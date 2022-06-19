@@ -4,7 +4,7 @@ export class UserController{
     constructor() {
     }
 
-    public create(req: Request, res: Response): void {
+    public register(req: Request, res: Response): void {
         if (req /*valid*/) {
             /* if ( make entry into database){
          send res with status 200 and id
@@ -16,10 +16,11 @@ export class UserController{
         }
     }
 
-    public get(req: Request, res: Response): void {
+    public login(req: Request, res: Response): void {
         if (req.params.id /*valid*/) {
             /* if ( successfully gotten from db){
          send res with status 200 and values as json
+         login
          }else{
              send res with status 404
             }*/
@@ -27,7 +28,8 @@ export class UserController{
             res.status(400).send("Bad Request")
         }
     }
-    public getByName(req: Request, res: Response): void {
+
+    public logout(req: Request, res: Response): void {
         if (req.params.name /*valid*/) {
             /* if ( successfully gotten from db){
          send res with status 200 and values as json
