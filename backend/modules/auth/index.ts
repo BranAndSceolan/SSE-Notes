@@ -3,10 +3,12 @@ import {Application, Request, Response} from "express";
 import express from "express";
 //import cors from "cors"
 import {PORT} from "../../index";
-
+const helmet = require('helmet')
 
 const app: Application = express();
 app.use(express.json())
+app.use(helmet())
+app.use(helmet.noCache())
 //app.use(cors())
 app.use(express.urlencoded({
     extended: true
