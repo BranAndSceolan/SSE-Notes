@@ -21,9 +21,9 @@ router.post('/login', (req: Request, res: Response) => {
 })
 
 router.post('/logout', (req: Request, res: Response) => {
-    JWT.authenticate(req, res, () => userController.logout(req, res))
+    userController.logout(req, res)
 })
 
-router.delete('/delete/:id', ((req: Request, res: Response) => {
-    JWT.authenticate(req, res, () => userController.delete(req, res))
+router.delete('/delete', ((req: Request, res: Response) => {
+    userController.delete(req, res)
 }))
