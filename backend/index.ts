@@ -1,6 +1,9 @@
 import express from "express";
 import {Application, Request, Response} from "express";
 import helmet from "helmet";
+import genuuid from 'uid-safe'
+import * as Express from "express";
+import * as ExpressSession from "express-session";
 
 export const PORT = 8000
 
@@ -18,6 +21,18 @@ app.use(helmet())
 app.use(express.urlencoded({
     extended: true
 }));
+
+export interface myRequest extends Express.Request { session: [any];}
+
+const instance = Express();
+
+instance.use(ExpressSession({
+    secret: "help!!!",
+    resave: false,
+    saveUninitialized: true
+}));
+
+
 
 // Application routing
 app.use('/documents', notesRouter)
