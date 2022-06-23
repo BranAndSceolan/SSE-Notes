@@ -7,4 +7,5 @@
 # Documents
 /documents/create
 /documents/{document_id}
-( would make sense, but is not explicitly demanded: /documents/delete)
+/documents/list
+( would make sense, but is not explicitly demanded: /documents/delete/:id)
