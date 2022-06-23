@@ -1,0 +1,10 @@
+# User
+/user/register
+/user/login
+/user/logout
+/user/delete
+
+# Documents
+/documents/create
+/documents/{document_id}
+( would make sense, but is not explicitly demanded: /documents/delete)
