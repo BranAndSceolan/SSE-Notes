@@ -12,6 +12,12 @@ Because it is well known and tried, so if there are any issues, they are likely 
 To use cookies for session-handling. Also thought about using JWTs, but since you can't explicitly log out using those,
 cookies might be the better choice.
 Express-session is tried and intended to be used with express, so they should work good together. 
+# typescript
+to write better structured, typed code than we would get using plain javascript
+# nodemon, ts-node, tsc-watch
+to simplify development
+
 
 # Database
 ## postgres
+
