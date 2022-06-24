@@ -1,13 +1,15 @@
 import express from "express";
 import {Application, Request, Response} from "express";
 import helmet from "helmet";
-
-export const PORT = 8000
+import {Client} from "pg";
 
 import {
     notesRouter,
     authRouter
 } from "./routes/index"
+
+export const PORT = 8000
+
 
 // Verbindung zur Datenbank herstellen
 
@@ -25,8 +27,6 @@ declare module "express-session" {
     }
 }
 
-const Client  = require('pg')
-
 export const client = new Client({
     user: 'dbuser',
     host: 'database.server.com',
@@ -35,7 +35,7 @@ export const client = new Client({
     port: 3211,
 })
 client.connect()
-client.query('SELECT NOW()', (err: Error, res: Response) => {
+client.query('SELECT NOW()', (err: Error, res: any) => {
     console.log(err, res)
     client.end()
 })

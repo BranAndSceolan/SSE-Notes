@@ -32,6 +32,8 @@
 
     "@types/express-session": "^1.17.4",
 
+    "@types/pg": "^8.6.5",
+
     "@types/uid-safe": "^2.1.2",
 
     "express": "^4.18.1",
@@ -41,6 +43,8 @@
     "helmet": "^5.1.0",
 
     "node-postgres": "^0.6.2",
+
+    "pg": "^8.7.3",
 
     "ts-node": "^10.8.1",
 
