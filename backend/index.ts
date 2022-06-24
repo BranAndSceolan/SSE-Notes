@@ -25,7 +25,20 @@ declare module "express-session" {
     }
 }
 
+const Client  = require('pg')
 
+export const client = new Client({
+    user: 'dbuser',
+    host: 'database.server.com',
+    database: 'mydb',
+    password: 'secretpassword',
+    port: 3211,
+})
+client.connect()
+client.query('SELECT NOW()', (err: Error, res: Response) => {
+    console.log(err, res)
+    client.end()
+})
 
 // Application routing
 app.use('/documents', notesRouter)
