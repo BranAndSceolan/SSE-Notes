@@ -4,7 +4,7 @@ POST localhost:8000/user/register
 Content-Type: application/json
 
 {
-  "name": "Te",
+  "name": "Ben",
   "password": "123"
 }
 
@@ -13,9 +13,11 @@ POST localhost:8000/user/login
 Content-Type: application/json
 
 {
-  "name": "Te",
+  "name": "Ben",
   "password": "123"
 }
+###
+POST localhost:8000/user/logout
 
 ###
 DELETE localhost:8000/user/delete

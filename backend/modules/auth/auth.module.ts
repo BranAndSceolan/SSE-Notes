@@ -14,8 +14,6 @@ export class AuthModule{
         } else {
             res.status(400).send("name and password need to be sensible values")
         }
-        console.log(newUsername)
-        console.log(newPassword)
         // check if already used
         try {
             const result = await client.query('SELECT name FROM users WHERE name like $1', [newUsername])
@@ -73,7 +71,7 @@ export class AuthModule{
         if (req.session.signInName) {
             next()
         } else {
-            res.status(401)
+            res.status(401).send("not logged in!")
         }
     }
 

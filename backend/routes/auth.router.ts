@@ -28,5 +28,6 @@ router.post('/logout', (req: Request, res: Response) => {
 })
 
 router.delete('/delete', ((req: Request, res: Response) => {
+    console.log("router triggered")
     authModule.checkLogin(req, res, ()=> userController.delete(req, res))
 }))
