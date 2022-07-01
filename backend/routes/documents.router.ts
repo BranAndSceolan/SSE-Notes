@@ -1,5 +1,6 @@
 import express, { Request, Response} from 'express'
 import {noteController} from "../modules/controllers";
+import {printToConsole} from "../modules/util/util";
 
 export const router = express.Router({
     strict: true
@@ -13,6 +14,7 @@ export const router = express.Router({
 
 // POST Routes
 router.post('/create', (req: Request, res: Response) => {
+    printToConsole("router triggered")
     noteController.create(req, res)
 })
 

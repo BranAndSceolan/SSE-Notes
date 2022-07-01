@@ -37,6 +37,7 @@ app.use(session({
 declare module "express-session" {
     interface Session {
         signInName: string;
+        signInId: number;
     }
 }
 

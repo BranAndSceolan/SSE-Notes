@@ -26,8 +26,8 @@ export class AuthModule{
         }
 
         try {
-            const result = await client.query('INSERT INTO users(name, password) VALUES($1, $2) RETURNING *', [newUsername, newPassword])
-            if (result){
+            const result = await client.query('INSERT INTO users(name, password) VALUES($1, $2) RETURNING 1', [newUsername, newPassword])
+            if (result.rowCount == 1){
                 req.session.signInName = newUsername;
                 return res.status(200).send("Congratulations! You are now registered!")
             } else {

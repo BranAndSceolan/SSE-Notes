@@ -10,7 +10,7 @@
 
   "scripts": {
 
-    "start": "nodemon",
+    "start": "../node_modules/.bin/nodemon",
 
     "build": "npx tsc"
 
@@ -62,8 +62,11 @@
 
   "devDependencies": {
 
-    "nodemon": "^2.0.18"
+    "@types/config": "^0.0.41",
 
+    "nodemon": "^2.0.18",
+
+    "config": "^3.3.7"
   }
 
 }

@@ -1,3 +1,55 @@
+POST http://localhost:8000/documents/create
+Content-Type: application/json
+
+{
+  "title": "Hallo",
+  "content": "Ich hörte, hier kann man Dinge notieren!",
+  "private": false
+}
+
+###
+
+POST http://localhost:8000/user/register
+Content-Type: application/json
+
+{
+  "name": "Ben",
+  "password": "123"
+}
+
+<> 2022-07-01T193555.200.html
+
+###
+
+POST http://localhost:8000/user/login
+Content-Type: application/json
+
+{
+  "name": "Ben",
+  "password": "123"
+}
+
+<> 2022-07-01T193546.404.urilist
+
+###
+
+GET http://localhost:8000
+
+<> 2022-07-01T193534.200.html
+
+###
+
+POST http://localhost:8000/documents/create
+Content-Type: application/json
+
+{
+  "title": "Hallo",
+  "content": "Ich hörte, hier kann man Dinge notieren!",
+  "private": false
+}
+
+###
+
 DELETE http://localhost:8000/user/delete
 
 <> 2022-07-01T180314.200.html
@@ -415,66 +467,6 @@ Content-Type: application/json
 }
 
 <> 2022-07-01T150516.500.html
-
-###
-
-POST http://localhost:8000/user/register
-Content-Type: application/json
-
-{
-  "name": "Test1",
-  "password": "123"
-}
-
-<> 2022-07-01T150333.500.html
-
-###
-
-POST http://localhost:8000/user/register
-Content-Type: application/json
-
-{
-  "name": "Test1",
-  "password": "123"
-}
-
-<> 2022-07-01T150032.500.html
-
-###
-
-POST http://localhost:8000/user/register
-Content-Type: application/json
-
-{
-  "name": "Test1",
-  "password": "123"
-}
-
-<> 2022-07-01T145719.500.html
-
-###
-
-POST http://localhost:8000/user/register
-Content-Type: application/json
-
-{
-  "name": "Test1",
-  "password": "123"
-}
-
-<> 2022-07-01T145441.500.html
-
-###
-
-POST http://localhost:8000/user/register
-Content-Type: application/json
-
-{
-  "name": "Test1",
-  "password": "123"
-}
-
-<> 2022-07-01T145425.500.html
 
 ###
 
