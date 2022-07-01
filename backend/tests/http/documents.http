@@ -4,5 +4,6 @@ Content-Type: application/json
 {
   "title": "Hallo",
   "content": "Ich hörte, hier kann man Dinge notieren!",
-  "private": false
+  "private": "false"
 }
+###

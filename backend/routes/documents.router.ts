@@ -18,6 +18,7 @@ router.post('/create', (req: Request, res: Response) => {
     noteController.create(req, res)
 })
 
+/*
 router.post('/:id', (req: Request, res: Response) => {
     noteController.get(req, res)
 })
@@ -28,4 +29,4 @@ router.post('/list', (req: Request, res: Response) => {
 
 router.delete('/delete/:id', ((req: Request, res: Response) => {
     noteController.delete(req, res)
-}))
+}))*/

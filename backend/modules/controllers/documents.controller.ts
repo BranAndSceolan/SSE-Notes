@@ -3,12 +3,11 @@ import {printToConsole} from "../util/util";
 import {client} from "../../index";
 
 export class DocumentsController {
-    constructor() {
-    }
 
-    public async create(req: Request, res: Response): Promise<void> {
-        console.log("Create")
-        const author : string = req.session.signInName
+    public create(_req: Request, _res: Response): void {
+        return console.log("Create")
+    }
+     /*   const author : string = "Test"
         const title : string = req.body.title
         const content : string = req.body.content
         const privacy : string = req.body.private
@@ -43,7 +42,7 @@ export class DocumentsController {
                 res.sendStatus(500)
             }
         }
-    }
+    }*/
 
     public async get(req: Request, res: Response): Promise <void> {
         const noteId = req.body.note.trim()

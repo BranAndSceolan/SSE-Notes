@@ -4,6 +4,83 @@ Content-Type: application/json
 {
   "title": "Hallo",
   "content": "Ich hörte, hier kann man Dinge notieren!",
+  "private": "false"
+}
+
+###
+
+POST http://localhost:8000/documents/create
+Content-Type: application/json
+
+{
+  "title": "Hallo",
+  "content": "Ich hörte, hier kann man Dinge notieren!",
+  "private": false
+}
+
+###
+
+POST http://localhost:8000/documents/create
+Content-Type: application/json
+
+{
+  "title": "Hallo",
+  "content": "Ich hörte, hier kann man Dinge notieren!",
+  "private": false
+}
+
+###
+
+POST http://localhost:8000/documents/create
+Content-Type: application/json
+
+{
+  "title": "Hallo",
+  "content": "Ich hörte, hier kann man Dinge notieren!",
+  "private": false
+}
+
+###
+
+POST http://localhost:8000/documents/create
+Content-Type: application/json
+
+{
+  "title": "Hallo",
+  "content": "Ich hörte, hier kann man Dinge notieren!",
+  "private": false
+}
+
+###
+
+POST http://localhost:8000/documents/create
+Content-Type: application/json
+
+{
+  "title": "Hallo",
+  "content": "Ich hörte, hier kann man Dinge notieren!",
+  "private": false
+}
+
+###
+
+POST http://localhost:8000/documents/create
+Content-Type: application/json
+
+{
+  "title": "Hallo",
+  "content": "Ich hörte, hier kann man Dinge notieren!",
+  "private": false
+}
+
+###
+
+POST http://localhost:8000/documents/create
+Content-Type: application/json
+
+{
+  "title": "Hallo",
+  "content": "Ich hörte, hier kann man Dinge notieren!",
   "private": false
 }
 
@@ -391,82 +468,6 @@ Content-Type: application/json
 }
 
 <> 2022-07-01T151655.500.html
-
-###
-
-POST http://localhost:8000/user/register
-Content-Type: application/json
-
-{
-  "name": "Test1",
-  "password": "123"
-}
-
-<> 2022-07-01T151644.400.html
-
-###
-
-POST http://localhost:8000/user/register
-Content-Type: application/json
-
-{
-  "name": "Test1",
-  "password": "123"
-}
-
-<> 2022-07-01T151445.500.html
-
-###
-
-GET http://localhost:8000
-
-<> 2022-07-01T151445.200.html
-
-###
-
-POST http://localhost:8000/user/register
-Content-Type: application/json
-
-{
-  "name": "Test1",
-  "password": "123"
-}
-
-<> 2022-07-01T151137.500.html
-
-###
-
-POST http://localhost:8000/user/register
-Content-Type: application/json
-
-{
-  "name": "Test1",
-  "password": "123"
-}
-
-###
-
-POST http://localhost:8000/user/register
-Content-Type: application/json
-
-{
-  "name": "Test1",
-  "password": "123"
-}
-
-<> 2022-07-01T150843.500.html
-
-###
-
-POST http://localhost:8000/user/register
-Content-Type: application/json
-
-{
-  "name": "Test1",
-  "password": "123"
-}
-
-<> 2022-07-01T150516.500.html
 
 ###
 
