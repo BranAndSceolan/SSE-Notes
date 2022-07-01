@@ -1,6 +1,7 @@
 import {Request, Response} from "express";
 import {printToConsole} from "../util/util";
 import {client} from "../../index";
+import {CreditedNote} from "../entities/document.entity";
 
 export class DocumentsController {
 
@@ -50,7 +51,7 @@ export class DocumentsController {
             try {
                 const result = await client.query('SELECT * FROM notes INNER JOIN users ON users.id = notes.authorid WHERE $1 = notes.id', [noteId])
                 if (result.rowCount == 1){
-                    res.status(200).send(result.rows[0].content)
+                    res.status(200).send(new CreditedNote(result.rows[0].content, result.rows[0].private, result.rows[0].title, result.rows[0].name))
                 }
             } catch (e) {
                 printToConsole("Error while getting specific note: "+ e)
