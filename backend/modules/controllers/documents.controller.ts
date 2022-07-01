@@ -4,10 +4,10 @@ import {client} from "../../index";
 
 export class DocumentsController {
 
-    public create(_req: Request, _res: Response): void {
-        return console.log("Create")
-    }
-     /*   const author : string = "Test"
+    public async create(req: Request, res: Response): Promise<void> {
+     const author : string = req.session.signInName
+        let resultUser = undefined
+        let insertResult = undefined
         const title : string = req.body.title
         const content : string = req.body.content
         const privacy : string = req.body.private
@@ -19,42 +19,42 @@ export class DocumentsController {
             res.status(400).send("Privacy level is missing")
         } else {
             try {
-                const result = await client.query('SELECT id FROM users WHERE name like $1', [author])
-                if (result.rowCount != 1) {
+                resultUser = await client.query('SELECT id FROM users WHERE name like $1', [author])
+                if (resultUser?.rowCount != 1) {
                     printToConsole("failed to find user corresponding to session")
                     res.status(404).send("failed to find user corresponding to session")
                 } else {
-                    printToConsole(result.rows[0])
-                    const authorId = result.rows[0]
+                    printToConsole(resultUser.rows[0])
+                    const authorid = resultUser.rows[0].id
                     const insertNoteStatement = 'INSERT INTO notes(authorid, title, content, private) VALUES($1, $2, $3, $4) RETURNING *'
-                    const noteValues = [authorId, title, content, privacy]
-                    const insertResult = await client.query(insertNoteStatement, noteValues)
-                    if (insertResult.rowCount == 1){
-                        printToConsole("[+] added note: "+ insertResult + " | " + insertResult.rows[0].title)
+                    const noteValues = [authorid, title, content, privacy]
+                        insertResult = await client.query(insertNoteStatement, noteValues)
+                    if (insertResult?.rowCount == 1){
+                        printToConsole("[+] added note: "+ insertResult.rows[0])
                         res.status(201).send("added note")
                     } else {
                         printToConsole("Something went wrong while creating a note!")
                         res.status(500).send("something went wrong while creating a note!")
                     }
                 }
-                } catch (e) {
-                printToConsole("Had following error while trying to find user: " + e)
+            } catch (e) {
+                printToConsole("Had following error while trying to find user or inserting note: " + e)
                 res.sendStatus(500)
             }
         }
-    }*/
+    }
 
     public async get(req: Request, res: Response): Promise <void> {
-        const noteId = req.body.note.trim()
+        const noteId = req.params.id
         if (noteId) {
             try {
-                const result = await client.query('SELECT * FROM notes INNER JOIN users ON notes.author=user.id WHERE notes.id=$1', [noteId])
+                const result = await client.query('SELECT * FROM notes INNER JOIN users ON users.id = notes.authorid WHERE $1 = notes.id', [noteId])
                 if (result.rowCount == 1){
                     res.status(200).send(result.rows[0].content)
                 }
             } catch (e) {
                 printToConsole("Error while getting specific note: "+ e)
-                res.send(500).send("Error while getting note")
+                res.status(500).send("Error while getting note")
             }
         } else {
             res.status(400).send("Bad Request")

@@ -283,3 +283,4 @@ fabric.properties
 
 .idea
 .idea/httpRequests/http-requests-log.http
+.idea/httpRequests/http-client.cookies

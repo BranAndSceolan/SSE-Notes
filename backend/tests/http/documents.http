@@ -7,3 +7,6 @@ Content-Type: application/json
   "private": "false"
 }
 ###
+
+GET localhost:8000/documents/1
+###

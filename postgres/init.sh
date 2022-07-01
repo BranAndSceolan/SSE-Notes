@@ -10,7 +10,7 @@ CREATE table users(
 );
 
 CREATE table notes(
-    id integer PRIMARY KEY,
+    id bigserial PRIMARY KEY,
     title varchar not null,
     content varchar not null,
     private boolean not null ,
