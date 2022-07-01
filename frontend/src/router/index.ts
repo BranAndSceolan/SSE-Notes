@@ -14,6 +14,22 @@ const routes: Array<RouteRecordRaw> = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+  },
+  {
+    path: '/documents',
+    name: 'documentList',
+    component: () => import(/* webpackChunkName: "about" */ '../views/DocumentListView.vue')
+  },
+  {
+    path: '/documents/:document_id',
+    name: 'document',
+    component: () => import(/* webpackChunkName: "about" */ '../views/DocumentView.vue')
+  },
+  {
+    path: '/search',
+    name: 'search',
+    //query parameters are not defined at all in Vue
+    component: () => import(/* webpackChunkName: "about" */ '../views/SearchView.vue')
   }
 ]
 
