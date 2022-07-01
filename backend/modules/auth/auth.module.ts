@@ -46,14 +46,14 @@ export class AuthModule{
         let password : string | undefined = req.body.password.trim()
         let result = undefined
         try {
-            result = await client.query('INSERT INTO users(name, password) VALUES($1, $2) RETURNING *', [username, password])
+            result = await client.query('SELECT FROM users WHERE name like $1 AND password like $2 ', [username, password])
         } catch (err){
+            console.log(err)
             return res.status(500).send("Something went wrong!")
         }
         if (result.rowCount == 1 && username) {
-            console.log("Name: " + username)
             req.session.signInName = username;
-            return res.sendStatus(200);
+            return res.status(200).send("Logged in!");
         } else {
             res.status(404);
             res.contentType("text/urilist");

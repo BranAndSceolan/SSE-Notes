@@ -1,4 +1,5 @@
 import {Request, Response} from "express";
+import {client} from "../../index";
 
 export class UserController{
     constructor() {
@@ -40,15 +41,19 @@ export class UserController{
             res.status(400).send("Bad Request")
         }
     }
-    public delete(req: Request, res: Response): void {
-        if (req /*valid*/) {
-            /* if ( delete from database){
-         send res with status 200 and values of deleted note
-         }else{
-             send res with status 500
-            }*/
-        } else {
-            res.status(400).send("Bad Request")
+    public async delete(req: Request, res: Response): Promise<void> {
+        if (req.session.signInName) {
+            const username: string = req.session.signInName
+            try {
+                let result = await client.query('DELETE FROM users WHERE name like $1 RETURNING *', [username])
+                if (result) {
+                    res.status(200).send("user "+ username+ " deleted!")
+                } else {
+                    res.status(400).send("Error deleting user")
+                }
+            } catch (e) {
+                res.status(500).send("Error while deleting user"+ e)
+            }
         }
     }
 }
