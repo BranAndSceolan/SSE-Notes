@@ -2,11 +2,13 @@ import express from "express";
 import {Application, Request, Response} from "express";
 import helmet from "helmet";
 import {Client} from "pg";
+import session from "express-session";
 
 import {
     notesRouter,
     authRouter
 } from "./routes/index"
+import crypto from "crypto";
 
 export const PORT = 8000
 
@@ -21,6 +23,17 @@ app.use(express.urlencoded({
     extended: true
 }));
 
+app.use(session({
+    resave: true, // save session even if not modified
+    saveUninitialized: true, // save session even if not used
+    rolling: true, // forces cookie set on every response needed to set expiration
+    secret: crypto.randomInt(0, 1000000).toString(), // encrypt session-id in cookie using "secret" as modifier
+    name: "myawesomecookie", // name of the cookie set is set by the server
+    //TODO: cookie: {secure: true} //enable this as soon as https-certificates are included and we use https for our messages
+    // only then will this application be secure!
+    cookie: {maxAge: 15*60*1000}
+}));
+
 declare module "express-session" {
     interface Session {
         signInName: string;
@@ -28,16 +41,16 @@ declare module "express-session" {
 }
 
 export const client = new Client({
-    user: 'dbuser',
-    host: 'database.server.com',
-    database: 'mydb',
-    password: 'secretpassword',
-    port: 3211,
+    user: "Test",
+    host: 'localhost',
+    database: 'Test',
+    password: "Test",
+    port: 5432,
 })
 client.connect()
 client.query('SELECT NOW()', (err: Error, res: any) => {
-    console.log(err, res)
-    client.end()
+    console.log(err, res.rows[0])
+    // client.end() Don't disconnect yet!
 })
 
 // Application routing

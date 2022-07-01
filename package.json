@@ -6,7 +6,7 @@
 
   "description": "sse-notes: write private or public notes",
 
-  "main": "/index.js",
+  "main": "index.js",
 
   "scripts": {
 

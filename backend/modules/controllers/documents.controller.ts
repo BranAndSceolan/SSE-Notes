@@ -5,15 +5,18 @@ export class DocumentsController {
     }
 
     public create(req: Request, res: Response): void {
-       if (req /*valid*/) {
-           /* if ( make entry into database){
+        const name : string = req.session.signInName
+        const title : String | undefined = req.body.title.trim()
+        res.status(501).send(name + " " + title)
+       /*if ( valid) {
+            if ( make entry into database){
         send res with status 200 and id
         }else{
             send res with status 500
-           }*/
+           }
        } else {
            res.status(400).send("Bad Request")
-       }
+       }*/
     }
 
     public get(req: Request, res: Response): void {

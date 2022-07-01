@@ -3,12 +3,8 @@ import {NextFunction} from "express/ts4.0";
 import {client} from "../../index";
 
 
-export class AuthModule {
-
-    constructor() {
-    }
-
-    async register(req: Request, res: Response) {
+export class AuthModule{
+    public async register(req: Request, res: Response) {
         let newUsername = undefined
         let newPassword = undefined
         // check for validity
@@ -18,13 +14,16 @@ export class AuthModule {
         } else {
             res.status(400).send("name and password need to be sensible values")
         }
+        console.log(newUsername)
+        console.log(newPassword)
         // check if already used
         try {
-            const result = await client.query('SELECT FROM users(name) VALUES($1)', [newUsername])
-            if (result.length > 0) {
+            const result = await client.query('SELECT name FROM users WHERE name like $1', [newUsername])
+            if (result.rowCount > 0) {
                 return res.status(400).send("This name isn't available!")
             }
         } catch (err){
+            console.log(err)
             return res.status(500).send("Something went wrong registering!")
         }
 
@@ -32,11 +31,12 @@ export class AuthModule {
             const result = await client.query('INSERT INTO users(name, password) VALUES($1, $2) RETURNING *', [newUsername, newPassword])
             if (result){
                 req.session.signInName = newUsername;
-               return res.status(200).send("Congratulations! You are now registered!")
+                return res.status(200).send("Congratulations! You are now registered!")
             } else {
-               return res.status(500).send("Something went wrong registering!")
+                return res.status(500).send("No result")
             }
         } catch (err) {
+            console.log(err)
             return res.status(500).send("Something went wrong!")
         }
     }
@@ -50,7 +50,8 @@ export class AuthModule {
         } catch (err){
             return res.status(500).send("Something went wrong!")
         }
-        if (result.length == 1 && username) {
+        if (result.rowCount == 1 && username) {
+            console.log("Name: " + username)
             req.session.signInName = username;
             return res.sendStatus(200);
         } else {
@@ -77,3 +78,4 @@ export class AuthModule {
     }
 
 }
+
