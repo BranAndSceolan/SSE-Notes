@@ -1,12 +1,24 @@
-POST localhost:8000/documents/create
+POST localhost:8000/api/documents/create
 Content-Type: application/json
 
 {
   "title": "Hallo",
   "content": "Ich hörte, hier kann man Dinge notieren!",
-  "private": "false"
+  "private": 1
 }
 ###
 
-GET localhost:8000/documents/1
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "Shhh",
+  "content": "Dies ist eine geheime Nachricht!",
+  "private": 0
+}
+###
+GET localhost:8000/api/documents/get/8
+###
+
+GET localhost:8000/api/documents/list
 ###

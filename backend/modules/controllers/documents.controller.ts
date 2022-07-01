@@ -6,8 +6,7 @@ import {CreditedNote} from "../entities/document.entity";
 export class DocumentsController {
 
     public async create(req: Request, res: Response): Promise<void> {
-     const author : string = req.session.signInName
-        let resultUser = undefined
+     const authorId : bigint = req.session.signInId
         let insertResult = undefined
         const title : string = req.body.title
         const content : string = req.body.content
@@ -16,73 +15,88 @@ export class DocumentsController {
             res.status(400).send("Title is missing")
         } else if (!content || content.trim() === ""){
             res.status(400).send("Content is missing")
-        } else if (!privacy || privacy.trim() === ""){
+        } else if (privacy === undefined ){
             res.status(400).send("Privacy level is missing")
         } else {
             try {
-                resultUser = await client.query('SELECT id FROM users WHERE name like $1', [author])
-                if (resultUser?.rowCount != 1) {
-                    printToConsole("failed to find user corresponding to session")
-                    res.status(404).send("failed to find user corresponding to session")
+                const insertNoteStatement = 'INSERT INTO notes(authorid, title, content, private) VALUES($1, $2, $3, $4) RETURNING *'
+                const noteValues = [authorId, title, content, privacy]
+                insertResult = await client.query(insertNoteStatement, noteValues)
+                if (insertResult?.rowCount == 1){
+                    printToConsole("[+] added note: "+ insertResult.rows[0])
+                    res.status(201).send("added note")
                 } else {
-                    printToConsole(resultUser.rows[0])
-                    const authorid = resultUser.rows[0].id
-                    const insertNoteStatement = 'INSERT INTO notes(authorid, title, content, private) VALUES($1, $2, $3, $4) RETURNING *'
-                    const noteValues = [authorid, title, content, privacy]
-                        insertResult = await client.query(insertNoteStatement, noteValues)
-                    if (insertResult?.rowCount == 1){
-                        printToConsole("[+] added note: "+ insertResult.rows[0])
-                        res.status(201).send("added note")
-                    } else {
-                        printToConsole("Something went wrong while creating a note!")
-                        res.status(500).send("something went wrong while creating a note!")
-                    }
+                    printToConsole("Something went wrong while creating a note!")
+                    res.status(500).send("something went wrong while creating a note!")
                 }
             } catch (e) {
-                printToConsole("Had following error while trying to find user or inserting note: " + e)
+                printToConsole("Had following error while trying inserting note: " + e)
                 res.sendStatus(500)
             }
         }
     }
 
     public async get(req: Request, res: Response): Promise <void> {
-        const noteId = req.params.id
+        let noteId
+        if(req.params.id) {
+            noteId = BigInt(req.params.id)
+        }
+        let result
         if (noteId) {
             try {
-                const result = await client.query('SELECT * FROM notes INNER JOIN users ON users.id = notes.authorid WHERE $1 = notes.id', [noteId])
-                if (result.rowCount == 1){
-                    res.status(200).send(new CreditedNote(result.rows[0].content, result.rows[0].private, result.rows[0].title, result.rows[0].name))
-                }
+               result = await client.query('SELECT * FROM notes INNER JOIN users ON users.id = notes.authorid WHERE $1 = notes.id', [noteId])
             } catch (e) {
                 printToConsole("Error while getting specific note: "+ e)
                 res.status(500).send("Error while getting note")
             }
+            if (result?.rowCount == 1) {
+                printToConsole(result.rows[0])
+                if (req.session.signInId== result.rows[0]) {
+                    res.status(200).send(new CreditedNote(result.rows[0].content, result.rows[0].private, result.rows[0].title, result.rows[0].name))
+                } else if (!result.rows[0].private){
+                    res.status(200).send(new CreditedNote(result.rows[0].content, result.rows[0].private, result.rows[0].title, result.rows[0].name))
+                } else {
+                    res.status(403).send("Forbidden")
+                }
+            }
         } else {
+
             res.status(400).send("Bad Request")
         }
     }
 
-    public getList(req: Request, res: Response): void{
-        if (req.params /*valid*/) {
-            /* if ( successfully gotten from db){
-         send res with status 200 and values as json
-         }else{
-             send res with status 404
-            }*/
-        } else {
-            res.status(400).send("Bad Request")
+    public async getList(req: Request, res: Response): Promise<void>{
+        let list = undefined
+        try {
+            list = await client.query('SELECT * FROM notes INNER JOIN users ON notes.authorid = users.id WHERE users.id = $1 OR notes.private = FALSE', [req.session.signInId])
+            const res : any = []
+            for( let i = 0; i < list.rowCount; i++){
+                const l = list.rows[i]
+                res.append(new CreditedNote(l.content, l.private, l.title, l.name))
+            }
+
+            if (list){
+                printToConsole("got results: "+ list)
+                printToConsole("as array: "+ res)
+                res.status(200).send(res)
+            }
+        } catch (e) {
+            printToConsole("Error while trying to fetch list: "+ e)
+            res.status(500).send("Internal Server Error")
         }
+
     }
 
-    public delete(req: Request, res: Response): void {
-        if (req /*valid*/) {
-            /* if ( delete from database){
-         send res with status 200 and values of deleted note
-         }else{
-             send res with status 500
-            }*/
-        } else {
-            res.status(400).send("Bad Request")
+    public async delete(req: Request, res: Response): Promise<void> {
+        let deleted = undefined
+        try{
+            deleted = await client.query('DELETE FROM notes WHERE id = $1 AND authorid = $2 RETURNING *', [req.params.id, req.session.signInId])
+        }catch (e) {
+            res.sendStatus(500)
         }
+        if (deleted){
+            res.status(200).send(deleted.rows[0])
+        }
+
     }
 }

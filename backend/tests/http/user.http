@@ -1,23 +1,23 @@
-GET localhost:8000/
+GET localhost:8000/api
 ###
-POST localhost:8000/user/register
+POST localhost:8000/api/user/register
 Content-Type: application/json
 
 {
-  "name": "Ben",
+  "name": "Beni",
   "password": "123"
 }
 
 ###
-POST localhost:8000/user/login
+POST localhost:8000/api/user/login
 Content-Type: application/json
 
 {
-  "name": "Ben",
+  "name": "Beni",
   "password": "123"
 }
 ###
-POST localhost:8000/user/logout
+POST localhost:8000/api/user/logout
 
 ###
-DELETE localhost:8000/user/delete
+DELETE localhost:8000/api/user/delete

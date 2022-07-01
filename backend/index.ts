@@ -36,8 +36,7 @@ app.use(session({
 
 declare module "express-session" {
     interface Session {
-        signInName: string;
-        signInId: number;
+        signInId: bigint;
     }
 }
 
@@ -55,10 +54,10 @@ client.query('SELECT NOW()', (err: Error, res: any) => {
 })
 
 // Application routing
-app.use('/documents', notesRouter)
-app.use('/user', authRouter)
+app.use('/api/documents', notesRouter)
+app.use('/api/user', authRouter)
 
-app.get('/', (_req: Request, res: Response) => {
+app.get('/api', (_req: Request, res: Response) => {
     res.status(200).send("Welcome to SSE-NOTES!")
 });
 

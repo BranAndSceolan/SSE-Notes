@@ -26,9 +26,9 @@ export class AuthModule{
         }
 
         try {
-            const result = await client.query('INSERT INTO users(name, password) VALUES($1, $2) RETURNING 1', [newUsername, newPassword])
+            const result = await client.query('INSERT INTO users(name, password) VALUES($1, $2) RETURNING *', [newUsername, newPassword])
             if (result.rowCount == 1){
-                req.session.signInName = newUsername;
+                req.session.signInId = result.rows[0].id
                 return res.status(200).send("Congratulations! You are now registered!")
             } else {
                 return res.status(500).send("No result")
@@ -44,13 +44,13 @@ export class AuthModule{
         let password : string | undefined = req.body.password.trim()
         let result = undefined
         try {
-            result = await client.query('SELECT FROM users WHERE name like $1 AND password like $2 ', [username, password])
+            result = await client.query('SELECT id FROM users WHERE name like $1 AND password like $2 ', [username, password])
         } catch (err){
             console.log(err)
             return res.status(500).send("Something went wrong!")
         }
-        if (result.rowCount == 1 && username) {
-            req.session.signInName = username;
+        if (result.rowCount == 1) {
+            req.session.signInId = result.rows[0].id
             return res.status(200).send("Logged in!");
         } else {
             res.status(404);
@@ -68,7 +68,7 @@ export class AuthModule{
     }
 
     checkLogin(req: Request, res: Response, next: NextFunction) {
-        if (req.session.signInName) {
+        if (req.session.signInId) {
             next()
         } else {
             res.status(401).send("not logged in!")
