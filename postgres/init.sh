@@ -4,13 +4,13 @@ set -e
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" << EOSQL
 CREATE USER notes PASSWORD '$NOTES_PASSWORD';
 CREATE table users(
-    id integer PRIMARY KEY ,
+    id bigserial PRIMARY KEY ,
     name varchar not null ,
     password varchar
 );
 
 CREATE table notes(
-    id integer PRIMARY KEY,
+    id bigserial PRIMARY KEY,
     title varchar not null,
     content varchar not null,
     private boolean not null ,

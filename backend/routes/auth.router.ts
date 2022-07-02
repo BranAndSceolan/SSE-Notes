@@ -1,9 +1,12 @@
 import express, { Request, Response} from 'express'
 import {userController} from "../modules/controllers";
+//import {authModule} from "../modules/auth"
+import {authModule} from "../modules/auth"
 
 export const router = express.Router({
     strict: true
 })
+
 
 /**
  * Authentication Routes
@@ -13,17 +16,17 @@ export const router = express.Router({
 
 // POST Routes
 router.post('/register', (req: Request, res: Response) => {
-    userController.register(req, res)
+    authModule.register(req, res)
 })
 
 router.post('/login', (req: Request, res: Response) => {
-    userController.login(req, res)
+    authModule.login(req, res)
 })
 
 router.post('/logout', (req: Request, res: Response) => {
-    userController.logout(req, res)
+    authModule.logOut(req, res)
 })
 
 router.delete('/delete', ((req: Request, res: Response) => {
-    userController.delete(req, res)
+    authModule.checkLogin(req, res, ()=> userController.delete(req, res))
 }))

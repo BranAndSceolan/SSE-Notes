@@ -1,0 +1,23 @@
+GET localhost:8000/api
+###
+POST localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "Beni",
+  "password": "123"
+}
+
+###
+POST localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "Beni",
+  "password": "123"
+}
+###
+POST localhost:8000/api/user/logout
+
+###
+DELETE localhost:8000/api/user/delete
