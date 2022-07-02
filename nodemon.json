@@ -1,6 +1,0 @@
-{
-  "watch": ["backend"],
-  "ext": ".ts",
-  "ignore": [],
-  "exec": "ts-node ./backend/index.ts"
-}

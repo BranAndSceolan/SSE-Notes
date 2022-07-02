@@ -7,10 +7,10 @@ services:
 
     image: notes/postgres
 
-    environment:
-      - NOTES_PASSWORD=
-      - POSTGRES_USER=
-      - POSTGRES_PASSWORD=
+    environment: # After successfully having started the db-container, these values can be deleted from the docker_compose file.
+      - NOTES_PASSWORD=Test
+      - POSTGRES_USER=Test
+      - POSTGRES_PASSWORD=Test
 
     restart: unless-stopped
 
