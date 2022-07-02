@@ -9,6 +9,7 @@ import {
     authRouter
 } from "./routes/index"
 import crypto from "crypto";
+import {printToConsole} from "./modules/util/util";
 
 export const PORT = 8000
 
@@ -49,7 +50,7 @@ export const client = new Client({
 })
 client.connect()
 client.query('SELECT NOW()', (err: Error, res: any) => {
-    console.log(err, res.rows[0])
+    printToConsole("Error? "+ err + " | Time: " + res.rows[0].now)
     // client.end() Don't disconnect yet!
 })
 

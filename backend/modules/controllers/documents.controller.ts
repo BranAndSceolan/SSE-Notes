@@ -69,20 +69,47 @@ export class DocumentsController {
         let list = undefined
         try {
             list = await client.query('SELECT * FROM notes INNER JOIN users ON notes.authorid = users.id WHERE users.id = $1 OR notes.private = FALSE', [req.session.signInId])
-            const res : any = []
+            const notes : CreditedNote[] = []
             for( let i = 0; i < list.rowCount; i++){
                 const l = list.rows[i]
-                res.append(new CreditedNote(l.content, l.private, l.title, l.name))
+                notes.push(new CreditedNote(l.content, l.private, l.title, l.name))
             }
 
             if (list){
                 printToConsole("got results: "+ list)
-                printToConsole("as array: "+ res)
-                res.status(200).send(res)
+                printToConsole("as array: "+ notes)
+                res.status(200).send(notes)
             }
         } catch (e) {
             printToConsole("Error while trying to fetch list: "+ e)
             res.status(500).send("Internal Server Error")
+        }
+
+    }
+
+    public async update(req: Request, res: Response): Promise<void> {
+        let updated = undefined
+        const query = 'UPDATE notes SET title = $3, content = $4, private = $5 WHERE id = $1 AND authorid = $2 RETURNING *'
+        const title = req.body.title
+        const privacy = req.body.private
+        const content = req.body.content
+        if (!title.trim()){
+            res.status(400).send("Title missing!")
+        } else if (!content.trim()) {
+            res.status(400).send("Content missing!")
+        }else if (privacy == undefined) {
+            res.status(400).send("Privacy level missing!")
+        } else {
+            try {
+                const values = [req.params.id, req.session.signInId, title, content, privacy]
+                updated = await client.query(query, values)
+            } catch (e) {
+                printToConsole("Something went wrong updating a note: "+ e)
+                res.sendStatus(500)
+            }
+            if (updated) {
+                res.status(200).send(updated.rows[0])
+            }
         }
 
     }
