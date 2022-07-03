@@ -15,7 +15,6 @@
       <v-col class="button-col">
 
         <v-dialog
-            v-model="dialog"
             transition="dialog-top-transition"
         >
           <template v-slot:activator="{ props }">
@@ -28,14 +27,14 @@
           <template v-slot:default="{ isActive }">
           <v-card class="loginPrompt">
             <v-card-header-text>
-              <v-form v-model="form">
+              <v-form>
                       <v-text-field
-                          v-model.trim="username"
+                          v-model.lazy.trim="username"
                           label="Username"
                           required
                       ></v-text-field>
                       <v-text-field
-                          v-model.trim="password"
+                          v-model.lazy.trim="password"
                           label="Password"
                           required
                       ></v-text-field>
@@ -79,7 +78,6 @@ function changeRoute(route){
 }
 
 function register(){
-  console.log("Registering as: " + username.value + " - " + password.value);
   API.registerUser(username.value, password.value);
 }
 

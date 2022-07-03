@@ -6,6 +6,12 @@ const apiAxiosInstance: AxiosInstance = axios.create({
 });
 
 class APIService {
+
+    public axios: AxiosInstance;
+
+    constructor(axiosInstance: AxiosInstance) {
+        this.axios = axiosInstance;
+    }
     /*
     todo: implement methods
     getDocument(){}
@@ -15,36 +21,45 @@ class APIService {
     getDocumentList(){}
     */
     registerUser(username: string, password: string){
-        apiAxiosInstance.post("/user/register", {name: username, password: password})
-            .then((res: AxiosResponse) => {
-                console.log(res)
-            })
-            .catch((error: AxiosError) => {
-                console.log(error)
-            });
+        return new Promise((resolve, reject) => {
+            this.axios.post("/user/register", {name: username, password: password})
+                .then((res: AxiosResponse) => {
+                    resolve(res);
+                })
+                .catch((error: AxiosError) => {
+                    reject(error);
+                });
+
+        });
     }
 
     //deleteUser(){}
 
     login(username: string, password: string){
-        apiAxiosInstance.post("/user/login", {name: username, password: password})
-            .then((res: AxiosResponse) => {
-                console.log(res)
-            })
-            .catch((error: AxiosError) => {
-                console.log(error)
-            });
+        return new Promise((resolve, reject) => {
+            this.axios.post("/user/login", {name: username, password: password})
+                .then((res: AxiosResponse) => {
+                    resolve(res);
+                })
+                .catch((error: AxiosError) => {
+                    reject(error);
+                });
+
+        });
     }
 
     logout(){
-        apiAxiosInstance.post("/user/logout")
-            .then((res: AxiosResponse) => {
-                console.log(res)
-            })
-            .catch((error: AxiosError) => {
-                console.log(error)
-            });
+        return new Promise((resolve, reject) => {
+            this.axios.post("/user/logout")
+                .then((res: AxiosResponse) => {
+                    resolve(res);
+                })
+                .catch((error: AxiosError) => {
+                    reject(error);
+                });
+
+        });
     }
 }
 
-export const API = new APIService();
+export const API = new APIService(apiAxiosInstance);
