@@ -5,3 +5,7 @@ export function printToConsole(s: string){
         console.log(s)
     }
 }
+
+export function printError(position: string, errorText: string) {
+    printToConsole("At "+ position + " : " + errorText)
+}
