@@ -13,8 +13,14 @@
         </v-btn>
       </v-col>
       <v-col class="button-col">
-
+          <v-btn
+          @click="logout"
+          v-if="loggedIn">
+            <v-icon class="icon">mdi-account</v-icon>
+            Logout
+          </v-btn>
         <v-dialog
+            v-else
             transition="dialog-top-transition"
         >
           <template v-slot:activator="{ props }">
@@ -32,11 +38,13 @@
                           v-model.lazy.trim="username"
                           label="Username"
                           required
+                          @keyup.enter="login().then(()=>{isActive.value = false; loggedIn = true});"
                       ></v-text-field>
                       <v-text-field
                           v-model.lazy.trim="password"
                           label="Password"
                           required
+                          @keyup.enter="login().then(()=>{isActive.value = false; loggedIn = true});"
                       ></v-text-field>
               </v-form>
             </v-card-header-text>
@@ -44,7 +52,7 @@
             <v-card-actions class="justify-end">
               <v-btn
                   text
-                  @click="login();"
+                  @click="login().then(()=>{isActive.value = false; loggedIn = true});"
               >Login</v-btn>
               <v-btn
                   text
@@ -72,17 +80,21 @@ import { ref } from 'vue'
 
 const username = ref('')
 const password = ref('')
-
+let loggedIn = ref(false);
 function changeRoute(route){
   router.push("/" + route);
 }
 
 function register(){
-  API.registerUser(username.value, password.value);
+  return API.registerUser(username.value, password.value);
 }
 
 function login(){
-  API.login(username.value, password.value);
+  return API.login(username.value, password.value);
+}
+
+function logout(){
+  API.logout().then(() => {loggedIn.value = false;});
 }
 </script>
 
