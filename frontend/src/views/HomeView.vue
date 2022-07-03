@@ -1,18 +1,8 @@
 <template>
-  <hello-world />
+  <LandingPage/>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+import LandingPage from '../components/LandingPage.vue';
 
-// Components
-import HelloWorld from '../components/HelloWorld.vue';
-
-export default defineComponent({
-  name: 'HomeView',
-
-  components: {
-    HelloWorld,
-  },
-});
 </script>

@@ -28,14 +28,14 @@
           <template v-slot:default="{ isActive }">
           <v-card class="loginPrompt">
             <v-card-header-text>
-              <v-form v-model="valid">
+              <v-form v-model="form">
                       <v-text-field
-                          v-model="username"
+                          v-model.trim="username"
                           label="Username"
                           required
                       ></v-text-field>
                       <v-text-field
-                          v-model="password"
+                          v-model.trim="password"
                           label="Password"
                           required
                       ></v-text-field>
@@ -45,11 +45,11 @@
             <v-card-actions class="justify-end">
               <v-btn
                   text
-                  @click="isActive.value = false"
+                  @click="login();"
               >Login</v-btn>
               <v-btn
                   text
-                  @click="isActive.value = false"
+                  @click="register();"
               >Register now</v-btn>
               <v-btn
                   text
@@ -68,9 +68,23 @@
 
 <script setup>
 import router from "@/router";
+import {API} from "@/services/API-Service";
+import { ref } from 'vue'
+
+const username = ref('')
+const password = ref('')
 
 function changeRoute(route){
   router.push("/" + route);
+}
+
+function register(){
+  console.log("Registering as: " + username.value + " - " + password.value);
+  API.registerUser(username.value, password.value);
+}
+
+function login(){
+  API.login(username.value, password.value);
 }
 </script>
 

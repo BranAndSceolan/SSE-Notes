@@ -5,7 +5,7 @@ to be no injections, but helps.
 
 # Backend
 ## helmet
-To avoid secret information being read from the cache.
+Sets HTTP headers automatically to help secure the application
 ## express
 Because it is well known and tried, so if there are any issues, they are likely to be found and fixed quickly.
 ## express-session

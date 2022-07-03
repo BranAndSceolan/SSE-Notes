@@ -10,7 +10,7 @@
 
   "scripts": {
 
-    "start": "../node_modules/.bin/nodemon",
+    "start": "./node_modules/.bin/nodemon",
 
     "build": "npx tsc"
 
@@ -24,7 +24,7 @@
 
   },
 
-  "author": "sse-notes team: Daniel Pook, Antonia Strack",
+  "author": "sse-notes team: Daniel Poock, Antonia Strack",
 
   "dependencies": {
 
