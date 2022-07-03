@@ -12,8 +12,30 @@ class APIService {
     constructor(axiosInstance: AxiosInstance) {
         this.axios = axiosInstance;
     }
+
+    createDocument(title: string, text: string, privateNote: boolean){
+        //todo: please change the backend to expect booleans, they are stored as booleans in the DB, then correct this
+        let privateInt = 0;
+        if(privateNote){privateInt = 1}
+        return new Promise((resolve, reject) => {
+            this.axios.post("/documents/create",
+                {
+                title: title,
+                content: text,
+                private: privateInt
+                })
+                .then((res: AxiosResponse) => {
+                    resolve(res);
+                })
+                .catch((error: AxiosError) => {
+                    reject(error);
+                });
+
+        });
+    }
     /*
     todo: implement methods
+
     getDocument(){}
 
     deleteDocument(){}

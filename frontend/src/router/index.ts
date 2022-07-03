@@ -4,6 +4,7 @@ import AboutView from '../views/AboutView.vue'
 import DocumentListView from '../views/DocumentListView.vue'
 import DocumentView from '../views/DocumentView.vue'
 import SearchView from '../views/SearchView.vue'
+import CreateDocumentView from '../views/CreateDocumentView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -14,9 +15,6 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/about',
     name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: AboutView
   },
   {
@@ -34,6 +32,12 @@ const routes: Array<RouteRecordRaw> = [
     name: 'search',
     //query parameters are not defined at all in Vue
     component: SearchView
+  },
+  {
+    path: '/create',
+    name: 'create',
+    //query parameters are not defined at all in Vue
+    component: CreateDocumentView
   }
 ]
 

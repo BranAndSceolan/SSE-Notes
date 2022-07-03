@@ -3,6 +3,15 @@
 Because it already escapes html input and attribute bindings. This is not a guarantee that there are going 
 to be no injections, but helps.
 
+## MD Editor v3
+Markdown editor that also supports HTML-Tags and HTML Sanitization to prevent XSS
+
+## Vuetify
+Vue component library to speed up development
+
+## Axios
+Used to send requests to the backend
+
 # Backend
 ## helmet
 Sets HTTP headers automatically to help secure the application
@@ -19,8 +28,5 @@ to simplify development
 
 
 # Database
-## postgres
-
-# Markdown
-## MD Editor v3
-Markdown editor that also works for basic HTML-Tags
+## Postgres
+Widely used SQL Database with very few known CVEs https://www.postgresql.org/support/security/14/
