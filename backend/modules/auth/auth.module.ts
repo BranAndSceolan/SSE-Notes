@@ -1,27 +1,35 @@
 import {Request, Response} from "express";
 import {NextFunction} from "express/ts4.0";
 import {client} from "../../index";
+import {internalErrorMessage, printError} from "../util/util";
 
 
 export class AuthModule{
     public async register(req: Request, res: Response) {
-        let newUsername = undefined
-        let newPassword = undefined
+        let newUsername : undefined | string = undefined
+        let newPassword : undefined | string = undefined
         // check for validity
-        if (req.body.name.trim() && req.body.password.trim()){
-            newPassword = req.body.password.trim()
+        if (req.body.name && req.body.name.trim){
             newUsername = req.body.name.trim()
         } else {
-            res.status(400).send("name and password need to be sensible values")
+            printError("register", "Missing password")
+            res.status(400).send("Name is missing.")
+        }
+        if (req.body.password && req.body.password.trim()){
+            newPassword = req.body.password.trim()
+        } else {
+            printError("register", "Missing password")
+            res.send(400).send("Password is missing.")
         }
         // check if already used
         try {
             const result = await client.query('SELECT name FROM users WHERE name like $1', [newUsername])
             if (result.rowCount > 0) {
-                return res.status(400).send("This name isn't available!")
+                printError("register, namecheck", "This name isn't available!")
+                return res.sendStatus(400).send("This name isn't available!")
             }
         } catch (err){
-            console.log(err)
+            printError("register, searching whether name is already in use",err)
             return res.status(500).send("Something went wrong registering!")
         }
 
@@ -31,11 +39,12 @@ export class AuthModule{
                 req.session.signInId = result.rows[0].id
                 return res.status(200).send("Congratulations! You are now registered!")
             } else {
-                return res.status(500).send("No result")
+                printError("register, inserting user into db", "no return values from db")
+                return res.status(500).send(internalErrorMessage)
             }
         } catch (err) {
-            console.log(err)
-            return res.status(500).send("Something went wrong!")
+            printError("register, inserting user values into db", err)
+            return res.status(500).send(internalErrorMessage)
         }
     }
 
