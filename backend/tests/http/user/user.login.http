@@ -1,0 +1,98 @@
+### Test: correctly written login
+POST localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "Beni",
+  "password": "123"
+}
+
+### Test: login with missing name
+POST localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "password": "123"
+}
+
+### Test: login with empty name
+POST localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "",
+  "password": "123"
+}
+
+### Test: login with missing password
+POST localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "Wilhelm"
+}
+
+### Test: login with empty password
+POST localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "Mohammad",
+  "password": ""
+}
+
+### Test: login with missing body
+POST localhost:8000/api/user/login
+
+
+### Test: login with empty body
+POST localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+}
+
+### Test: login with empty attributes
+POST localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "",
+  "password": ""
+}
+
+### Test: login message with incorrect type in name (boolean: true)
+POST localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": true,
+  "password": "as"
+}
+
+### Test: login message with incorrect type in password (boolean: true)
+POST localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "lköja",
+  "password": true
+}
+
+### Test: login message with incorrect type in name (number)
+POST localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": 10,
+  "password": "as"
+}
+
+### Test: register message with incorrect type in password (number)
+POST localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "lköja",
+  "password": 11
+}

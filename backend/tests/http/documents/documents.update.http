@@ -1,0 +1,40 @@
+### Preparation: login as Beni (use if not already logged in)
+POST localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "Beni",
+  "password": "123"
+}
+
+### Preparation: create a correctly written note (if you are using NODE_ENV=debug, you can look up the id in the console)
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "Hallo",
+  "content": "test!",
+  "private": false
+}
+
+### Preparation: logout (to confirm that logged out you cannot update any notes)
+POST localhost:8000/api/user/logout
+
+### Preparation: login as Ben (to confirm that as Ben you cannot update other users' notes)
+POST localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "Ben",
+  "password": "123"
+}
+
+###
+POST localhost:8000/api/documents/update/36
+Content-Type: application/json
+
+{
+  "title": "Updated",
+  "content": "Diese Nachricht wurde verändert!",
+  "private": 1
+}
