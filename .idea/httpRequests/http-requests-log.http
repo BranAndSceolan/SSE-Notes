@@ -1,3 +1,335 @@
+DELETE http://localhost:8000/api/user/delete
+
+<> 2022-07-04T125957.200.html
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "DeleteTestUser",
+  "password": "123"
+}
+
+<> 2022-07-04T125953.200.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "DeleteTestUser",
+  "password": "123"
+}
+
+<> 2022-07-04T125903.400.html
+
+###
+
+DELETE http://localhost:8000/api/user/delete
+
+<> 2022-07-04T125850.401.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "DeleteTestUser",
+  "password": "123"
+}
+
+<> 2022-07-04T125844.400.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "DeleteTestUser",
+  "password": "123"
+}
+
+<> 2022-07-04T125833.200.html
+
+###
+
+DELETE http://localhost:8000/api/user/delete
+
+<> 2022-07-04T125800.200.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "DeleteTestUser",
+  "password": "123"
+}
+
+<> 2022-07-04T125757.200.html
+
+###
+
+POST http://localhost:8000/api/user/logout
+
+<> 2022-07-04T125746.200.txt
+
+###
+
+POST http://localhost:8000/api/logout
+
+<> 2022-07-04T125725.404.html
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "Beni",
+  "password": "123"
+}
+
+<> 2022-07-04T125714.200.html
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "",
+  "password": ""
+}
+
+<> 2022-07-04T125446.400.html
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": true,
+  "password": "as"
+}
+
+<> 2022-07-04T125443.400.html
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "lköja",
+  "password": true
+}
+
+<> 2022-07-04T125437.400.html
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "lköja",
+  "password": 11
+}
+
+<> 2022-07-04T125435.400.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "lköja",
+  "password": 11
+}
+
+<> 2022-07-04T125241.400.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "lköja",
+  "password": 11
+}
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "lköja",
+  "password": 11
+}
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": 10,
+  "password": "as"
+}
+
+<> 2022-07-04T125031.400.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": true,
+  "password": "as"
+}
+
+<> 2022-07-04T124842.400.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": true,
+  "password": "as"
+}
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": false,
+  "password": "as"
+}
+
+<> 2022-07-04T124735.400.html
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "",
+  "password": ""
+}
+
+<> 2022-07-04T124629.400.html
+
+###
+
+POST http://localhost:8000/api/user/login
+
+<> 2022-07-04T124608.400.html
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+}
+
+<> 2022-07-04T124557.400.html
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+<> 2022-07-04T124554.400.html
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "Mohammad",
+  "password": ""
+}
+
+<> 2022-07-04T124541.400.html
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "Mohammad"
+}
+
+<> 2022-07-04T124514.400.html
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "Wilhelm"
+}
+
+<> 2022-07-04T124510.400.html
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "",
+  "password": "123"
+}
+
+<> 2022-07-04T124507.400.html
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "password": "123"
+}
+
+<> 2022-07-04T124459.400.html
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "Beni",
+  "password": "123"
+}
+
+<> 2022-07-04T124451.200.html
+
+###
+
 POST http://localhost:8000/api/user/register
 Content-Type: application/json
 
@@ -192,116 +524,6 @@ Content-Type: application/json
 }
 
 <> 2022-07-02T094747.200.html
-
-###
-
-GET http://localhost:8000/api/documents/list
-
-<> 2022-07-02T094040.200.json
-
-###
-
-POST http://localhost:8000/api/user/logout
-
-<> 2022-07-02T094027.200.txt
-
-###
-
-POST http://localhost:8000/api/user/logout
-
-###
-
-GET http://localhost:8000/api/documents/list
-
-<> 2022-07-02T092801.200.json
-
-###
-
-POST http://localhost:8000/api/user/login
-Content-Type: application/json
-
-{
-  "name": "Beni",
-  "password": "123"
-}
-
-<> 2022-07-02T092748.200.html
-
-###
-
-GET http://localhost:8000/api/documents/list
-
-<> 2022-07-02T092342.500.html
-
-###
-
-POST http://localhost:8000/api/user/login
-Content-Type: application/json
-
-{
-  "name": "Beni",
-  "password": "123"
-}
-
-<> 2022-07-02T092336.200.html
-
-###
-
-GET http://localhost:8000/api/documents/list
-
-<> 2022-07-02T092209.500.html
-
-###
-
-POST http://localhost:8000/api/user/login
-Content-Type: application/json
-
-{
-  "name": "Beni",
-  "password": "123"
-}
-
-<> 2022-07-02T092159.200.html
-
-###
-
-GET http://localhost:8000/api/documents/list
-
-<> 2022-07-02T091756.500.html
-
-###
-
-GET http://localhost:8000/api/documents/get/8
-
-<> 2022-07-02T091739.200.json
-
-###
-
-POST http://localhost:8000/api/user/login
-Content-Type: application/json
-
-{
-  "name": "Beni",
-  "password": "123"
-}
-
-<> 2022-07-02T091732.200.html
-
-###
-
-GET http://localhost:8000/api/documents/get/8
-
-###
-
-POST http://localhost:8000/api/user/register
-Content-Type: application/json
-
-{
-  "name": "Beni",
-  "password": "123"
-}
-
-<> 2022-07-02T091411.400.html
 
 ###
 

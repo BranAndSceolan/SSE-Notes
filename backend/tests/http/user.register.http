@@ -43,7 +43,7 @@ Content-Type: application/json
 
 ### Test: register message without body
 POST localhost:8000/api/user/register
-Content-Type: application/json
+
 
 ### Test: register message with empty body
 POST localhost:8000/api/user/register
@@ -58,4 +58,40 @@ Content-Type: application/json
 {
 "name": "",
 "password": ""
+}
+
+### Test: register message with incorrect type in name (boolean: true)
+POST localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": true,
+  "password": "as"
+}
+
+### Test: register message with incorrect type in password (boolean: true)
+POST localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "lköja",
+  "password": true
+}
+
+### Test: register message with incorrect type in name (number)
+POST localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": 10,
+  "password": "as"
+}
+
+### Test: register message with incorrect type in password (number)
+POST localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "lköja",
+  "password": 11
 }

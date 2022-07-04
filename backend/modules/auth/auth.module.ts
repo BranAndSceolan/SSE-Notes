@@ -9,19 +9,19 @@ export class AuthModule{
         let newUsername : undefined | string = undefined
         let newPassword : undefined | string = undefined
         // check for validity
-        if (req.body && req.body.name && req.body.name.trim() && typeof req.body.name.trim() == "string"){
+        if (req.body && req.body.name && typeof req.body.name == "string" && req.body.name.trim()){
             newUsername = req.body.name.trim()
         } else {
             printError("register", "Missing password")
             return res.status(400).send("Name is missing.")
         }
-        if (req.body && req.body.password && req.body.password.trim() && typeof req.body.password.trim() == "string"){
+        if (req.body && req.body.password && typeof req.body.password == "string" && req.body.password.trim()){
             newPassword = req.body.password.trim()
         } else {
             printError("register", "Missing password")
           return res.status(400).send("Password is missing.")
         }
-        // check if already used
+        // check if already used&& typeof req.body.password == "string"
         try {
             const result = await client.query('SELECT name FROM users WHERE name like $1', [newUsername])
             if (result.rowCount > 0) {
@@ -50,14 +50,14 @@ export class AuthModule{
 
     async login(req: Request, res: Response) {
         let username : string | undefined = undefined
-        if(req.body.name && req.body.name.trim()){
+        if (req.body && req.body.name && typeof req.body.name == "string" && req.body.name.trim()){
             username = req.body.name.trim()
         } else {
             printError("login", "Username missing")
             return res.status(400).send("Username missing!")
         }
         let password : string | undefined = undefined
-        if (req.body.password && req.body.password.trim()){
+        if (req.body && req.body.password && typeof req.body.password == "string" && req.body.password.trim()){
            password = req.body.password.trim()
         } else {
             printError("login", "Password missing!")
