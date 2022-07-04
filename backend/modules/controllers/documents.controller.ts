@@ -70,14 +70,18 @@ export class DocumentsController {
                 printToConsole(result.rows[0])
                 if (req.session.signInId== result.rows[0]) {
                     res.status(200).send(new CreditedNote(result.rows[0].content, result.rows[0].private, result.rows[0].title, result.rows[0].name))
-                } else if (!result.rows[0].private){
-                    res.status(200).send(new CreditedNote(result.rows[0].content, result.rows[0].private, result.rows[0].title, result.rows[0].name))
+                } else if (result.rows[0].private){
+                    if (req.session.signInId == result.rows[0].authorId) {
+                        res.status(200).send(new CreditedNote(result.rows[0].content, result.rows[0].private, result.rows[0].title, result.rows[0].name))
+                    } else{
+                        printError("get note", "Tried to get private note from other user")
+                        res.status(403).send("Forbidden")
+                    }
                 } else {
                     res.status(403).send("Forbidden")
                 }
             }
         } else {
-
             res.status(400).send("Bad Request")
         }
     }
