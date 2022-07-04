@@ -14,7 +14,7 @@ Content-Type: application/json
 {
   "title": "Shhh",
   "content": "Dies ist eine geheime Nachricht!",
-  "private": false
+  "private": true
 }
 
 ### Test: private note with missing title
@@ -23,7 +23,7 @@ Content-Type: application/json
 
 {
   "content": "Diese Nachricht hat keinen Titel!",
-  "private": false
+  "private": true
 }
 
 ### Test: private note with empty title
@@ -33,7 +33,7 @@ Content-Type: application/json
 {
   "title": "",
   "content": "Dies ist eine geheime Nachricht!",
-  "private": false
+  "private": true
 }
 
 ### Test: private note with missing content
@@ -42,7 +42,7 @@ Content-Type: application/json
 
 {
   "title": "Shhh",
-  "private": false
+  "private": true
 }
 
 ### Test: private note with empty content
@@ -52,7 +52,7 @@ Content-Type: application/json
 {
   "title": "Ups",
   "content": "",
-  "private": false
+  "private": true
 }
 
 ### Test: private note with empty title and content
@@ -62,7 +62,7 @@ Content-Type: application/json
 {
   "title": "",
   "content": "",
-  "private": false
+  "private": true
 }
 
 ### Test: private note with missing title and content
@@ -70,7 +70,7 @@ POST localhost:8000/api/documents/create
 Content-Type: application/json
 
 {
-  "private": false
+  "private": true
 }
 
 ### Test: create note with convertable string for attribute private ("yes")

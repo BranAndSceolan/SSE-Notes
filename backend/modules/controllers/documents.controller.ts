@@ -41,7 +41,7 @@ export class DocumentsController {
              const noteValues = [authorId, title, content, privacy]
              insertResult = await client.query(insertNoteStatement, noteValues)
              if (insertResult?.rowCount == 1){
-                 printToConsole("[+] added note: "+ insertResult.rows[0])
+                 printToConsole("[+] added note with id: "+ insertResult.rows[0].id)
                  return res.status(201).send(insertResult.rows[0].toString())
              } else {
                  printToConsole("Something went wrong while creating a note!")
@@ -154,11 +154,10 @@ export class DocumentsController {
             printError("Delete Note", e)
             return res.status(500).send(internalErrorMessage)
         }
-        if (deleted){
+        if (deleted.rows[0]){
             return res.status(200).send(deleted.rows[0])
         } else{
-            printError("delete Note", "no result from db")
-            return res.status(500).send(internalErrorMessage)
+            return res.status(403).send("You can only delete your own notes!")
         }
 
     }
