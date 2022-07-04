@@ -73,7 +73,7 @@ Content-Type: application/json
   "private": true
 }
 
-### Test: create note with convertable string for attribute private ("yes")
+### Test: create a note with convertable string for attribute private ("yes")
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 
@@ -83,7 +83,7 @@ Content-Type: application/json
   "private": "yes"
 }
 
-### Test: create note with convertable string for attribute private ("YES")
+### Test: create a note with convertable string for attribute private ("YES")
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 
@@ -93,7 +93,7 @@ Content-Type: application/json
   "private": "YES"
 }
 
-### Test: create note with convertable string for attribute private ("y")
+### Test: create a note with convertable string for attribute private ("y")
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 
@@ -103,7 +103,7 @@ Content-Type: application/json
   "private": "y"
 }
 
-### Test: create note with convertable string for attribute private ("Y")
+### Test: create a note with convertable string for attribute private ("Y")
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 
@@ -112,7 +112,7 @@ Content-Type: application/json
   "content": "xxxxxxx",
   "private": "Y"
 }
-### Test: create note with convertable string for attribute private ("true")
+### Test: create a note with convertable string for attribute private ("true")
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 
@@ -122,7 +122,7 @@ Content-Type: application/json
   "private": "true"
 }
 
-### Test: create note with convertable string for attribute private ("TRUE")
+### Test: create a note with convertable string for attribute private ("TRUE")
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 
@@ -132,7 +132,7 @@ Content-Type: application/json
   "private": "TRUE"
 }
 
-### Test: create note with convertable string for attribute private ("t")
+### Test: create a note with convertable string for attribute private ("t")
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 
@@ -142,7 +142,7 @@ Content-Type: application/json
   "private": "t"
 }
 
-### Test: create note with convertable string for attribute private ("T")
+### Test: create a note with convertable string for attribute private ("T")
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 
@@ -152,7 +152,7 @@ Content-Type: application/json
   "private": "T"
 }
 
-### Test: create note with convertable string for attribute private ("on")
+### Test: create a note with convertable string for attribute private ("on")
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 
@@ -162,7 +162,7 @@ Content-Type: application/json
   "private": "on"
 }
 
-### Test: create note with convertable string for attribute private ("ON")
+### Test: create a note with convertable string for attribute private ("ON")
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 
@@ -172,7 +172,7 @@ Content-Type: application/json
   "private": "ON"
 }
 
-### Test: create note with convertable string for attribute private ("1")
+### Test: create a note with convertable string for attribute private ("1")
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 
@@ -182,7 +182,7 @@ Content-Type: application/json
   "private": "1"
 }
 
-### Test: create note with convertable number for attribute private (1)
+### Test: create a note with convertable number for attribute private (1)
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 

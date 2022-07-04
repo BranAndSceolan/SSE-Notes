@@ -137,11 +137,11 @@ export class DocumentsController {
             printToConsole("Something went wrong updating a note: "+ e)
             return res.status(500).send(internalErrorMessage)
         }
-        if (updated) {
+        if (updated.rowCount == 1) {
             return res.status(200).send(updated.rows[0])
         } else {
             printError("update Note", "no result from db")
-            return res.status(500).send(internalErrorMessage)
+            return res.status(500).send("You can only update your own notes")
         }
 
     }
@@ -154,7 +154,7 @@ export class DocumentsController {
             printError("Delete Note", e)
             return res.status(500).send(internalErrorMessage)
         }
-        if (deleted.rows[0]){
+        if (deleted.rowCount == 1){
             return res.status(200).send(deleted.rows[0])
         } else{
             return res.status(403).send("You can only delete your own notes!")

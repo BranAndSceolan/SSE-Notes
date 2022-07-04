@@ -7,7 +7,7 @@ Content-Type: application/json
   "password": "123"
 }
 
-### Preparation: create correctly written public note (if you are using NODE_ENV=debug, you can look up the id in the console)
+### Preparation: create a correctly written public note (if you are using NODE_ENV=debug, you can look up the id in the console)
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 

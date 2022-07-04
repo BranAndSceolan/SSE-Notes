@@ -65,7 +65,7 @@ Content-Type: application/json
   "private": false
 }
 
-### Test: create public note with missing title and content
+### Test: create a public note with missing title and content
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 
@@ -73,17 +73,17 @@ Content-Type: application/json
   "private": false
 }
 
-### Test: create note without body
+### Test: create a note without body
 POST localhost:8000/api/documents/create
 
-### Test: create note with empty body
+### Test: create a note with empty body
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 
 {
 }
 
-### Test: create note with missing entries
+### Test: create a note with missing entries
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 
@@ -93,7 +93,7 @@ Content-Type: application/json
   "private": ""
 }
 
-### Test: create note with wrong types (number)
+### Test: create a note with wrong types (number)
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 
@@ -103,7 +103,7 @@ Content-Type: application/json
   "private": 15
 }
 
-### Test: create note with wrong types (bool for text)
+### Test: create a note with wrong types (bool for text)
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 
@@ -113,7 +113,7 @@ Content-Type: application/json
   "private": true
 }
 
-### Test: create note with wrong types (Not bool convertable string for private)
+### Test: create a note with wrong types (Not bool convertable string for private)
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 
@@ -123,7 +123,7 @@ Content-Type: application/json
   "private": "löasklf"
 }
 
-### Test: create note with wrong types (Not bool convertable number for private)
+### Test: create a note with wrong types (Not bool convertable number for private)
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 
@@ -133,7 +133,7 @@ Content-Type: application/json
   "private": 5
 }
 
-### Test: create note with missing entry for attribute private
+### Test: create a note with missing entry for attribute private
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 
@@ -143,7 +143,7 @@ Content-Type: application/json
   "private": ""
 }
 
-### Test: create note without attribute private
+### Test: create a note without attribute private
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 
@@ -152,7 +152,7 @@ Content-Type: application/json
   "content": "xxxxxxx"
 }
 
-### Test: create note with convertable string for attribute private ("no")
+### Test: create a note with convertable string for attribute private ("no")
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 
@@ -162,7 +162,7 @@ Content-Type: application/json
   "private": "no"
 }
 
-### Test: create note with convertable string for attribute private ("NO")
+### Test: create a note with convertable string for attribute private ("NO")
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 
@@ -172,7 +172,7 @@ Content-Type: application/json
   "private": "NO"
 }
 
-### Test: create note with convertable string for attribute private ("n")
+### Test: create a note with convertable string for attribute private ("n")
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 
@@ -182,7 +182,7 @@ Content-Type: application/json
   "private": "n"
 }
 
-### Test: create note with convertable string for attribute private ("N")
+### Test: create a note with convertable string for attribute private ("N")
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 
@@ -191,7 +191,7 @@ Content-Type: application/json
   "content": "xxxxxxx",
   "private": "N"
 }
-### Test: create note with convertable string for attribute private ("false")
+### Test: create a note with convertable string for attribute private ("false")
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 
@@ -201,7 +201,7 @@ Content-Type: application/json
   "private": "false"
 }
 
-### Test: create note with convertable string for attribute private ("FALSE")
+### Test: create a note with convertable string for attribute private ("FALSE")
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 
@@ -211,7 +211,7 @@ Content-Type: application/json
   "private": "FALSE"
 }
 
-### Test: create note with convertable string for attribute private ("f")
+### Test: create a note with convertable string for attribute private ("f")
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 
@@ -221,7 +221,7 @@ Content-Type: application/json
   "private": "f"
 }
 
-### Test: create note with convertable string for attribute private ("F")
+### Test: create a note with convertable string for attribute private ("F")
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 
@@ -231,7 +231,7 @@ Content-Type: application/json
   "private": "F"
 }
 
-### Test: create note with convertable string for attribute private ("off")
+### Test: create a note with convertable string for attribute private ("off")
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 
@@ -241,7 +241,7 @@ Content-Type: application/json
   "private": "off"
 }
 
-### Test: create note with convertable string for attribute private ("OFF")
+### Test: create a note with convertable string for attribute private ("OFF")
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 
@@ -251,7 +251,7 @@ Content-Type: application/json
   "private": "OFF"
 }
 
-### Test: create note with convertable string for attribute private ("0")
+### Test: create a note with convertable string for attribute private ("0")
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 
@@ -261,7 +261,7 @@ Content-Type: application/json
   "private": "0"
 }
 
-### Test: create note with convertable number for attribute private (0)
+### Test: create a note with convertable number for attribute private (0)
 POST localhost:8000/api/documents/create
 Content-Type: application/json
 
