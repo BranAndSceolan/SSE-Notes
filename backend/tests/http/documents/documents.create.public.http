@@ -1,0 +1,272 @@
+### Preparation: login as Beni (use if not already logged in)
+POST localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "Beni",
+  "password": "123"
+}
+
+### Test: create correctly written public note
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "Hallo",
+  "content": "test!",
+  "private": true
+}
+
+### Test: create public note with missing title
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+ "content": "Diese Nachricht hat keinen Titel!",
+  "private": true
+}
+
+### Test: create public note with empty title
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "",
+  "content": "Dies ist eine öffentliche Nachricht!",
+  "private": true
+}
+
+### Test: create public note with missing content
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "Hey",
+  "private": true
+}
+
+### Test: create public note with empty content
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "OH!",
+  "content": "",
+  "private": true
+}
+
+### Test: create public note with empty title and content
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "",
+  "content": "",
+  "private": true
+}
+
+### Test: create public note with missing title and content
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "private": true
+}
+
+### Test: create note without body
+POST localhost:8000/api/documents/create
+
+### Test: create note with empty body
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+}
+
+### Test: create note with missing entries
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "",
+  "content": "",
+  "private": ""
+}
+
+### Test: create note with wrong types (number)
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": 13,
+  "content": 14,
+  "private": 15
+}
+
+### Test: create note with wrong types (bool for text)
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": true,
+  "content": true,
+  "private": true
+}
+
+### Test: create note with wrong types (Not bool convertable string for private)
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "private": "löasklf"
+}
+
+### Test: create note with wrong types (Not bool convertable number for private)
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "private": 5
+}
+
+### Test: create note with missing entry for attribute private
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "private": ""
+}
+
+### Test: create note without attribute private
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx"
+}
+
+### Test: create note with convertable string for attribute private ("no")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "private": "no"
+}
+
+### Test: create note with convertable string for attribute private ("NO")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "private": "NO"
+}
+
+### Test: create note with convertable string for attribute private ("n")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "private": "n"
+}
+
+### Test: create note with convertable string for attribute private ("N")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "private": "N"
+}
+### Test: create note with convertable string for attribute private ("false")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "private": "false"
+}
+
+### Test: create note with convertable string for attribute private ("FALSE")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "private": "FALSE"
+}
+
+### Test: create note with convertable string for attribute private ("f")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "private": "f"
+}
+
+### Test: create note with convertable string for attribute private ("F")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "private": "F"
+}
+
+### Test: create note with convertable string for attribute private ("off")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "private": "off"
+}
+
+### Test: create note with convertable string for attribute private ("OFF")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "private": "OFF"
+}
+
+### Test: create note with convertable string for attribute private ("0")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "private": "0"
+}
+
+### Test: create note with convertable number for attribute private (0)
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "private": 0
+}

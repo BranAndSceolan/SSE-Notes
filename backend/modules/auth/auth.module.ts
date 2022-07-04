@@ -5,7 +5,7 @@ import {internalErrorMessage, printError} from "../util/util";
 
 
 export class AuthModule{
-    public async register(req: Request, res: Response) {
+    public async register(req: Request, res: Response): Promise<Response> {
         let newUsername : undefined | string = undefined
         let newPassword : undefined | string = undefined
         // check for validity
@@ -15,7 +15,7 @@ export class AuthModule{
             printError("register", "Missing password")
             return res.status(400).send("Name is missing.")
         }
-        if (req.body && req.body.password && typeof req.body.password == "string" && req.body.password.trim()){
+        if (req.body.password && typeof req.body.password == "string" && req.body.password.trim()){
             newPassword = req.body.password.trim()
         } else {
             printError("register", "Missing password")
@@ -48,7 +48,7 @@ export class AuthModule{
         }
     }
 
-    async login(req: Request, res: Response) {
+    public async login(req: Request, res: Response): Promise<Response>{
         let username : string | undefined = undefined
         if (req.body && req.body.name && typeof req.body.name == "string" && req.body.name.trim()){
             username = req.body.name.trim()
@@ -57,7 +57,7 @@ export class AuthModule{
             return res.status(400).send("Username missing!")
         }
         let password : string | undefined = undefined
-        if (req.body && req.body.password && typeof req.body.password == "string" && req.body.password.trim()){
+        if (req.body.password && typeof req.body.password == "string" && req.body.password.trim()){
            password = req.body.password.trim()
         } else {
             printError("login", "Password missing!")
@@ -82,14 +82,14 @@ export class AuthModule{
 
     }
 
-    logOut(req: Request, res: Response): void {
+    public logOut(req: Request, res: Response): void {
         req.session.destroy(() => {
             res.clearCookie("connect.sid");
             res.sendStatus(200);
         });
     }
 
-    checkLogin(req: Request, res: Response, next: NextFunction) {
+    public checkLogin(req: Request, res: Response, next: NextFunction) : void {
         if (req.session.signInId) {
             next()
         } else {

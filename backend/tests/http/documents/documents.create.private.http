@@ -1,0 +1,193 @@
+### Preparation: login as Beni (use if not already logged in)
+POST localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "Beni",
+  "password": "123"
+}
+
+### Test: correctly written private note
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "Shhh",
+  "content": "Dies ist eine geheime Nachricht!",
+  "private": false
+}
+
+### Test: private note with missing title
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "content": "Diese Nachricht hat keinen Titel!",
+  "private": false
+}
+
+### Test: private note with empty title
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "",
+  "content": "Dies ist eine geheime Nachricht!",
+  "private": false
+}
+
+### Test: private note with missing content
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "Shhh",
+  "private": false
+}
+
+### Test: private note with empty content
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "Ups",
+  "content": "",
+  "private": false
+}
+
+### Test: private note with empty title and content
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "",
+  "content": "",
+  "private": false
+}
+
+### Test: private note with missing title and content
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "private": false
+}
+
+### Test: create note with convertable string for attribute private ("yes")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "private": "yes"
+}
+
+### Test: create note with convertable string for attribute private ("YES")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "private": "YES"
+}
+
+### Test: create note with convertable string for attribute private ("y")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "private": "y"
+}
+
+### Test: create note with convertable string for attribute private ("Y")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "private": "Y"
+}
+### Test: create note with convertable string for attribute private ("true")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "private": "true"
+}
+
+### Test: create note with convertable string for attribute private ("TRUE")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "private": "TRUE"
+}
+
+### Test: create note with convertable string for attribute private ("t")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "private": "t"
+}
+
+### Test: create note with convertable string for attribute private ("T")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "private": "T"
+}
+
+### Test: create note with convertable string for attribute private ("on")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "private": "on"
+}
+
+### Test: create note with convertable string for attribute private ("ON")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "private": "ON"
+}
+
+### Test: create note with convertable string for attribute private ("1")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "private": "1"
+}
+
+### Test: create note with convertable number for attribute private (1)
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "private": 1
+}

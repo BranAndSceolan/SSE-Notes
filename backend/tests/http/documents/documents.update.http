@@ -1,0 +1,9 @@
+###
+POST localhost:8000/api/documents/update/9
+Content-Type: application/json
+
+{
+  "title": "Updated",
+  "content": "Diese Nachricht wurde verändert!",
+  "private": 1
+}

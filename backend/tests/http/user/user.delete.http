@@ -1,4 +1,4 @@
-### Create user, so you can test delete
+### Preparation: create user, so you can test delete
 POST localhost:8000/api/user/register
 Content-Type: application/json
 
@@ -7,7 +7,7 @@ Content-Type: application/json
   "password": "123"
 }
 
-### Test: login for deleteTestUser
+### Preparation: login for deleteTestUser (only needed if server shut down between a successfull register and delete message for user delete)
 POST localhost:8000/api/user/login
 Content-Type: application/json
 
@@ -16,5 +16,5 @@ Content-Type: application/json
   "password": "123"
 }
 
-### Delete user
+### Test: delete user
 DELETE localhost:8000/api/user/delete
