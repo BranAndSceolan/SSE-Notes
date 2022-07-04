@@ -1,0 +1,61 @@
+### Test: correctly written register message (remember to use a name that's not already used).
+POST localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "Katrin",
+  "password": "123"
+}
+
+### Test: register message with missing name entry
+POST localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "password": "123"
+}
+
+### Test: register message with empty name entry
+POST localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "",
+  "password": "123"
+}
+
+### Test: register message with missing password entry
+POST localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "Elena"
+}
+
+### Test: register message with empty password entry
+POST localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "Monika",
+  "password": ""
+}
+
+### Test: register message without body
+POST localhost:8000/api/user/register
+Content-Type: application/json
+
+### Test: register message with empty body
+POST localhost:8000/api/user/register
+Content-Type: application/json
+
+{}
+
+### Test: register message body with empty entries
+POST localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+"name": "",
+"password": ""
+}

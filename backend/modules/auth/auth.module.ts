@@ -9,28 +9,28 @@ export class AuthModule{
         let newUsername : undefined | string = undefined
         let newPassword : undefined | string = undefined
         // check for validity
-        if (req.body.name && req.body.name.trim){
+        if (req.body && req.body.name && req.body.name.trim() && typeof req.body.name.trim() == "string"){
             newUsername = req.body.name.trim()
         } else {
             printError("register", "Missing password")
-            res.status(400).send("Name is missing.")
+            return res.status(400).send("Name is missing.")
         }
-        if (req.body.password && req.body.password.trim()){
+        if (req.body && req.body.password && req.body.password.trim() && typeof req.body.password.trim() == "string"){
             newPassword = req.body.password.trim()
         } else {
             printError("register", "Missing password")
-            res.send(400).send("Password is missing.")
+          return res.status(400).send("Password is missing.")
         }
         // check if already used
         try {
             const result = await client.query('SELECT name FROM users WHERE name like $1', [newUsername])
             if (result.rowCount > 0) {
                 printError("register, namecheck", "This name isn't available!")
-                return res.sendStatus(400).send("This name isn't available!")
+                return res.status(400).send("This name isn't available!")
             }
         } catch (err){
             printError("register, searching whether name is already in use",err)
-            return res.status(500).send("Something went wrong registering!")
+            return res.status(500).send(internalErrorMessage)
         }
 
         try {
@@ -49,19 +49,32 @@ export class AuthModule{
     }
 
     async login(req: Request, res: Response) {
-        let username : string | undefined = req.body.name.trim()
-        let password : string | undefined = req.body.password.trim()
+        let username : string | undefined = undefined
+        if(req.body.name && req.body.name.trim()){
+            username = req.body.name.trim()
+        } else {
+            printError("login", "Username missing")
+            return res.status(400).send("Username missing!")
+        }
+        let password : string | undefined = undefined
+        if (req.body.password && req.body.password.trim()){
+           password = req.body.password.trim()
+        } else {
+            printError("login", "Password missing!")
+            return res.status(400).send("Password missing!")
+        }
         let result = undefined
         try {
             result = await client.query('SELECT id FROM users WHERE name like $1 AND password like $2 ', [username, password])
         } catch (err){
-            console.log(err)
-            return res.status(500).send("Something went wrong!")
+            printError("login checking for password and user in Database",err)
+            return res.status(500).send(internalErrorMessage)
         }
         if (result.rowCount == 1) {
             req.session.signInId = result.rows[0].id
             return res.status(200).send("Logged in!");
         } else {
+            printError("login", "No password and username not found or not fitting.")
             res.status(404);
             res.contentType("text/urilist");
             return res.send("Make sure to enter a valid username and the fitting password.");
@@ -80,6 +93,7 @@ export class AuthModule{
         if (req.session.signInId) {
             next()
         } else {
+            printError("checkLogin", "Not logged in, no signInId given.")
             res.status(401).send("not logged in!")
         }
     }

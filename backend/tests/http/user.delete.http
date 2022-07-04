@@ -1,0 +1,11 @@
+### Create user, so you can test delete
+POST localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "DeleteTestUser",
+  "password": "123"
+}
+
+### Delete user
+DELETE localhost:8000/api/user/delete

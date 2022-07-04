@@ -1,0 +1,307 @@
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+"name": "",
+"password": ""
+}
+
+<> 2022-07-04T123646.400.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{}
+
+<> 2022-07-04T123634.400.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+<> 2022-07-04T123625.400.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "Monika",
+  "password": ""
+}
+
+<> 2022-07-04T123615.400.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "Elena"
+}
+
+<> 2022-07-04T123605.400.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "",
+  "password": "123"
+}
+
+<> 2022-07-04T123558.400.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "password": "123"
+}
+
+<> 2022-07-04T123545.400.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "Elena"
+}
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "",
+  "password": "123"
+}
+
+<> 2022-07-04T123222.400.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "password": "123"
+}
+
+<> 2022-07-04T123211.400.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "Katrin",
+  "password": "123"
+}
+
+<> 2022-07-04T123208.200.html
+
+###
+
+GET http://localhost:8000/api
+
+<> 2022-07-04T122015.200.html
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "Beni",
+  "password": "123"
+}
+
+<> 2022-07-02T095028.200.html
+
+###
+
+POST http://localhost:8000/api/documents/update/9
+Content-Type: application/json
+
+{
+  "title": "Updated",
+  "content": "Diese Nachricht wurde verändert!",
+  "private": 1
+}
+
+<> 2022-07-02T094910.200.json
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "Beni",
+  "password": "123"
+}
+
+<> 2022-07-02T094906.200.html
+
+###
+
+POST http://localhost:8000/api/documents/update/9
+Content-Type: application/json
+
+{
+  "title": "Updated",
+  "content": "Diese Nachricht wurde verändert!",
+  "private": 1
+}
+
+<> 2022-07-02T094859.401.html
+
+###
+
+POST http://localhost:8000/api/documents/update/9
+Content-Type: application/json
+
+{
+  "title": "Updated",
+  "content": "Diese Nachricht wurde verändert!",
+  "private": 1
+}
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "Beni",
+  "password": "123"
+}
+
+<> 2022-07-02T094747.200.html
+
+###
+
+GET http://localhost:8000/api/documents/list
+
+<> 2022-07-02T094040.200.json
+
+###
+
+POST http://localhost:8000/api/user/logout
+
+<> 2022-07-02T094027.200.txt
+
+###
+
+POST http://localhost:8000/api/user/logout
+
+###
+
+GET http://localhost:8000/api/documents/list
+
+<> 2022-07-02T092801.200.json
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "Beni",
+  "password": "123"
+}
+
+<> 2022-07-02T092748.200.html
+
+###
+
+GET http://localhost:8000/api/documents/list
+
+<> 2022-07-02T092342.500.html
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "Beni",
+  "password": "123"
+}
+
+<> 2022-07-02T092336.200.html
+
+###
+
+GET http://localhost:8000/api/documents/list
+
+<> 2022-07-02T092209.500.html
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "Beni",
+  "password": "123"
+}
+
+<> 2022-07-02T092159.200.html
+
+###
+
+GET http://localhost:8000/api/documents/list
+
+<> 2022-07-02T091756.500.html
+
+###
+
+GET http://localhost:8000/api/documents/get/8
+
+<> 2022-07-02T091739.200.json
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "Beni",
+  "password": "123"
+}
+
+<> 2022-07-02T091732.200.html
+
+###
+
+GET http://localhost:8000/api/documents/get/8
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "Beni",
+  "password": "123"
+}
+
+<> 2022-07-02T091411.400.html
+
+###
+
