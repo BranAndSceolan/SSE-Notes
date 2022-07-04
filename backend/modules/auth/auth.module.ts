@@ -9,19 +9,17 @@ export class AuthModule{
         let newUsername : undefined | string = undefined
         let newPassword : undefined | string = undefined
         // check for validity
-        if (req.body && req.body.name && typeof req.body.name == "string" && req.body.name.trim()){
-            newUsername = req.body.name.trim()
+        if (req.body && req.body.name && typeof req.body.name == "string" && (newUsername = req.body.name.trim())){
         } else {
-            printError("register", "Missing password")
+            printError("register", "Missing name")
             return res.status(400).send("Name is missing.")
         }
-        if (req.body.password && typeof req.body.password == "string" && req.body.password.trim()){
-            newPassword = req.body.password.trim()
+        if (req.body.password && typeof req.body.password == "string" && (newPassword = req.body.password.trim())){
         } else {
             printError("register", "Missing password")
           return res.status(400).send("Password is missing.")
         }
-        // check if already used&& typeof req.body.password == "string"
+        // check if name is already used
         try {
             const result = await client.query('SELECT name FROM users WHERE name like $1', [newUsername])
             if (result.rowCount > 0) {
@@ -50,15 +48,13 @@ export class AuthModule{
 
     public async login(req: Request, res: Response): Promise<Response>{
         let username : string | undefined = undefined
-        if (req.body && req.body.name && typeof req.body.name == "string" && req.body.name.trim()){
-            username = req.body.name.trim()
+        if (req.body && req.body.name && typeof req.body.name == "string" && (username = req.body.name.trim())){
         } else {
             printError("login", "Username missing")
             return res.status(400).send("Username missing!")
         }
         let password : string | undefined = undefined
-        if (req.body.password && typeof req.body.password == "string" && req.body.password.trim()){
-           password = req.body.password.trim()
+        if (req.body.password && typeof req.body.password == "string" && (password = req.body.password.trim())){
         } else {
             printError("login", "Password missing!")
             return res.status(400).send("Password missing!")
@@ -75,16 +71,16 @@ export class AuthModule{
             return res.status(200).send("Logged in!");
         } else {
             printError("login", "No password and username not found or not fitting.")
-            res.status(404);
+            res.status(400);
             res.contentType("text/urilist");
-            return res.send("Make sure to enter a valid username and the fitting password.");
+            return res.send("Make sure to enter a valid username and the correct password.");
         }
 
     }
 
     public logOut(req: Request, res: Response): void {
         req.session.destroy(() => {
-            res.clearCookie("connect.sid");
+            res.clearCookie("myawesomecookie");
             res.sendStatus(200);
         });
     }

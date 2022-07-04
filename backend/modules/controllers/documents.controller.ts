@@ -15,15 +15,13 @@ export class DocumentsController {
         let content : string | undefined = undefined
         let privacy : string | number | boolean | undefined = undefined
 
-        if (req.body && req.body.title &&  typeof req.body.title == "string" && req.body.title.trim()) {
-            title = req.body.title.trim()
+        if (req.body.title &&  typeof req.body.title == "string" && (title = req.body.title.trim())) {
         } else {
             printError("create Note", "Title is missing")
             return res.status(400).send("Title is missing")
         }
 
-        if (req.body.content &&  typeof req.body.content == "string" && req.body.content.trim()) {
-            content = req.body.content.trim()
+        if (req.body.content &&  typeof req.body.content == "string" && (content = req.body.content.trim())) {
         } else {
             printError("create Note", "Content is missing")
             return res.status(400).send("Content is missing")
@@ -32,8 +30,8 @@ export class DocumentsController {
         if ((typeof req.body.private == "string" && this.postgreSqlTruthStrings.includes(req.body.private.toUpperCase())) ||(typeof req.body.private == "boolean") || (typeof req.body.private == "number" &&(req.body.private == 0 || req.body.private == 1)) ){
            privacy = req.body.private
         } else {
-            printError("create Note", "Privacy level is missing or invalid")
-            return res.status(400).send("Privacy level is missing or invalid")
+            printError("create Note", "Privacy flag is missing or invalid")
+            return res.status(400).send("Privacy flag is missing or invalid")
         }
 
          try {
@@ -68,21 +66,21 @@ export class DocumentsController {
             }
             if (result?.rowCount == 1) {
                 printToConsole(result.rows[0])
-                if (req.session.signInId== result.rows[0]) {
+                if (!result.rows[0].private) {
                     res.status(200).send(new CreditedNote(result.rows[0].content, result.rows[0].private, result.rows[0].title, result.rows[0].name, result.rows[0].id))
-                } else if (result.rows[0].private){
+                } else {
                     if (req.session.signInId == result.rows[0].authorId) {
                         res.status(200).send(new CreditedNote(result.rows[0].content, result.rows[0].private, result.rows[0].title, result.rows[0].name, result.rows[0].id))
                     } else{
                         printError("get note", "Tried to get private note from other user")
                         res.status(403).send("Forbidden")
                     }
-                } else {
-                    res.status(403).send("Forbidden")
                 }
+            } else {
+                res.status(400).send();
             }
         } else {
-            res.status(400).send("Bad Request")
+            res.status(400).send()
         }
     }
 
@@ -109,15 +107,13 @@ export class DocumentsController {
         let title : string | undefined = undefined
         let content : string | undefined = undefined
         let privacy : string | number | boolean | undefined = undefined
-        if (req.body && req.body.title && typeof req.body.title == "string" && req.body.title.trim()) {
-            title = req.body.title.trim()
+        if (req.body && req.body.title && typeof req.body.title == "string" && (title = req.body.title.trim())) {
         } else{
             printError("update note", "Title missing")
             return res.status(400).send("Title missing!")
         }
 
-        if (req.body.content && typeof req.body.content == "string" && req.body.content.trim()) {
-            content = req.body.content.trim()
+        if (req.body.content && typeof req.body.content == "string" && (content = req.body.content.trim())) {
         } else{
             printError("update note", "Content missing")
             return res.status(400).send("Content missing!")
@@ -126,22 +122,21 @@ export class DocumentsController {
         if ((typeof req.body.private == "string" && this.postgreSqlTruthStrings.includes(req.body.private.toUpperCase())) ||(typeof req.body.private == "boolean") || (typeof req.body.private == "number" &&(req.body.private == 0 || req.body.private == 1))){
             privacy = req.body.private
         } else {
-            printError("Update Note", "Privacy level is missing or invalid")
-            return res.status(400).send("Privacy level is missing or invalid")
+            printError("Update Note", "Privacy flag is missing or invalid")
+            return res.status(400).send("Privacy flag is missing or invalid")
         }
 
         try {
-            const values = [req.params.id, req.session.signInId, title, content, privacy]
-            updated = await client.query(query, values)
+            updated = await client.query(query, [req.params.id, req.session.signInId, title, content, privacy])
         } catch (e) {
             printToConsole("Something went wrong updating a note: "+ e)
             return res.status(500).send(internalErrorMessage)
         }
         if (updated.rowCount == 1) {
-            return res.status(200).send(updated.rows[0])
+            return res.status(200).send();
         } else {
             printError("update Note", "no result from db")
-            return res.status(500).send("You can only update your own notes")
+            return res.status(403).send("This note either doesn't exist or isn't your own.")
         }
 
     }
@@ -155,9 +150,9 @@ export class DocumentsController {
             return res.status(500).send(internalErrorMessage)
         }
         if (deleted.rowCount == 1){
-            return res.status(200).send(deleted.rows[0])
+            return res.status(200).send();
         } else{
-            return res.status(403).send("You can only delete your own notes!")
+            return res.status(403).send("This note either doesn't exist or isn't your own.")
         }
 
     }
