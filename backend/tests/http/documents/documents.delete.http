@@ -1,0 +1,2 @@
+### Test: delete a note
+DELETE http://localhost:8000/api/documents/delete/20

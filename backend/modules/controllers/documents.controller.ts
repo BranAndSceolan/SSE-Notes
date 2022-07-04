@@ -69,10 +69,10 @@ export class DocumentsController {
             if (result?.rowCount == 1) {
                 printToConsole(result.rows[0])
                 if (req.session.signInId== result.rows[0]) {
-                    res.status(200).send(new CreditedNote(result.rows[0].content, result.rows[0].private, result.rows[0].title, result.rows[0].name))
+                    res.status(200).send(new CreditedNote(result.rows[0].content, result.rows[0].private, result.rows[0].title, result.rows[0].name, result.rows[0].id))
                 } else if (result.rows[0].private){
                     if (req.session.signInId == result.rows[0].authorId) {
-                        res.status(200).send(new CreditedNote(result.rows[0].content, result.rows[0].private, result.rows[0].title, result.rows[0].name))
+                        res.status(200).send(new CreditedNote(result.rows[0].content, result.rows[0].private, result.rows[0].title, result.rows[0].name, result.rows[0].id))
                     } else{
                         printError("get note", "Tried to get private note from other user")
                         res.status(403).send("Forbidden")
@@ -89,14 +89,12 @@ export class DocumentsController {
     public async getList(req: Request, res: Response): Promise<Response> {
         let list = undefined
         try {
-            list = await client.query('SELECT * FROM notes INNER JOIN users ON notes.authorid = users.id WHERE users.id = $1 OR notes.private = FALSE', [req.session.signInId])
+            list = await client.query('SELECT content, private, title, name, notes.id AS id FROM notes INNER JOIN users ON notes.authorid = users.id WHERE users.id = $1 OR notes.private = FALSE', [req.session.signInId])
             const notes : CreditedNote[] = []
             for( let i = 0; i < list.rowCount; i++){
                 const l = list.rows[i]
-                notes.push(new CreditedNote(l.content, l.private, l.title, l.name))
+                notes.push(new CreditedNote(l.content, l.private, l.title, l.name, l.id))
             }
-                printToConsole("got results: "+ list)
-                printToConsole("as array: "+ notes)
                 return res.status(200).send(notes)
         } catch (e) {
             printToConsole("Error while trying to fetch list: "+ e)
