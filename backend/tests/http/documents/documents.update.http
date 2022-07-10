@@ -30,7 +30,7 @@ Content-Type: application/json
 }
 
 ###
-POST localhost:8000/api/documents/update/36
+PUT localhost:8000/api/documents/update/36
 Content-Type: application/json
 
 {
