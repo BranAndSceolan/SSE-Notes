@@ -73,11 +73,11 @@ export class DocumentsController {
                         res.status(200).send(new CreditedNote(result.rows[0].content, result.rows[0].private, result.rows[0].title, result.rows[0].name, result.rows[0].id))
                     } else{
                         printError("get note", "Tried to get private note from other user")
-                        res.status(403).send("Forbidden")
+                        res.status(403).send("This note either doesn't exist or isn't your own.")
                     }
                 }
             } else {
-                res.status(400).send();
+                res.status(403).send("This note either doesn't exist or isn't your own.");
             }
         } else {
             res.status(400).send()
