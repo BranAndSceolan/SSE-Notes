@@ -3,8 +3,8 @@ POST localhost:8000/api/user/register
 Content-Type: application/json
 
 {
-  "name": "Katrin",
-  "password": "123"
+  "name": "Kat",
+  "password": "Troubadour&444"
 }
 
 ### Test: register message with missing name entry
@@ -12,7 +12,7 @@ POST localhost:8000/api/user/register
 Content-Type: application/json
 
 {
-  "password": "123"
+  "password": "Troubadour&444"
 }
 
 ### Test: register message with empty name entry
@@ -21,7 +21,7 @@ Content-Type: application/json
 
 {
   "name": "",
-  "password": "123"
+  "password": "Troubadour&444"
 }
 
 ### Test: register message with missing password entry
@@ -66,7 +66,7 @@ Content-Type: application/json
 
 {
   "name": true,
-  "password": "as"
+  "password": "Troubadour&444"
 }
 
 ### Test: register message with incorrect type in password (boolean: true)
@@ -84,7 +84,7 @@ Content-Type: application/json
 
 {
   "name": 10,
-  "password": "as"
+  "password": "Troubadour&444"
 }
 
 ### Test: register message with incorrect type in password (number)
