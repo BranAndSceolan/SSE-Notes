@@ -13,12 +13,12 @@ export class AuthModule{
         if (req.body && req.body.name && typeof req.body.name == "string" && (newUsername = req.body.name.trim())){
         } else {
             printError("register", "Missing name")
-            return res.status(400).send("Name is missing.")
+            return res.status(400).send("Username is missing!")
         }
         if (req.body.password && typeof req.body.password == "string" && (newPassword = req.body.password.trim())){
         } else {
             printError("register", "Missing password")
-          return res.status(400).send("Password is missing.")
+          return res.status(400).send("Password is missing!")
         }
         // check if password is good enough
         let result : zxcvbn.ZXCVBNResult
@@ -61,14 +61,14 @@ export class AuthModule{
         let username : string | undefined = undefined
         if (req.body && req.body.name && typeof req.body.name == "string" && (username = req.body.name.trim())){
         } else {
-            printError("login", "Username missing")
-            return res.status(400).send("Username missing!")
+            printError("login", "Username is missing")
+            return res.status(400).send("Username is missing")
         }
         let password : string | undefined = undefined
         if (req.body.password && typeof req.body.password == "string" && (password = req.body.password.trim())){
         } else {
-            printError("login", "Password missing!")
-            return res.status(400).send("Password missing!")
+            printError("login", "Password is missing!")
+            return res.status(400).send("Password is missing")
         }
         let result = undefined
         try {

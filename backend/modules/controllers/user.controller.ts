@@ -8,6 +8,9 @@ export class UserController{
     }
     public async delete(req: Request, res: Response): Promise<void> {
             const userId: bigint = req.session.signInId
+            req.session.destroy(() => {
+                res.clearCookie("myawesomecookie");
+            });
             try {
                 let result = await client.query('DELETE FROM users WHERE id = $1 RETURNING *', [userId])
                 if (result) {

@@ -12,7 +12,7 @@ router.post('/create', (req: Request, res: Response) => {
    authModule.checkLogin(req, res, () => noteController.create(req, res))
 })
 
-router.post('/update/:id', (req: Request, res: Response )=>{
+router.put('/update/:id', (req: Request, res: Response )=>{
     authModule.checkLogin(req, res, ()=>{noteController.update(req, res)})
 })
 
