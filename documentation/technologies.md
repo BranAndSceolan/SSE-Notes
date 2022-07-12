@@ -16,6 +16,9 @@ Express-session is tried and intended to be used with express, so they should wo
 to write better structured, typed code than we would get using plain javascript
 # nodemon, ts-node, tsc-watch
 to simplify development
+# zxcvbn
+to check password strength
+
 
 
 # Database

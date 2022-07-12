@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "name": "DeleteTestUser",
-  "password": "123"
+  "password": "Troubadour&444"
 }
 
 ### Preparation: login for deleteTestUser (only needed if server shut down between a successfull register and delete message for user delete)
@@ -13,7 +13,7 @@ Content-Type: application/json
 
 {
   "name": "DeleteTestUser",
-  "password": "123"
+  "password": "Troubadour&444"
 }
 
 ### Test: delete user

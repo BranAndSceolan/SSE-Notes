@@ -1,6 +1,7 @@
 import {Request, Response} from "express";
 import {NextFunction} from "express/ts4.0";
 import {client} from "../../index";
+import zxcvbn from "zxcvbn";
 import {internalErrorMessage, printError} from "../util/util";
 
 
@@ -18,6 +19,16 @@ export class AuthModule{
         } else {
             printError("register", "Missing password")
           return res.status(400).send("Password is missing!")
+        }
+        // check if password is good enough
+        let result : zxcvbn.ZXCVBNResult
+        result = zxcvbn(newPassword)
+        if (result.score < 3) {
+            printError("register, checking Password", result.feedback.suggestions.toString())
+            // for some reason, zxcvbn sometimes ends up with ,. in strings. Replace ,. for better readability
+            return res.status(400).send("Password too weak! "
+                + result.feedback.suggestions.toString().replace(/\.,/g, '. ') + "\n "
+                + result.feedback.warning.toString().replace(/\.,/g, '.'))
         }
         // check if name is already used
         try {

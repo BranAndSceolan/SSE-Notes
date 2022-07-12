@@ -10,7 +10,7 @@
 
   "scripts": {
 
-    "start": "../node_modules/.bin/nodemon",
+    "start": "./node_modules/.bin/nodemon",
 
     "build": "npx tsc"
 
@@ -50,7 +50,9 @@
 
     "tsc-watch": "^5.0.3",
 
-    "uid-safe": "^2.1.5"
+    "uid-safe": "^2.1.5",
+
+    "zxcvbn": "^4.4.2"
 
   },
 
@@ -64,9 +66,12 @@
 
     "@types/config": "^0.0.41",
 
-    "nodemon": "^2.0.18",
+    "@types/zxcvbn": "^4.4.1",
 
-    "config": "^3.3.7"
+    "config": "^3.3.7",
+
+    "nodemon": "^2.0.18"
+
   }
 
 }
