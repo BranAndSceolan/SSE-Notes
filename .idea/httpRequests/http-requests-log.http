@@ -1,0 +1,217 @@
+PUT http://localhost:8000/api/documents/update/5
+Content-Type: application/json
+
+{
+  "title": "Updated",
+  "content": "Diese Nachricht wurde verändert!",
+  "private": 1
+}
+
+###
+
+PUT http://localhost:8000/api/documents/update/4
+Content-Type: application/json
+
+{
+  "title": "Updated",
+  "content": "Diese Nachricht wurde verändert!",
+  "private": 1
+}
+
+<> 2022-07-13T184634.403.html
+
+###
+
+POST http://localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "Hallo",
+  "content": "test!",
+  "private": false
+}
+
+<> 2022-07-13T184622.201.html
+
+###
+
+GET http://localhost:8000/api/documents/list
+
+<> 2022-07-13T184606.200.json
+
+###
+
+GET http://localhost:8000/api/documents/get/3
+
+<> 2022-07-13T184534.200.json
+
+###
+
+GET http://localhost:8000/api/documents/get/1
+
+<> 2022-07-13T184514.403.html
+
+###
+
+DELETE http://localhost:8000/api/documents/delete/4
+
+###
+
+POST http://localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "Hallo",
+  "content": "test!",
+  "private": false
+}
+
+<> 2022-07-13T184354.201.html
+
+###
+
+POST http://localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "Hallo",
+  "content": "test!",
+  "private": false
+}
+
+<> 2022-07-13T184345.201.html
+
+###
+
+POST http://localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "content": "Diese Nachricht hat keinen Titel!",
+  "private": true
+}
+
+<> 2022-07-13T184324.400.html
+
+###
+
+POST http://localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "Shhh",
+  "content": "Dies ist eine geheime Nachricht!",
+  "private": true
+}
+
+<> 2022-07-13T184320.201.html
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "Beni",
+  "password": "123"
+}
+
+<> 2022-07-13T184306.200.html
+
+###
+
+POST http://localhost:8000/api/user/logout
+
+<> 2022-07-13T184254.200.txt
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "Katra",
+  "password": "123"
+}
+
+<> 2022-07-13T184232.200.html
+
+###
+
+DELETE http://localhost:8000/api/user/delete
+
+<> 2022-07-13T184216.200.html
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "DeleteTestUser",
+  "password": "Troubadour&444"
+}
+
+<> 2022-07-13T184115.200.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "DeleteTestUser",
+  "password": "Troubadour&444"
+}
+
+<> 2022-07-13T184111.200.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "lköja",
+  "password": 11
+}
+
+<> 2022-07-13T184052.400.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "password": "Troubadour&444"
+}
+
+<> 2022-07-13T184045.400.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "Katrin",
+  "password": "Troubadour&444"
+}
+
+<> 2022-07-13T184037.200.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "Katrin",
+  "password": "123"
+}
+
+<> 2022-07-13T184022.400.html
+
+###
+

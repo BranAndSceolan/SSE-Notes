@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "name": "Katrin",
-  "password": "123"
+  "password": "Troubadour&444"
 }
 
 ### Test: register message with missing name entry
