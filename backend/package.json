@@ -10,7 +10,7 @@
 
   "scripts": {
 
-    "start": "./node_modules/.bin/nodemon",
+    "start": "env $(cat ../.env) ./node_modules/.bin/nodemon",
 
     "build": "npx tsc"
 

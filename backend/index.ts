@@ -42,10 +42,10 @@ declare module "express-session" {
 }
 
 export const client = new Client({
-    user: "Test",
+    user: "notes",
     host: 'localhost',
-    database: 'Test',
-    password: "Test",
+    database: process.env.POSTGRES_DB,
+    password: process.env.NOTES_PASSWORD,
     port: 5432,
 })
 client.connect()

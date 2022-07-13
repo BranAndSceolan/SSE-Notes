@@ -1,5 +1,5 @@
 ### Test: get a public note by a valid id
-GET localhost:8000/api/documents/get/1
+GET localhost:8000/api/documents/get/3
 
 ### Preparation: login as Beni (who has access to the private note with id 18)
 POST localhost:8000/api/user/login

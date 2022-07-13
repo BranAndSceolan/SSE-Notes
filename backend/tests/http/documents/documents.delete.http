@@ -13,7 +13,7 @@ Content-Type: application/json
 
 {
   "title": "Hallo",
-  "content": "test!",
+  "content": "DeleteTest!",
   "private": false
 }
 
@@ -30,4 +30,4 @@ Content-Type: application/json
 }
 
 ### Test: delete a note (make sure the note exists, you are its logged in author and use the right id)
-DELETE http://localhost:8000/api/documents/delete/35
+DELETE http://localhost:8000/api/documents/delete/4
