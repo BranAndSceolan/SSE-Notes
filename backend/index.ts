@@ -6,7 +6,7 @@ import session from "express-session";
 
 import {
     notesRouter,
-    authRouter
+    authRouter, strengthRouter
 } from "./routes/index"
 import crypto from "crypto";
 import {printToConsole} from "./modules/util/util";
@@ -57,6 +57,7 @@ client.query('SELECT NOW()', (err: Error, res: any) => {
 // Application routing
 app.use('/api/documents', notesRouter)
 app.use('/api/user', authRouter)
+app.use('/api/strength', strengthRouter)
 
 app.get('/api', (_req: Request, res: Response) => {
     res.status(200).send("Welcome to SSE-NOTES!")

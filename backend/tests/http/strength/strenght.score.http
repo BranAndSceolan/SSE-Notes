@@ -1,0 +1,44 @@
+### Test: Gives score 4
+POST http://localhost:8000/api/strength/score
+Content-Type: application/json
+
+{
+  "password": "Tr0b4d&3KnUH"
+}
+### Test: score 3
+POST http://localhost:8000/api/strength/score
+Content-Type: application/json
+
+{
+  "password": "Troubadour&444"
+}
+###Test: Score 2
+POST http://localhost:8000/api/strength/score
+Content-Type: application/json
+
+{
+  "password": "Trdour&3"
+}
+### Test: score 1
+POST http://localhost:8000/api/strength/score
+Content-Type: application/json
+
+{
+  "password": "Trouba"
+}
+### Test: Score 0
+POST http://localhost:8000/api/strength/score
+Content-Type: application/json
+
+{
+"password": "Tr"
+}
+
+
+### Test: Should give 400, missing Password
+POST http://localhost:8000/api/strength/score
+Content-Type: application/json
+
+{
+  "password": ""
+}

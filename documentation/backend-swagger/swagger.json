@@ -444,6 +444,10 @@
                   },
                   "Duplicate Name": {
                     "$ref": "#/components/examples/duplicateName"
+                  },
+                  "Weak Password": {
+                    "summary": "Password was too weak to be allowed. Comes with some possible reasons to why, and how to improve the password.",
+                    "value": "Password too weak! Add another word or two. Uncommon words are better. Avoid sequences\nSequences like abc or 6543 are easy to guess"
                   }
                 }
               }
@@ -621,6 +625,87 @@
           }
         }
       }
+    },
+    "/api/strength/score": {
+      "post": {
+        "tags": ["Password checking"],
+        "description": "Calculates a score of security for a given password. If the password fails, suggestions on how to improve it are also given.",
+        "summary": "Asks for the security score of a password",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/scoreRequest"
+              },
+              "examples": {
+                "Secure password": {
+                  "description": "Password which is likely to withstand brute force and dictionary attacks ",
+                  "value": {
+                    "password": "öei86g7j,KJ09sf"
+                  }
+                },
+                "Bad password": {
+                  "description": "This password will be easily cracked using brute force",
+                  "value": {
+                    "password": "hi"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Score the password got (everything smaller than 3 comes with suggestions on how to find a more secure password.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/scoreResult"
+                },
+                "examples": {
+                  "Good Score": {
+                    "$ref": "#/components/examples/goodScore"
+                  },
+                  "bad Score": {
+                    "$ref": "#/components/examples/badScore"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "There was no password to evaluate",
+            "content": {
+              "text/html": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorBody"
+                  },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/missingPassword"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Error",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorBody"
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/internalErrorRes"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -652,6 +737,22 @@
       }
     },
     "examples": {
+      "goodScore": {
+        "description": "Score of a acceptable password",
+        "value": {
+          "score": 3,
+          "suggestion": "",
+          "warning": ""
+        }
+      },
+      "badScore": {
+        "description": "Score of a unacceptable password",
+        "value": {
+          "score": 0,
+          "suggestion": "Password too weak! Add another word or twp. Uncommon words are better. Avoid sequences",
+          "warning": "Sequences like abc or 6543 are easy to guess"
+        }
+      },
       "kaliLogin": {
         "description": "Login Data of User Kali",
         "value": {
@@ -768,6 +869,32 @@
     "schemas": {
       "errorBody": {
         "type": "string"
+      },
+      "scoreRequest": {
+        "type": "object",
+        "required": [
+          "password"
+        ],
+        "properties": {
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "scoreResult": {
+        "type": "object",
+        "required": ["score"],
+        "properties": {
+          "score": {
+            "type": "integer"
+          },
+          "suggestion": {
+            "type": "string"
+          },
+          "warning": {
+            "type": "string"
+          }
+        }
       },
       "createUser": {
         "type": "object",
