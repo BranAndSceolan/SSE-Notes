@@ -2,6 +2,273 @@ POST http://localhost:8000/api/documents/create
 Content-Type: application/json
 
 {
+  "title": "Shhh",
+  "content": "Dies ist eine geheime Nachricht!",
+  "private": true
+}
+
+<> 2022-07-13T183347.201.html
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "Katra",
+  "password": "123"
+}
+
+<> 2022-07-13T183330.200.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "Beni",
+  "password": "123"
+}
+
+<> 2022-07-13T183319.200.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "Katra",
+  "password": "123"
+}
+
+<> 2022-07-13T183239.200.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "Katra",
+  "password": "123"
+}
+
+<> 2022-07-13T182930.500.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "Katra",
+  "password": "123"
+}
+
+<> 2022-07-13T163614.500.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "Katra",
+  "password": "123"
+}
+
+<> 2022-07-13T163425.500.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "Katra",
+  "password": "123"
+}
+
+<> 2022-07-13T163158.500.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "Katra",
+  "password": "123"
+}
+
+<> 2022-07-13T162941.500.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "Katra",
+  "password": "123"
+}
+
+<> 2022-07-13T162624.500.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "Katra",
+  "password": "123"
+}
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "Katra",
+  "password": "123"
+}
+
+<> 2022-07-13T162414.500.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "Katra",
+  "password": "123"
+}
+
+<> 2022-07-13T161122.500.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "Katrin",
+  "password": "123"
+}
+
+<> 2022-07-13T161115.500.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "Katrin",
+  "password": "123"
+}
+
+<> 2022-07-13T161102.500.html
+
+###
+
+GET http://localhost:8000/api
+
+<> 2022-07-13T161056.200.html
+
+###
+
+GET http://localhost:8000/api
+
+###
+
+GET http://localhost:8000/api
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "Katrin",
+  "password": "123"
+}
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "Katrin",
+  "password": "123"
+}
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "Katrin",
+  "password": "123"
+}
+
+###
+
+GET http://localhost:8000/api
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "Katrin",
+  "password": "123"
+}
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "Katrin",
+  "password": "123"
+}
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "Katrin",
+  "password": "123"
+}
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "Katrin",
+  "password": "123"
+}
+
+###
+
+POST http://localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
   "title": "XXX",
   "content": "xxxxxxx"
 }
@@ -297,329 +564,6 @@ Content-Type: application/json
 }
 
 <> 2022-07-04T161329.201.html
-
-###
-
-POST http://localhost:8000/api/documents/create
-Content-Type: application/json
-
-{
-  "title": "XXX",
-  "content": "xxxxxxx",
-  "private": "on"
-}
-
-<> 2022-07-04T161318.201.html
-
-###
-
-POST http://localhost:8000/api/documents/create
-Content-Type: application/json
-
-{
-  "title": "XXX",
-  "content": "xxxxxxx",
-  "private": "t"
-}
-
-<> 2022-07-04T161310.201.html
-
-###
-
-POST http://localhost:8000/api/documents/create
-Content-Type: application/json
-
-{
-  "title": "XXX",
-  "content": "xxxxxxx",
-  "private": "TRUE"
-}
-
-<> 2022-07-04T161301.201.html
-
-###
-
-POST http://localhost:8000/api/documents/create
-Content-Type: application/json
-
-{
-  "title": "XXX",
-  "content": "xxxxxxx",
-  "private": "true"
-}
-
-<> 2022-07-04T161249.201.html
-
-###
-
-POST http://localhost:8000/api/documents/create
-Content-Type: application/json
-
-{
-  "title": "XXX",
-  "content": "xxxxxxx",
-  "private": "Y"
-}
-
-<> 2022-07-04T161238.201.html
-
-###
-
-POST http://localhost:8000/api/documents/create
-Content-Type: application/json
-
-{
-  "title": "XXX",
-  "content": "xxxxxxx",
-  "private": "y"
-}
-
-<> 2022-07-04T161227.201.html
-
-###
-
-POST http://localhost:8000/api/documents/create
-Content-Type: application/json
-
-{
-  "title": "XXX",
-  "content": "xxxxxxx",
-  "private": "YES"
-}
-
-<> 2022-07-04T161211.201.html
-
-###
-
-POST http://localhost:8000/api/documents/create
-Content-Type: application/json
-
-{
-  "title": "XXX",
-  "content": "xxxxxxx",
-  "private": "yes"
-}
-
-<> 2022-07-04T161205.201.html
-
-###
-
-POST http://localhost:8000/api/documents/create
-Content-Type: application/json
-
-{
-  "title": "XXX",
-  "content": "xxxxxxx"
-}
-
-<> 2022-07-04T161200.400.html
-
-###
-
-POST http://localhost:8000/api/documents/create
-Content-Type: application/json
-
-{
-  "title": "XXX",
-  "content": "xxxxxxx",
-  "private": ""
-}
-
-<> 2022-07-04T161149.400.html
-
-###
-
-POST http://localhost:8000/api/documents/create
-Content-Type: application/json
-
-{
-  "title": "XXX",
-  "content": "xxxxxxx",
-  "private": "löasklf"
-}
-
-<> 2022-07-04T161140.400.html
-
-###
-
-POST http://localhost:8000/api/documents/create
-Content-Type: application/json
-
-{
-  "title": "XXX",
-  "content": "xxxxxxx",
-  "private": 5
-}
-
-<> 2022-07-04T161136.400.html
-
-###
-
-POST http://localhost:8000/api/documents/create
-Content-Type: application/json
-
-{
-  "title": "XXX",
-  "content": "xxxxxxx",
-  "private": "löasklf"
-}
-
-<> 2022-07-04T161125.400.html
-
-###
-
-POST http://localhost:8000/api/documents/create
-Content-Type: application/json
-
-{
-  "title": "XXX",
-  "content": "xxxxxxx",
-  "private": "löasklf"
-}
-
-<> 2022-07-04T161110.400.html
-
-###
-
-POST http://localhost:8000/api/documents/create
-Content-Type: application/json
-
-{
-  "title": true,
-  "content": true,
-  "private": true
-}
-
-<> 2022-07-04T161106.400.html
-
-###
-
-POST http://localhost:8000/api/documents/create
-Content-Type: application/json
-
-{
-  "title": 13,
-  "content": 14,
-  "private": 15
-}
-
-<> 2022-07-04T161059.400.html
-
-###
-
-POST http://localhost:8000/api/documents/create
-Content-Type: application/json
-
-{
-  "title": "",
-  "content": "",
-  "private": ""
-}
-
-<> 2022-07-04T161054.400.html
-
-###
-
-POST http://localhost:8000/api/documents/create
-Content-Type: application/json
-
-{
-}
-
-<> 2022-07-04T161049.400.html
-
-###
-
-POST http://localhost:8000/api/documents/create
-
-<> 2022-07-04T161044.400.html
-
-###
-
-POST http://localhost:8000/api/documents/create
-Content-Type: application/json
-
-{
-  "private": true
-}
-
-<> 2022-07-04T161036.400.html
-
-###
-
-POST http://localhost:8000/api/documents/create
-Content-Type: application/json
-
-{
-  "title": "",
-  "content": "",
-  "private": true
-}
-
-<> 2022-07-04T161024.400.html
-
-###
-
-POST http://localhost:8000/api/documents/create
-Content-Type: application/json
-
-{
-  "title": "OH!",
-  "content": "",
-  "private": true
-}
-
-<> 2022-07-04T161020.400.html
-
-###
-
-POST http://localhost:8000/api/documents/create
-Content-Type: application/json
-
-{
-  "title": "Hey",
-  "private": true
-}
-
-<> 2022-07-04T161015.400.html
-
-###
-
-POST http://localhost:8000/api/documents/create
-Content-Type: application/json
-
-{
-  "title": "",
-  "content": "Dies ist eine öffentliche Nachricht!",
-  "private": true
-}
-
-<> 2022-07-04T161012.400.html
-
-###
-
-POST http://localhost:8000/api/documents/create
-Content-Type: application/json
-
-{
- "content": "Diese Nachricht hat keinen Titel!",
-  "private": true
-}
-
-<> 2022-07-04T160948.400.html
-
-###
-
-POST http://localhost:8000/api/documents/create
-Content-Type: application/json
-
-{
-  "title": "Hallo",
-  "content": "test!",
-  "private": true
-}
-
-<> 2022-07-04T160930.201.html
 
 ###
 
