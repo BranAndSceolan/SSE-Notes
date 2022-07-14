@@ -7,7 +7,7 @@ CREATE USER notes PASSWORD '$NOTES_PASSWORD';
 CREATE table users(
     id bigserial PRIMARY KEY ,
     name varchar not null ,
-    password varchar
+    password varchar not null
 );
 
 CREATE table notes(
