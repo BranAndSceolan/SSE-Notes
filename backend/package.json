@@ -36,6 +36,8 @@
 
     "@types/uid-safe": "^2.1.2",
 
+    "argon2": "^0.28.7",
+
     "express": "^4.18.1",
 
     "express-session": "^1.17.3",
