@@ -2,8 +2,8 @@ import {Request, Response} from "express";
 import {NextFunction} from "express/ts4.0";
 import {client} from "../../index";
 import zxcvbn from "zxcvbn";
-import {internalErrorMessage, printError} from "../util/util";
-
+import {internalErrorMessage, printError, printToConsole} from "../util/util";
+import argon2, {argon2id} from "argon2";
 
 export class AuthModule{
     public async register(req: Request, res: Response): Promise<Response> {
@@ -41,9 +41,18 @@ export class AuthModule{
             printError("register, searching whether name is already in use",err)
             return res.status(500).send(internalErrorMessage)
         }
-
+        // hash password using argon2id
+        // using 64 MB of memory (memoryCost is given in KB), 1 degree of parallelism and 3 iterations, which is
+        // more than the minimum of 15MiB memory, 1 degree of parallelism and 2 iterations OWASP recommends
+        // node-agron2 sets its own salt randomly and saves it with the hash
+        const hash = await argon2.hash(newPassword, {
+            type : argon2id,
+            memoryCost: 2 ** 16,
+            hashLength: 50,
+        })
+        printToConsole(hash)
         try {
-            const result = await client.query('INSERT INTO users(name, password) VALUES($1, $2) RETURNING *', [newUsername, newPassword])
+            const result = await client.query('INSERT INTO users(name, password) VALUES($1, $2) RETURNING *', [newUsername, hash])
             if (result.rowCount == 1){
                 req.session.signInId = result.rows[0].id
                 return res.status(200).send("Congratulations! You are now registered!")
@@ -72,18 +81,28 @@ export class AuthModule{
         }
         let result = undefined
         try {
-            result = await client.query('SELECT id FROM users WHERE name like $1 AND password like $2 ', [username, password])
+            result = await client.query('SELECT * FROM users WHERE name like $1', [username])
         } catch (err){
             printError("login checking for password and user in Database",err)
             return res.status(500).send(internalErrorMessage)
         }
         if (result.rowCount == 1) {
-            req.session.signInId = result.rows[0].id
-            return res.status(200).send("Logged in!");
+            try {
+                if (await argon2.verify(result.rows[0].password, password)) {
+                    req.session.signInId = result.rows[0].id
+                    return res.status(200).send("Logged in!");
+                } else {
+                    printError("login", "No password and username not found or not fitting.")
+                    res.status(400);
+                    return res.send("Make sure to enter a valid username and the correct password.");
+                }
+            } catch (err) {
+                printError("at login, verify password hash", err)
+                return res.status(500).send(internalErrorMessage)// internal failure
+            }
         } else {
             printError("login", "No password and username not found or not fitting.")
             res.status(400);
-            res.contentType("text/urilist");
             return res.send("Make sure to enter a valid username and the correct password.");
         }
 
