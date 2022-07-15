@@ -1,3 +1,168 @@
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "TestHash",
+  "password": "Troubadour&444"
+}
+
+<> 2022-07-14T094535.200.html
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "TestHash",
+  "password": "Troubadour&44"
+}
+
+<> 2022-07-14T094529.400.html
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "TestHash",
+  "password": "Troubadour&44"
+}
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "TestHash",
+  "password": "Troubadour&444"
+}
+
+<> 2022-07-14T094439.200.html
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "TestHash",
+  "password": "Troubadour&444"
+}
+
+<> 2022-07-14T094405.500.html
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "TestHash",
+  "password": "Troubadour&444"
+}
+
+<> 2022-07-14T094305.500.html
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "TestHash",
+  "password": "Troubadour&444"
+}
+
+<> 2022-07-14T094158.500.html
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "TestHash",
+  "password": "Troubadour&444"
+}
+
+<> 2022-07-14T094112.500.html
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "TestHash",
+  "password": "Troubadour&444"
+}
+
+<> 2022-07-14T094007.500.html
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "TestHash",
+  "password": "Troubadour&444"
+}
+
+<> 2022-07-14T093955.500.html
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "Testhash",
+  "password": "Troubadour&444"
+}
+
+<> 2022-07-14T093846.400.html
+
+###
+
+POST http://localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "Testhash",
+  "password": "Troubadour&444"
+}
+
+<> 2022-07-14T093718.400.html
+
+###
+
+POST http://localhost:8000/api/user/register
+Content-Type: application/json
+
+{
+  "name": "TestHash",
+  "password": "Troubadour&444"
+}
+
+<> 2022-07-14T093647.200.html
+
+###
+
+PUT http://localhost:8000/api/documents/update/5
+Content-Type: application/json
+
+{
+  "title": "Updated",
+  "content": "Diese Nachricht wurde verändert!",
+  "private": 1
+}
+
+###
+
 PUT http://localhost:8000/api/documents/update/5
 Content-Type: application/json
 

@@ -3,6 +3,9 @@
 github: https://github.com/dropbox/zxcvbn#usage
 npm: https://www.npmjs.com/package/zxcvbn
 
+## License
+zxcvbn is published under MIT-License, which is unproblematic for us, because it allows all kinds of uses. 
+
 ## Pros
 * Gives not only a score but also suggestions and warnings
 * A high number of weekly downloads on npm (more than 350 000)
@@ -10,9 +13,10 @@ npm: https://www.npmjs.com/package/zxcvbn
 * Recommended in a [study](http://users.encs.concordia.ca/~mmannan/publications/password-meters-tissec.pdf) by the [Concordia University (Canada)](https://www.concordia.ca/cunews/main/stories/2015/03/25/does-your-password-pass-muster.html)
 * No third hand dependencies
 * Operates below human perception
+* no known security issues on [synkAdvisor](https://snyk.io/advisor/npm-package/zxcvbn)
 ## Cons
 * not unconditionally suited to usage in frontend
-* last update in 2017
+* last update in 2017, which is also the reason for a relatively low score on [synkAdvisor](https://snyk.io/advisor/npm-package/zxcvbn)
 * relatively [high package size](https://bundlephobia.com/package/zxcvbn@4.4.2) for a password strength checker
 
 ## Why this package?
