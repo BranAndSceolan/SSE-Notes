@@ -1,7 +1,7 @@
 import express from "express";
 import {Application, Request, Response} from "express";
 import helmet from "helmet";
-import {Pool} from "pg";
+import {Client} from "pg";
 import session from "express-session";
 
 import {
@@ -9,7 +9,7 @@ import {
     authRouter, strengthRouter
 } from "./routes/index"
 import crypto from "crypto";
-import {printError, printToConsole} from "./modules/util/util";
+import { printToConsole} from "./modules/util/util";
 
 export const PORT = 8000
 
@@ -41,20 +41,20 @@ declare module "express-session" {
     }
 }
 
-export const pool = new Pool({
+export const client = new Client({
     user: "notes",
     host: 'localhost',
     database: process.env.POSTGRES_DB,
     password: process.env.NOTES_PASSWORD,
     port: 5432,
 })
-pool.on('error', (err, client) => {
-    printError("on pooling request", 'Error: ' + err+ " |client "+ client);
-});
 
-pool.query('SELECT NOW()', async (err: Error, res: any) => {
+client.connect()
+client.query('SELECT NOW()', (err: Error, res: any) => {
     printToConsole("Error? " + err + " | Time: " + res.rows[0].now)
+    // client.end() Don't disconnect yet!
 })
+
 
 // Application routing
 app.use('/api/documents', notesRouter)

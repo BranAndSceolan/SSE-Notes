@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 import {internalErrorMessage, printError, printToConsole} from "../util/util";
-import {pool} from "../../index";
+import {client} from "../../index";
 import {CreditedNote} from "../entities/document.entity";
 
 export class DocumentsController {
@@ -37,7 +37,7 @@ export class DocumentsController {
          try {
              const insertNoteStatement = 'INSERT INTO notes(authorid, title, content, private) VALUES($1, $2, $3, $4) RETURNING *'
              const noteValues = [authorId, title, content, privacy]
-             insertResult = await pool.query(insertNoteStatement, noteValues)
+             insertResult = await client.query(insertNoteStatement, noteValues)
              if (insertResult?.rowCount == 1){
                  printToConsole("[+] added note with id: "+ insertResult.rows[0].id)
                  return res.status(201).send(insertResult.rows[0].toString())
@@ -59,7 +59,7 @@ export class DocumentsController {
         let result
         if (noteId) {
             try {
-               result = await pool.query('SELECT * FROM notes INNER JOIN users ON users.id = notes.authorid WHERE $1 = notes.id', [noteId])
+               result = await client.query('SELECT * FROM notes INNER JOIN users ON users.id = notes.authorid WHERE $1 = notes.id', [noteId])
             } catch (e) {
                 printToConsole("Error while getting specific note: "+ e)
                 res.status(500).send(internalErrorMessage)
@@ -87,7 +87,7 @@ export class DocumentsController {
     public async getList(req: Request, res: Response): Promise<Response> {
         let list = undefined
         try {
-            list = await pool.query('SELECT content, private, title, name, notes.id AS id FROM notes INNER JOIN users ON notes.authorid = users.id WHERE users.id = $1 OR notes.private = FALSE', [req.session.signInId])
+            list = await client.query('SELECT content, private, title, name, notes.id AS id FROM notes INNER JOIN users ON notes.authorid = users.id WHERE users.id = $1 OR notes.private = FALSE', [req.session.signInId])
             const notes : CreditedNote[] = []
             for( let i = 0; i < list.rowCount; i++){
                 const l = list.rows[i]
@@ -127,7 +127,7 @@ export class DocumentsController {
         }
 
         try {
-            updated = await pool.query(query, [req.params.id, req.session.signInId, title, content, privacy])
+            updated = await client.query(query, [req.params.id, req.session.signInId, title, content, privacy])
         } catch (e) {
             printToConsole("Something went wrong updating a note: "+ e)
             return res.status(500).send(internalErrorMessage)
@@ -144,7 +144,7 @@ export class DocumentsController {
     public async delete(req: Request, res: Response): Promise<Response> {
         let deleted = undefined
         try{
-            deleted = await pool.query('DELETE FROM notes WHERE id = $1 AND authorid = $2 RETURNING *', [req.params.id, req.session.signInId])
+            deleted = await client.query('DELETE FROM notes WHERE id = $1 AND authorid = $2 RETURNING *', [req.params.id, req.session.signInId])
         }catch (e) {
             printError("Delete Note", e)
             return res.status(500).send(internalErrorMessage)

@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 import {NextFunction} from "express/ts4.0";
-import {pool} from "../../index";
+import {client} from "../../index";
 import zxcvbn from "zxcvbn";
 import {internalErrorMessage, printError, printToConsole} from "../util/util";
 import argon2, {argon2id} from "argon2";
@@ -32,7 +32,7 @@ export class AuthModule{
         }
         // check if name is already used
         try {
-            const result = await pool.query('SELECT name FROM users WHERE name like $1', [newUsername])
+            const result = await client.query('SELECT name FROM users WHERE name like $1', [newUsername])
             if (result.rowCount > 0) {
                 printError("register, namecheck", "This name isn't available!")
                 return res.status(400).send("This name isn't available!")
@@ -52,7 +52,7 @@ export class AuthModule{
         })
         printToConsole(hash)
         try {
-            const result = await pool.query('INSERT INTO users(name, password) VALUES($1, $2) RETURNING *', [newUsername, hash])
+            const result = await client.query('INSERT INTO users(name, password) VALUES($1, $2) RETURNING *', [newUsername, hash])
             if (result.rowCount == 1){
                 req.session.signInId = result.rows[0].id
                 return res.status(200).send("Congratulations! You are now registered!")
@@ -81,7 +81,7 @@ export class AuthModule{
         }
         let result = undefined
         try {
-            result = await pool.query('SELECT * FROM users WHERE name like $1', [username])
+            result = await client.query('SELECT * FROM users WHERE name like $1', [username])
         } catch (err){
             printError("login checking for password and user in Database",err)
             return res.status(500).send(internalErrorMessage)
