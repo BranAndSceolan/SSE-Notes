@@ -42,7 +42,7 @@ declare module "express-session" {
 }
 
 export const client = new Client({
-    user: "notes",
+    user: process.env.NOTES_USER,
     host: 'localhost',
     database: process.env.POSTGRES_DB,
     password: process.env.NOTES_PASSWORD,
