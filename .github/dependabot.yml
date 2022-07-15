@@ -6,10 +6,9 @@
 version: 2
 updates:
   - package-ecosystem: "npm" #
-    directory: "/fronend" # Location of package manifests
+    directory: "/frontend" # Location of package manifests
     schedule:
       interval: "daily"
-      updates:
   - package-ecosystem: "npm" #
     directory: "/backend" # Location of package manifests
     schedule:
