@@ -1,0 +1,27 @@
+### Test: get a public note by a valid id
+GET localhost:8000/api/documents/get/3
+
+### Preparation: login as Beni (who has access to the private note with id 18)
+POST localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "Beni",
+  "password": "123"
+}
+
+### Preparation: logout (to confirm that logged out you have no access to your own private notes)
+POST localhost:8000/api/user/logout
+
+### Preparation: login as Ben (to confirm that as Ben you have no access to Benis private notes)
+POST localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "Ben",
+  "password": "123"
+}
+
+### Test: get a private note by a valid id
+GET localhost:8000/api/documents/get/18
+###

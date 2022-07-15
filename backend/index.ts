@@ -6,7 +6,7 @@ import session from "express-session";
 
 import {
     notesRouter,
-    authRouter
+    authRouter, strengthRouter
 } from "./routes/index"
 import crypto from "crypto";
 import {printToConsole} from "./modules/util/util";
@@ -42,10 +42,10 @@ declare module "express-session" {
 }
 
 export const client = new Client({
-    user: "Test",
+    user: "notes",
     host: 'localhost',
-    database: 'Test',
-    password: "Test",
+    database: process.env.POSTGRES_DB,
+    password: process.env.NOTES_PASSWORD,
     port: 5432,
 })
 client.connect()
@@ -57,6 +57,7 @@ client.query('SELECT NOW()', (err: Error, res: any) => {
 // Application routing
 app.use('/api/documents', notesRouter)
 app.use('/api/user', authRouter)
+app.use('/api/strength', strengthRouter)
 
 app.get('/api', (_req: Request, res: Response) => {
     res.status(200).send("Welcome to SSE-NOTES!")

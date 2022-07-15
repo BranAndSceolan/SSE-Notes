@@ -1,0 +1,2 @@
+### Test: Welcome message
+GET localhost:8000/api

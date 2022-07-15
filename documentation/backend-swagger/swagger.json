@@ -1,0 +1,985 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "SSE_NOTES",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Users",
+      "description": "Manage authentication attempts and operations on user objects."
+    },
+    {
+      "name": "Documents",
+      "description": "Manage Notes."
+    }
+  ],
+  "paths": {
+    "/api/documents/create": {
+      "post": {
+        "security": [
+          {
+            "AuthCookie": []
+          }
+        ],
+        "summary": "Create a new document. Only possible if logged in.",
+        "tags": [
+          "Documents"
+        ],
+        "requestBody": {
+          "description": "Request to create a new document.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/createDocument"
+              },
+              "examples": {
+                "Create Note": {
+                  "$ref": "#/components/examples/createDocExample"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "A Document was created successfully."
+          },
+          "400": {
+            "description": "Some attributes seem to have been missing.",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorBody"
+                },
+                "examples": {
+                  "missing title": {
+                    "$ref": "#/components/examples/missingTitle"
+                  },
+                  "missing content": {
+                    "$ref": "#/components/examples/missingContent"
+                  },
+                  "missing privacy flag": {
+                    "$ref": "#/components/examples/missingPrivacyFlag"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User is not logged in, and this route demands a logged in user.",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorBody"
+                },
+                "examples": {
+                  "example0": {
+                    "$ref": "#/components/examples/notLoggedIn"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Some kind of unspecified error occurred.",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorBody"
+                },
+                "examples": {
+                  "example0": {
+                    "$ref": "#/components/examples/internalErrorRes"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/documents/get/{docId}": {
+      "get": {
+        "security": [
+          {
+            "AuthCookie": []
+          }
+        ],
+        "summary": "Only works if you own the document or it is public.",
+        "description": "Get a specific document by id. Does only work if it is a public document or your own.",
+        "tags": [
+          "Documents"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/docId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The document bearing the docId",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Document"
+                },
+                "examples": {
+                  "private message": {
+                    "$ref": "#/components/examples/privateDocExample"
+                  },
+                  "public message": {
+                    "$ref": "#/components/examples/publicDocExample"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Some kind of unspecified error occurred.",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorBody"
+                },
+                "examples": {
+                  "example0": {
+                    "$ref": "#/components/examples/internalErrorRes"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid id send as parameter"
+          },
+          "403": {
+            "description": "User is either not logged in or tried to access a private message to is not their own.",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorBody"
+                },
+                "examples": {
+                  "example0": {
+                    "$ref": "#/components/examples/notNoteOrForbiddenRes"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/documents/list": {
+      "get": {
+        "security": [
+          {
+            "AuthCookie": []
+          }
+        ],
+        "summary": "Gets all documents you are currently allowed to see depending on your login.",
+        "description": "Gets all documents you are currently allowed to see depending on your login. If you are not logged in, you will only see public documents. If you are logged in, there are also going to be your own private notes.",
+        "tags": [
+          "Documents"
+        ],
+        "responses": {
+          "200": {
+            "description": "list of notes user is allowed read-access to.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/List"
+                },
+                "examples": {
+                  "Kalis List": {
+                    "$ref": "#/components/examples/kalisListExample"
+                  },
+                  "List for logged out user": {
+                    "$ref": "#/components/examples/loggedOutUsersListExample"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorBody"
+                },
+                "examples": {
+                  "Error Message": {
+                    "$ref": "#/components/examples/internalErrorRes"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/documents/update/{docId}": {
+      "put": {
+        "security": [
+          {
+            "AuthCookie": []
+          }
+        ],
+        "summary": "Does only work if it is your document and you are logged in.",
+        "tags": [
+          "Documents"
+        ],
+        "requestBody": {
+          "description": "Request to update a document.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/createDocument"
+              },
+              "examples": {
+                "Create Note": {
+                  "$ref": "#/components/examples/createDocExample"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/docId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A Document was updated successfully."
+          },
+          "400": {
+            "description": "Some attributes seem to have been missing.",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorBody"
+                },
+                "examples": {
+                  "missing title": {
+                    "$ref": "#/components/examples/missingTitle"
+                  },
+                  "missing content": {
+                    "$ref": "#/components/examples/missingContent"
+                  },
+                  "missing privacy flag": {
+                    "$ref": "#/components/examples/missingPrivacyFlag"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User is not logged in, and this route demands a logged in user.",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorBody"
+                },
+                "examples": {
+                  "example0": {
+                    "$ref": "#/components/examples/notLoggedIn"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Some kind of unspecified error occurred.",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorBody"
+                },
+                "examples": {
+                  "example0": {
+                    "$ref": "#/components/examples/internalErrorRes"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/documents/delete/{docId}": {
+      "delete": {
+        "summary": "Does only work if it is your document and you are logged in.",
+        "security": [
+          {
+            "AuthCookie": []
+          }
+        ],
+        "description": "Delete the document which has the docId. Does only work if it is your document and you are logged in.",
+        "tags": [
+          "Documents"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/docId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Note was deleted successfully"
+          },
+          "401": {
+            "description": "Not logged in",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorBody"
+                },
+                "examples": {
+                  "not logged in": {
+                    "$ref": "#/components/examples/notLoggedIn"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Missing note or no rights",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorBody"
+                },
+                "examples": {
+                  "not logged in": {
+                    "$ref": "#/components/examples/notNoteOrForbiddenRes"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorBody"
+                },
+                "examples": {
+                  "Error Message": {
+                    "$ref": "#/components/examples/internalErrorRes"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/register": {
+      "post": {
+        "summary": "Only works if the name isn't already in use.",
+        "description": "Register as a new user. (Only works if the name isn't already in use)",
+        "tags": [
+          "Users"
+        ],
+        "requestBody": {
+          "description": "Request to create and register as a new User.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/createUser"
+              },
+              "examples": {
+                "Create Kali": {
+                  "$ref": "#/components/examples/kaliLogin"
+                },
+                "Create thm_movie_committee": {
+                  "$ref": "#/components/examples/thm_movie_committee-Login"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "New user was created and stored in the database. You are now also logged in.",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {
+                  "affirmation": {
+                    "summary": "Successfully registered",
+                    "value": "Congratulations! You are now registered!"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Some attribute is missing or forbidden",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorBody"
+                },
+                "examples": {
+                  "Missing Username": {
+                    "$ref": "#/components/examples/missingName"
+                  },
+                  "Missing Password": {
+                    "$ref": "#/components/examples/missingPassword"
+                  },
+                  "Duplicate Name": {
+                    "$ref": "#/components/examples/duplicateName"
+                  },
+                  "Weak Password": {
+                    "summary": "Password was too weak to be allowed. Comes with some possible reasons to why, and how to improve the password.",
+                    "value": "Password too weak! Add another word or two. Uncommon words are better. Avoid sequences\nSequences like abc or 6543 are easy to guess"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorBody"
+                },
+                "examples": {
+                  "Error Message": {
+                    "$ref": "#/components/examples/internalErrorRes"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/login": {
+      "post": {
+        "summary": "login as user",
+        "description": "login as user",
+        "tags": [
+          "Users"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/createUser"
+              },
+              "examples": {
+                "Kali Login": {
+                  "$ref": "#/components/examples/kaliLogin"
+                },
+                "thm_movie_committee Login": {
+                  "$ref": "#/components/examples/thm_movie_committee-Login"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Checked with server. You are now logged in.",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {
+                  "affirmation": {
+                    "summary": "Successfully logged in",
+                    "value": "Logged in!"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Some attribute is missing or forbidden",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorBody"
+                },
+                "examples": {
+                  "Missing Username": {
+                    "$ref": "#/components/examples/missingName"
+                  },
+                  "Missing Password": {
+                    "$ref": "#/components/examples/missingPassword"
+                  },
+                  "No entry": {
+                    "value": "Make sure to enter a valid username and the correct password."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorBody"
+                },
+                "examples": {
+                  "Error Message": {
+                    "$ref": "#/components/examples/internalErrorRes"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/logout": {
+      "post": {
+        "description": "Logout if already logged in by destroying cookie. If not logged in, do nothing.",
+        "summary": "Logout",
+        "tags": [
+          "Users"
+        ],
+        "responses": {
+          "200": {
+            "description": "You are now surely logged out, whether or not you were logged in before. Does return an empty body."
+          }
+        }
+      }
+    },
+    "/api/user/delete": {
+      "delete": {
+        "security": [
+          {
+            "AuthCookie": []
+          }
+        ],
+        "summary": "Only works if logged in.",
+        "description": "Ends session and removes user from database",
+        "tags": ["Users"],
+        "responses": {
+          "200": {
+            "description": "Logged out and deleted user",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {
+                  "affirmation": {
+                    "summary": "Successfully logged out and deleted user",
+                    "value": "user <User values> deleted!"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not logged in",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorBody"
+                },
+                "examples": {
+                  "not logged in": {
+                    "$ref": "#/components/examples/notLoggedIn"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorBody"
+                },
+                "examples": {
+                  "Error Message": {
+                    "$ref": "#/components/examples/internalErrorRes"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/strength/score": {
+      "post": {
+        "tags": ["Password checking"],
+        "description": "Calculates a score of security for a given password. If the password fails, suggestions on how to improve it are also given.",
+        "summary": "Asks for the security score of a password",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/scoreRequest"
+              },
+              "examples": {
+                "Secure password": {
+                  "description": "Password which is likely to withstand brute force and dictionary attacks ",
+                  "value": {
+                    "password": "öei86g7j,KJ09sf"
+                  }
+                },
+                "Bad password": {
+                  "description": "This password will be easily cracked using brute force",
+                  "value": {
+                    "password": "hi"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Score the password got (everything smaller than 3 comes with suggestions on how to find a more secure password.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/scoreResult"
+                },
+                "examples": {
+                  "Good Score": {
+                    "$ref": "#/components/examples/goodScore"
+                  },
+                  "bad Score": {
+                    "$ref": "#/components/examples/badScore"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "There was no password to evaluate",
+            "content": {
+              "text/html": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorBody"
+                  },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/missingPassword"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Error",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorBody"
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/internalErrorRes"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "AuthCookie": {
+        "type": "http",
+        "description": "cookie 'myawesomecookie' for session management",
+        "scheme": "bearer"
+      }
+    },
+    "parameters": {
+      "docId": {
+        "name": "docId",
+        "in": "path",
+        "required": true,
+        "description": "id of the document to get/update/delete",
+        "examples": {
+          "id of public message": {
+            "$ref": "#/components/examples/idOfPublicNote"
+          },
+          "id of private message": {
+            "$ref": "#/components/examples/idOfPrivateNote"
+          }
+        },
+        "schema": {
+          "type": "integer",
+          "format": "bigint"
+        }
+      }
+    },
+    "examples": {
+      "goodScore": {
+        "description": "Score of a acceptable password",
+        "value": {
+          "score": 3,
+          "suggestion": "",
+          "warning": ""
+        }
+      },
+      "badScore": {
+        "description": "Score of a unacceptable password",
+        "value": {
+          "score": 0,
+          "suggestion": "Password too weak! Add another word or twp. Uncommon words are better. Avoid sequences",
+          "warning": "Sequences like abc or 6543 are easy to guess"
+        }
+      },
+      "kaliLogin": {
+        "description": "Login Data of User Kali",
+        "value": {
+          "name": "Kali",
+          "password": "HeyYo"
+        }
+      },
+      "thm_movie_committee-Login": {
+        "description": "Login Data of thm_movie_committee",
+        "value": {
+          "name": "thm_movie_committee",
+          "password": "123"
+        }
+      },
+      "internalErrorRes": {
+        "summary": "Internal Error / No Comment",
+        "value": "Something went wrong, possibly on our side. We are sorry.\n Please try again in a minute."
+      },
+      "notLoggedIn": {
+        "summary": "Negative loginCheck result",
+        "value": "not logged in!"
+      },
+      "notNoteOrForbiddenRes": {
+        "summary": "Missing note or no rights",
+        "value": "This note either doesn't exist or isn't your own."
+      },
+      "duplicateName": {
+        "summary": "duplicate name",
+        "value": "This name isn't available!"
+      },
+      "missingName": {
+        "summary": "Missing Username",
+        "value": "Username is missing"
+      },
+      "missingPassword": {
+        "summary": "Missing Password",
+        "value": "Password is missing"
+      },
+      "missingTitle": {
+        "summary": "Missing Title",
+        "value": "Title is missing"
+      },
+      "missingContent": {
+        "summary": "Missing Content",
+        "value": "Content is missing"
+      },
+      "missingPrivacyFlag": {
+        "summary": "Missing or invalid privacy flag",
+        "value": "Privacy flag is missing or invalid"
+      },
+      "idOfPublicNote":{
+        "summary": "id for example of public message",
+        "value": 298
+      },
+      "idOfPrivateNote":{
+        "summary": "id for example of private message",
+        "value": 155
+      },
+      "createDocExample": {
+        "value": {
+          "title": "Remember to bring your own food!",
+          "content": "While we have prepared some drinks for the movie night tomorrow, we did not have time to get food for everyone. So if you think you might get hungry, especially if you have special dietary needs, please bring your own food.",
+          "private": false
+        }
+      },
+      "publicDocExample": {
+        "value": {
+          "title": "Remember to bring your own food!",
+          "content": "While we have prepared some drinks for the movie night tomorrow, we did not have time to get food for everyone. So if you think you might get hungry, especially if you have special dietary needs, please bring your own food.",
+          "private": false,
+          "name": "thm_movie_committee",
+          "id": 298
+        }
+      },
+      "privateDocExample": {
+        "value": {
+          "title": "Bake some cupcakes",
+          "content": "For the movie night. **Use NO ALMONDS** Sam is allergic.",
+          "private": true,
+          "name": "Kali",
+          "id": 155
+        }
+      },
+      "kalisListExample": {
+        "value": [
+          {
+           "title": "Bake some cupcakes",
+           "content": "For the movie night. **Use NO ALMONDS** Sam is allergic.",
+           "private": true,
+           "name": "Kali",
+           "id": 155
+         },
+          {
+             "title": "Remember to bring your own food!",
+             "content": "While we have prepared some drinks for the movie night tomorrow, we did not have time to get food for everyone. So if you think you might get hungry, especially if you have special dietary needs, please bring your own food.",
+             "private": false,
+             "name": "thm_movie_committee",
+             "id": 298
+          }
+        ]
+      },
+      "loggedOutUsersListExample": {
+        "value": [
+          {
+            "title": "Remember to bring your own food!",
+            "content": "While we have prepared some drinks for the movie night tomorrow, we did not have time to get food for everyone. So if you think you might get hungry, especially if you have special dietary needs, please bring your own food.",
+            "private": false,
+            "name": "thm_movie_committee",
+            "id": 298
+          }
+        ]
+      }
+    },
+    "schemas": {
+      "errorBody": {
+        "type": "string"
+      },
+      "scoreRequest": {
+        "type": "object",
+        "required": [
+          "password"
+        ],
+        "properties": {
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "scoreResult": {
+        "type": "object",
+        "required": ["score"],
+        "properties": {
+          "score": {
+            "type": "integer"
+          },
+          "suggestion": {
+            "type": "string"
+          },
+          "warning": {
+            "type": "string"
+          }
+        }
+      },
+      "createUser": {
+        "type": "object",
+        "required": [
+          "name",
+          "password"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "User": {
+      "type": "object",
+      "required": [
+        "name",
+        "id"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer",
+          "format": "bigint"
+        }
+      }
+    },
+      "createDocument": {
+        "type": "object",
+        "required": [
+          "title",
+          "content",
+          "private"
+        ],
+        "properties": {
+          "private": {
+            "type": "boolean"
+          },
+          "content": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          }
+        }
+      },
+      "Document": {
+        "type": "object",
+        "required": [
+          "title",
+          "content",
+          "private",
+          "name",
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "bigint"
+          },
+          "name": {
+            "type": "string"
+          },
+          "private": {
+            "type": "boolean"
+          },
+          "content": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          }
+        }
+      },
+      "List": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Document"
+        }
+      }
+    }
+  }
+}
