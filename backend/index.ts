@@ -1,7 +1,7 @@
 import express from "express";
 import {Application, Request, Response} from "express";
 import helmet from "helmet";
-import {Client} from "pg";
+import {Pool} from "pg";
 import session from "express-session";
 
 import {
@@ -41,7 +41,7 @@ declare module "express-session" {
     }
 }
 
-export const client = new Client({
+export const pool = new Pool({
     user: process.env.NOTES_USER,
     host: 'localhost',
     database: process.env.POSTGRES_DB,
@@ -49,8 +49,8 @@ export const client = new Client({
     port: 5432,
 })
 
-client.connect()
-client.query('SELECT NOW()', (err: Error, res: any) => {
+//client.connect()
+pool.query('SELECT NOW()', (err: Error, res: any) => {
     printToConsole("Error? " + err + " | Time: " + res.rows[0].now)
     // client.end() Don't disconnect yet!
 })

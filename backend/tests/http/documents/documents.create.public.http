@@ -3,8 +3,8 @@ POST localhost:8000/api/user/login
 Content-Type: application/json
 
 {
-  "name": "Beni",
-  "password": "123"
+  "name": "Eleonore",
+  "password": "Troubadour&444"
 }
 
 ### Test: create correctly written public note
