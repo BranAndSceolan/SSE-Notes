@@ -20,6 +20,7 @@ let testsSuccessful : boolean = false
                 .then(res => {
                     chai.expect(res.text).to.equal(returnString)
                     testResult = (res.text == returnString)
+                    printToConsole(testResult+ " ")
                 })
         })
 
