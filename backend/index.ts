@@ -49,7 +49,7 @@ export const client = new Client({
     port: 5432,
 })
 
-if (config.get("nodb")== false) {
+if (config.get("nodb")== "false") {
     client.connect()
     client.query('SELECT NOW()', (err: Error, res: any) => {
         printToConsole("Error? " + err + " | Time: " + res.rows[0].now)

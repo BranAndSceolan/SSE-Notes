@@ -1,6 +1,6 @@
 {
   "debug": "true",
   "auth": "false",
-  "nodb": "true",
+  "nodb": "false",
   "githubactions": "true"
 }

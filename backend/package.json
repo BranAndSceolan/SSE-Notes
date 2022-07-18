@@ -16,6 +16,8 @@
 
     "test": "env $(cat ../.env) mocha -r ts-node/register tests/chai/index.ts",
 
+    "github": "env $(cat ../.testenv) mocha -r ts-node/register tests/chai/index.ts",
+
     "baseTest": "NODE_ENV=baseTest mocha -r ts-node/register tests/chai/index.ts"
 
   },
