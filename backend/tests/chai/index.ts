@@ -17,7 +17,7 @@ chai.use(chaiHttp)
                     testResult = (res.text == returnString)
                 })
         })
-        if (config.get('nodb')== true) {
+        if (config.get('nodb') == "true") {
             if (testResult) {
                 process.exit(0)
             } else{
