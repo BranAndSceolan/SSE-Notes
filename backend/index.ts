@@ -3,6 +3,7 @@ import {Application, Request, Response} from "express";
 import helmet from "helmet";
 import {Client} from "pg";
 import session from "express-session";
+import csurf from "csurf"
 
 import {
     notesRouter,
@@ -55,6 +56,8 @@ client.query('SELECT NOW()', (err: Error, res: any) => {
     // client.end() Don't disconnect yet!
 })
 
+// protect against cross site request forgery
+app.use(csurf({ cookie: true }));
 
 // Application routing
 app.use('/api/documents', notesRouter)
