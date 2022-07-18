@@ -14,7 +14,9 @@
 
     "build": "npx tsc",
 
-    "test": "env $(cat ../.env) mocha -r ts-node/register tests/chai/index.ts"
+    "test": "env $(cat ../.env) mocha -r ts-node/register tests/chai/index.ts",
+
+    "baseTest": "mocha -r ts-node/register tests/chai/index.ts"
 
   },
 
