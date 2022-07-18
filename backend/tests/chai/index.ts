@@ -22,8 +22,9 @@ describe('Base Route Test', () => {
     })
 })
 
-while(testState != -1 && testState < 1 ){
-
+while( true){
+ if (testState == -1 || testState > 1){
+     process.exit(0)
+ }
 }
 
-process.exit(0)
