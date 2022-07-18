@@ -4,6 +4,8 @@ import chaiHttp from 'chai-http'
 
 chai.use(chaiHttp)
 
+let testsSuccessful : boolean = false
+
 try {
 
 // Test base route to return string
@@ -12,12 +14,17 @@ try {
         it(`should return ${returnString}`, () => {
             return chai.request(app).get('/api')
                 .then(res => {
-                    chai.expect(res.text).to.equal("...")
+                    chai.expect(res.text).to.equal(returnString)
+                    testsSuccessful = res.text == returnString;
                 })
         })
     })
 } finally {
+    if (testsSuccessful) {
         process.exit(0)
+    } else{
+        process.exit(1)
+    }
 }
 
 
