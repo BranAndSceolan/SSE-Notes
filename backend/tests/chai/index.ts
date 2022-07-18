@@ -18,7 +18,7 @@ chai.use(chaiHttp)
                 })
         })
         it("result for github actions", ()=> {
-            if (config.get('nodb') == "true") {
+            if (config.get('githubactions') == "true") {
                 if (testResult) {
                     process.exit(0)
                 } else {
