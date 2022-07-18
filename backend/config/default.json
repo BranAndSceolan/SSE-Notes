@@ -1,4 +1,5 @@
 {
   "debug": "false",
-  "auth": "true"
+  "auth": "true",
+  "nodb": "false"
 }
