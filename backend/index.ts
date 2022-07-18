@@ -51,7 +51,7 @@ export const client = new Client({
 
 client.connect()
 client.query('SELECT NOW()', (err: Error, res: any) => {
-    if (res.rows) {
+    if (res.rows != undefined) {
         printToConsole("Error? " + err + " | Time: " + res.rows[0].now)
     }
     // client.end() Don't disconnect yet!
