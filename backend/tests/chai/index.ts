@@ -237,5 +237,4 @@ chai.use(chaiHttp)
 
     })
 
-
-
+process.exit(0)
