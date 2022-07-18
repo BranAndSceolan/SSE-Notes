@@ -10,6 +10,7 @@ import {
 } from "./routes/index"
 import crypto from "crypto";
 import { printToConsole} from "./modules/util/util";
+import config from "config";
 
 export const PORT = 8000
 
@@ -40,7 +41,6 @@ declare module "express-session" {
         signInId: bigint;
     }
 }
-
 export const client = new Client({
     user: process.env.NOTES_USER,
     host: 'localhost',
@@ -49,13 +49,13 @@ export const client = new Client({
     port: 5432,
 })
 
-client.connect()
-client.query('SELECT NOW()', (err: Error, res: any) => {
-    if (res.rows != undefined) {
+if (config.get("nodb")== false) {
+    client.connect()
+    client.query('SELECT NOW()', (err: Error, res: any) => {
         printToConsole("Error? " + err + " | Time: " + res.rows[0].now)
-    }
-    // client.end() Don't disconnect yet!
-})
+        // client.end() Don't disconnect yet!
+    })
+}
 
 
 // Application routing
