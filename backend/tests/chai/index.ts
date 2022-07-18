@@ -15,3 +15,4 @@ describe('Base Route Test', () => {
     })
 })
 
+process.exit(0)
