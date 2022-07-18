@@ -9,7 +9,7 @@ let testsSuccessful : boolean = false
 try {
 
 // Test base route to return string
-    describe('Base Route Test', () => {
+    describe('Base Route Test', async () => {
         const returnString: String = "Welcome to SSE-NOTES!"
         it(`should return ${returnString}`, () => {
             return chai.request(app).get('/api')
