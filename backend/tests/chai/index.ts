@@ -1,30 +1,31 @@
 import {app} from '../../index';
 import chai from 'chai';
 import chaiHttp from 'chai-http'
+import config from "config";
 
 chai.use(chaiHttp)
 
-let testsSuccessful : boolean = false
-
-try {
 
 // Test base route to return string
-    describe('Base Route Test', async () => {
+    describe('Base Route Test',  () => {
+        let testResult : boolean = false
         const returnString: String = "Welcome to SSE-NOTES!"
         it(`should return ${returnString}`, () => {
             return chai.request(app).get('/api')
                 .then(res => {
                     chai.expect(res.text).to.equal(returnString)
-                    testsSuccessful = res.text == returnString;
+                    testResult = (res.text == returnString)
                 })
         })
+        if (config.get('nodb')== true) {
+            if (testResult) {
+                process.exit(0)
+            } else{
+                process.exit(1)
+            }
+        }
+
     })
-} finally {
-    if (testsSuccessful) {
-        process.exit(0)
-    } else{
-        process.exit(1)
-    }
-}
+
 
 
