@@ -2,6 +2,7 @@ import {app} from '../../index';
 import chai, {expect} from 'chai';
 import chaiHttp from 'chai-http'
 import config from "config";
+import {registerTest} from "./register.test";
 import {printToConsole} from "../../modules/util/util";
 import crypto from "crypto";
 
