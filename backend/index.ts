@@ -9,7 +9,7 @@ import {
     authRouter, strengthRouter
 } from "./routes/index"
 import crypto from "crypto";
-import { printToConsole} from "./modules/util/util";
+import {printError, printToConsole} from "./modules/util/util";
 import config from "config";
 
 export const PORT = 8000
@@ -50,7 +50,7 @@ export const client = new Client({
 })
 
 if (config.get("nodb")== "false") {
-    client.connect()
+    client.connect().catch((err)=>{printError("connecting", err)})
     client.query('SELECT NOW()', (err: Error, res: any) => {
         printToConsole("Error? " + err + " | Time: " + res.rows[0].now)
         // client.end() Don't disconnect yet!
