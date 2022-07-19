@@ -17,20 +17,24 @@ chai.use(chaiHttp)
                 .then(res => {
                     chai.expect(res.text).to.equal(returnString)
                     printToConsole(returnString+ " " + res.text)
-                    printToConsole((res.text == returnString )+ " ")
                     testResult = (res.text == returnString)
+
                 })
         })
 
         it("register test", async ()=>{
             testResult = await registerTest()
+            printToConsole(testResult+"in register test")
         })
 
         it("result for github actions", ()=> {
             if (config.get('githubactions') == "true") {
+                printToConsole("in github actions")
                 if (testResult) {
+                    printToConsole("exit successfully")
                     process.exit(0)
                 } else {
+                    printToConsole("exit unsuccessfully")
                     process.exit(1)
                 }
             }
