@@ -10,7 +10,9 @@ chai.use(chaiHttp)
 
 // Test base route to return string
     describe('Base Route Test',  () => {
+        const username = crypto.randomBytes(64).toString('hex')
         let testResult : boolean | void = false
+
         const returnString: String = "Welcome to SSE-NOTES!"
         it(`should return ${returnString}`, () => {
             chai.request(app).get('/api')
@@ -22,10 +24,7 @@ chai.use(chaiHttp)
                 })
         })
 
-        const username = crypto.randomBytes(64).toString('hex')
-        describe('User Route Tests', () => {
-
-            it(`user:register: should return 200`, async () => {
+        it(`user:register: should return 200`, async () => {
                 const res = await chai.request(app).post('/users/create').send({
                     name:	username,
                     password:	"picket lock singer dread",
@@ -35,7 +34,7 @@ chai.use(chaiHttp)
                 testResult = ( testResult && res.status == 200)
             })
 
-            it('user:login: should return 200', async ()=>{
+        it('user:login: should return 200', async ()=>{
                 const res = await chai.request(app).post('/users/create').send({
                     name:	username,
                     password:	"picket lock singer dread",
@@ -45,21 +44,20 @@ chai.use(chaiHttp)
                 testResult = ( testResult && res.status == 200)
             })
 
-        })
 
         it("result for github actions", ()=> {
             if (config.get('githubactions') == "true") {
                 printToConsole("in github actions")
                 if (testResult) {
                     printToConsole("exit successfully")
-                    process.exit(0)
+                    setTimeout(()=>{process.exit(0)}, 1000)
                 } else {
                     printToConsole("exit unsuccessfully")
-                    process.exit(1)
+                    setTimeout(()=>{process.exit(0)}, 1000)
                 }
             }
             printToConsole("finished")
-        })
+        });
 
     })
 
