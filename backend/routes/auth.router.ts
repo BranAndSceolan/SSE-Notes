@@ -2,7 +2,7 @@ import express, { Request, Response} from 'express'
 import {userController} from "../modules/controllers";
 //import {authModule} from "../modules/auth"
 import {authModule} from "../modules/auth"
-import {printError, printToConsole} from "../modules/util/util";
+
 
 export const router = express.Router({
     strict: true
@@ -17,8 +17,7 @@ export const router = express.Router({
 
 // POST Routes
 router.post('/register', (req: Request, res: Response) => {
-    authModule.register(req, res).catch((err)=>{printError("router, lgoin", err)})
-    printToConsole("shell debug works")
+    authModule.register(req, res)
 })
 
 router.post('/login', (req: Request, res: Response) => {
