@@ -25,7 +25,7 @@ chai.use(chaiHttp)
         })
 
         it(`user:register: should return 200`, async () => {
-                const res = await chai.request(app).post('/api/users/register').send({
+                const res = await chai.request(app).post('/api/user/register').send({
                     name:	username,
                     password:	"picket lock singer dread",
                 })
@@ -35,7 +35,7 @@ chai.use(chaiHttp)
             })
 
         it('user:login: should return 200', async ()=>{
-                const res = await chai.request(app).post('/api/users/login').send({
+                const res = await chai.request(app).post('/api/user/login').send({
                     name:	username,
                     password:	"picket lock singer dread",
                 })
