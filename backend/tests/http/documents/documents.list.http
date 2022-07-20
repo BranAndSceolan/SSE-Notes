@@ -1,18 +1,18 @@
-### Preparation: login as Beni (should be able to get a list with public notes of various authors, but only his own private notes)
+### Preparation: login as Eleonore (should be able to get a list with public notes of various authors, but only her own private notes)
 POST localhost:8000/api/user/login
 Content-Type: application/json
 
 {
-  "name": "Beni",
-  "password": "123"
+  "name": "Eleonore",
+  "password": "Troubadour&444"
 }
 
-### Preparation: login as Ben (should be able to get a list with public notes of various authors, but only his own private notes)
+### Preparation: login as Elle (should be able to get a list with public notes of various authors, but only her own private notes)
 POST localhost:8000/api/user/login
 Content-Type: application/json
 
 {
-  "name": "Ben",
+  "name": "Ella",
   "password": "123"
 }
 
