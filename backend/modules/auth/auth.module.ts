@@ -82,6 +82,7 @@ export class AuthModule{
         let result = undefined
         try {
             result = await pool.query('SELECT * FROM users WHERE name like $1', [username])
+            // cheap validation first: password gets only hashed if it is affirmed that there is a user with the given name
         } catch (err){
             printError("login checking for password and user in Database",err)
             return res.status(500).send(internalErrorMessage)
