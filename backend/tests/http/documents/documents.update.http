@@ -1,10 +1,10 @@
-### Preparation: login as Beni (use if not already logged in)
+### Preparation: login as Eleonore (use if not already logged in)
 POST localhost:8000/api/user/login
 Content-Type: application/json
 
 {
-  "name": "Beni",
-  "password": "123"
+  "name": "Eleonore",
+  "password": "Troubadour&444"
 }
 
 ### Preparation: create a correctly written note (if you are using NODE_ENV=debug, you can look up the id in the console)
@@ -25,8 +25,8 @@ POST localhost:8000/api/user/login
 Content-Type: application/json
 
 {
-  "name": "Ben",
-  "password": "123"
+  "name": "Ella",
+  "password": "Troubadour&444"
 }
 
 ###

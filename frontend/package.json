@@ -13,7 +13,7 @@
     "@mdi/font": "6.9.96",
     "axios": "^0.27.2",
     "core-js": "^3.8.3",
-    "md-editor-v3": "^2.2.0",
+    "md-editor-v3": "^2.2.1",
     "roboto-fontface": "*",
     "sanitize-html": "^2.7.0",
     "vue": "^3.2.13",
