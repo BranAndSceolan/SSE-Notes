@@ -175,7 +175,7 @@ chai.use(chaiHttp)
             testResult = ( testResult && resCreate.status == 400)
         })
 
-        if(config.get('githubactions')=="true") {
+        if(config.get('githubactions')=="false") {
             // DOCUMENTS GET - CORRECT - PUBLIC
             it('documents:get. (own public note) should return 200', async () => {
                 const res = await agent.get('/api/documents/get/1')
