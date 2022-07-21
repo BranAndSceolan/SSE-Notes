@@ -23,6 +23,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: | 
+          docker-compose down --volumes
+          docker rmi notes/postgres
+          docker rmi postgres
           source .testenv
           cd backend
           env $(cat ../.testenv) docker-compose up --build --force-recreate -d
