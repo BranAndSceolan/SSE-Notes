@@ -206,19 +206,23 @@ chai.use(chaiHttp)
         it ('delete own public document' , async ()=>{
             const res = await agent.delete('/api/documents/delete/'+ publicNoteId)
             chai.expect(res.status).to.equal(200)
+            testResult = ( testResult && res.status == 200)
             // shouldn't be able to get document anymore now
             const resFail = await agent.get('/api/documents/get/'+publicNoteId)
             chai.expect(resFail.status).to.equal(403)
             chai.expect(resFail.text).to.equal("This note either doesn't exist or isn't your own.")
+            testResult = ( testResult && resFail.status == 403 && resFail.text == "This note either doesn't exist or isn't your own.")
         })
 
         it ('delete own private document' , async ()=>{
             const res = await agent.delete('/api/documents/delete/'+ privateNoteId)
             chai.expect(res.status).to.equal(200)
+            testResult = ( testResult && res.status == 200)
             // shouldn't be able to get document anymore now
             const resFail = await agent.get('/api/documents/get/'+privateNoteId)
             chai.expect(resFail.status).to.equal(403)
             chai.expect(resFail.text).to.equal("This note either doesn't exist or isn't your own.")
+            testResult = ( testResult && resFail.status == 403 && resFail.text == "This note either doesn't exist or isn't your own.")
         })
 
         // USER DELETE - CORRECT
@@ -254,9 +258,11 @@ chai.use(chaiHttp)
            const res = await agent.get('/api/documents/search/e')
             chai.expect(res.body).to.exist
             chai.expect(res.status).to.equal(200)
+            testResult = ( testResult && res.status == 200 && res.body)
             let array = res.body
             for (let i = 0; i < array.length; i++) {
                 chai.expect(array[i].private).to.be.false
+                testResult = (testResult && ! array[i].private)
             }
         });
 
