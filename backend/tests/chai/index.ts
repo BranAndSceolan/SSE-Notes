@@ -177,13 +177,24 @@ let testsSuccessful : boolean = false
             testResult = ( testResult && resCreate.status == 400)
         })
 
-        // DOCUMENTS GET - CORRECT - PUBLIC
-        it('documents:get. (own public note) should return 200', async () => {
-            const res = await agent.get('/api/documents/get/1')
-            chai.expect(res.status).to.equal(200)
-            chai.expect(res.body.title).to.exist
-            testResult = (testResult && res.status == 200 && res.body.title)
-        })
+        if(config.get('githubactions')=="false") {
+            // DOCUMENTS GET - CORRECT - PUBLIC
+            it('documents:get. (own public note) should return 200', async () => {
+                const res = await agent.get('/api/documents/get/1')
+
+                chai.expect(res.status).to.equal(200)
+                chai.expect(res.body.title).to.exist
+                testResult = (testResult && res.status == 200 && res.body.title)
+            })
+
+            // DOCUMENTS GET - CORRECT - OWN PRIVATE MESSAGE
+            it('documents:get. (own private note) should return 200', async () => {
+                const res = await agent.get('/api/documents/get/2')
+                chai.expect(res.status).to.equal(200)
+                chai.expect(res.body.title).to.exist
+                testResult = (testResult && res.status == 200 && res.body.title)
+            })
+        }
 
         // DOCUMENTS LIST - CORRECT - OWN NOTES
         it ('documents:List should return 200', async ()=>{
