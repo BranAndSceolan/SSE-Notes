@@ -7,7 +7,6 @@ import crypto from "crypto";
 
 chai.use(chaiHttp)
 
-
 // Test base route to return string
     describe('Base Route Test',  () => {
         const username = crypto.randomBytes(64).toString('hex')
