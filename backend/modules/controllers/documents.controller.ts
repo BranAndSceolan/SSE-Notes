@@ -141,6 +141,26 @@ export class DocumentsController {
 
     }
 
+    public async search(req: Request, res: Response): Promise<Response>{
+        let searchValues : string;
+        let searchResult = undefined
+        if(req && req.params && req.params.search &&( searchValues = req.params.search)){
+            try {
+                searchResult = await pool.query("SELECT content, private, title, name, notes.id AS id FROM notes INNER JOIN users ON notes.authorid = users.id WHERE private=FALSE AND title LIKE '%' || $1 || '%' OR content LIKE '%' || $1 || '%' OR name LIKE '%' || $1 || '%'" , [searchValues])
+            } catch (e) {
+                printError("Search Notes", e)
+                return res.status(500).send(internalErrorMessage)
+            }
+            if(searchResult.rows) {
+                return res.status(200).send(searchResult.rows)
+            } else{
+                return res.status(500).send(internalErrorMessage)
+            }
+        } else {
+            return res.status(400).send("No search parameter.")
+        }
+    }
+
     public async delete(req: Request, res: Response): Promise<Response> {
         let deleted = undefined
         try{
