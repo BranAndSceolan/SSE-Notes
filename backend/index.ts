@@ -1,15 +1,17 @@
 import express from "express";
 import {Application, Request, Response} from "express";
 import helmet from "helmet";
-import {Client} from "pg";
+import {Pool} from "pg";
 import session from "express-session";
+import rateLimit from "express-rate-limit"
 
 import {
     notesRouter,
     authRouter, strengthRouter
 } from "./routes/index"
 import crypto from "crypto";
-import { printToConsole} from "./modules/util/util";
+import {printToConsole} from "./modules/util/util";
+
 
 export const PORT = 8000
 
@@ -23,6 +25,14 @@ app.use(helmet())
 app.use(express.urlencoded({
     extended: true
 }));
+
+
+const rateLimiter = rateLimit({
+    windowMs: 10 * 60 * 1000, // 1 minute
+    max: 10 * 5, // Limit each IP to 5 requests per `window` (here, per 1 minute)
+    standardHeaders: false, // Do not return rate limit info in the `RateLimit-*` headers
+    legacyHeaders: false,
+})
 
 app.use(session({
     resave: true, // save session even if not modified
@@ -41,7 +51,7 @@ declare module "express-session" {
     }
 }
 
-export const client = new Client({
+export const pool = new Pool({
     user: process.env.NOTES_USER,
     host: 'localhost',
     database: process.env.POSTGRES_DB,
@@ -49,11 +59,17 @@ export const client = new Client({
     port: 5432,
 })
 
-client.connect()
-client.query('SELECT NOW()', (err: Error, res: any) => {
-    printToConsole("Error? " + err + " | Time: " + res.rows[0].now)
-    // client.end() Don't disconnect yet!
+pool.query('SELECT NOW()', (err: Error, res: any) => {
+    if (err){
+    printToConsole("Error? " + err  )
+    }
+    if (res && res.rows && res.rows[0]){
+        printToConsole("Time " + res.rows[0].now)
+    }
 })
+
+// Apply rateLimit to the whole app (every route) to protect against ddos attacks
+app.use(rateLimiter)
 
 
 // Application routing
