@@ -11,6 +11,8 @@ chai.use(chaiHttp)
     describe('Base Route Test',  () => {
         const username = crypto.randomBytes(64).toString('hex')
         let testResult : boolean | void = false
+        let privateNoteId : number;
+        let publicNoteId : number;
         const agent = chai.request.agent(app)
         const returnString: String = "Welcome to SSE-NOTES!"
         it(`should return ${returnString}`, () => {
@@ -93,7 +95,8 @@ chai.use(chaiHttp)
                 content: "We are logged in",
                 private: false
             })
-            printToConsole(res.text)
+            chai.expect(resCreate.body.id).to.exist
+            publicNoteId = resCreate.body.id
             chai.expect(resCreate.status).to.equal(201)
             testResult = ( testResult && resCreate.status == 201)
         })
@@ -101,12 +104,14 @@ chai.use(chaiHttp)
         // DOCUMENTS CREATE - CORRECT
         it ('documents:create should return 200', async ()=>{
         const resCreate = await  agent.post('/api/documents/create').send({
-            title: "This should succeed a second time",
-            content: "We are logged in",
-            private: true
-        })
-        chai.expect(resCreate.status).to.equal(201)
-        testResult = ( testResult && resCreate.status == 201)
+                title: "This should succeed a second time",
+                content: "We are logged in",
+                private: true
+            })
+            chai.expect(resCreate.body.id).to.exist
+            privateNoteId = resCreate.body.id
+            chai.expect(resCreate.status).to.equal(201)
+            testResult = ( testResult && resCreate.status == 201)
         })
 
         // DOCUMENTS CREATE - WRONG - MISSING TITLE
@@ -174,28 +179,46 @@ chai.use(chaiHttp)
             testResult = ( testResult && resCreate.status == 400)
         })
 
-        if (config.get('githubactions') == "true") {
             // DOCUMENTS GET - CORRECT - PUBLIC
             it('documents:get. (own public note) should return 200', async () => {
-                const res = await agent.get('/api/documents/get/1')
+                const res = await agent.get('/api/documents/get/'+publicNoteId)
                 chai.expect(res.status).to.equal(200)
                 chai.expect(res.body.title).to.exist
                 testResult = (testResult && res.status == 200 && res.body.title)
             })
 
-            it('documents:get. (own public note) should return 200', async () => {
-                const res = await agent.get('/api/documents/get/2')
+            it('documents:get. (private note) should return 200', async () => {
+                const res = await agent.get('/api/documents/get/'+privateNoteId)
                 chai.expect(res.status).to.equal(200)
                 chai.expect(res.body.title).to.exist
                 testResult = (testResult && res.status == 200 && res.body.title)
             })
-        }
+
         // DOCUMENTS LIST - CORRECT - OWN NOTES
         it ('documents:List should return 200', async ()=>{
             const res = await agent.get('/api/documents/list')
             chai.expect(res.status).to.equal(200)
             chai.expect(res.body[0]).to.exist
             testResult = (testResult && res.status == 200 && res.body[0])
+        })
+
+        // DOCUMENTS DELETE
+        it ('delete own public document' , async ()=>{
+            const res = await agent.delete('/api/documents/delete/'+ publicNoteId)
+            chai.expect(res.status).to.equal(200)
+            // shouldn't be able to get document anymore now
+            const resFail = await agent.get('/api/documents/get/'+publicNoteId)
+            chai.expect(resFail.status).to.equal(403)
+            chai.expect(resFail.text).to.equal("This note either doesn't exist or isn't your own.")
+        })
+
+        it ('delete own private document' , async ()=>{
+            const res = await agent.delete('/api/documents/delete/'+ privateNoteId)
+            chai.expect(res.status).to.equal(200)
+            // shouldn't be able to get document anymore now
+            const resFail = await agent.get('/api/documents/get/'+privateNoteId)
+            chai.expect(resFail.status).to.equal(403)
+            chai.expect(resFail.text).to.equal("This note either doesn't exist or isn't your own.")
         })
 
         // USER DELETE - CORRECT

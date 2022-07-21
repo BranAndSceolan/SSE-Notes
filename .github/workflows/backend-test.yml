@@ -23,6 +23,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: | 
+          docker-compose
           source .testenv
           cd backend
           env $(cat ../.testenv) docker-compose up --build --force-recreate -d

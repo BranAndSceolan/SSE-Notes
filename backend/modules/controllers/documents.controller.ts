@@ -40,7 +40,7 @@ export class DocumentsController {
              insertResult = await pool.query(insertNoteStatement, noteValues)
              if (insertResult?.rowCount == 1){
                  printToConsole("[+] added note with id: "+ insertResult.rows[0].id)
-                 return res.status(201).send(insertResult.rows[0].toString())
+                 return res.status(201).send(insertResult.rows[0])
              } else {
                  printToConsole("Something went wrong while creating a note!")
                  return res.status(500).send(internalErrorMessage)
@@ -59,20 +59,21 @@ export class DocumentsController {
         let result
         if (noteId) {
             try {
-               result = await pool.query('SELECT * FROM notes INNER JOIN users ON users.id = notes.authorid WHERE $1 = notes.id', [noteId])
+               result = await pool.query('SELECT content, private, title, name, notes.id AS id, notes.authorid AS aid FROM notes INNER JOIN users ON users.id = notes.authorid WHERE $1 = notes.id', [noteId])
             } catch (e) {
                 printToConsole("Error while getting specific note: "+ e)
                 res.status(500).send(internalErrorMessage)
             }
             if (result?.rowCount == 1) {
-                printToConsole(result.rows[0])
-                if (!result.rows[0].private) {
-                    res.status(200).send(new CreditedNote(result.rows[0].content, result.rows[0].private, result.rows[0].title, result.rows[0].name, result.rows[0].id))
+                const note = result.rows[0]
+                printToConsole(note)
+                if (!note.private) {
+                    res.status(200).send(new CreditedNote(note.content, note.private, note.title, note.name, note.id, note.aid))
                 } else {
-                    if (req.session.signInId == result.rows[0].authorId) {
-                        res.status(200).send(new CreditedNote(result.rows[0].content, result.rows[0].private, result.rows[0].title, result.rows[0].name, result.rows[0].id))
+                    if (req.session.signInId == note.aid) {
+                        res.status(200).send(new CreditedNote(note.content, note.private, note.title, note.name, note.id, note.aid))
                     } else{
-                        printError("get note", "Tried to get private note from other user")
+                        printError("get note", "Tried to get private note from other user \n aid: "+ note.aid +" sessionid: "+ req.session.signInId)
                         res.status(403).send("This note either doesn't exist or isn't your own.")
                     }
                 }
