@@ -25,6 +25,7 @@ app.use(express.urlencoded({
     extended: true
 }));
 
+
 const rateLimiter = rateLimit({
     windowMs:  60 * 1000, // 1 minute
     max: 5, // Limit each IP to 5 requests per `window` (here, per 1 minute)
@@ -57,10 +58,13 @@ export const pool = new Pool({
     port: 5432,
 })
 
-//client.connect()
 pool.query('SELECT NOW()', (err: Error, res: any) => {
-    printToConsole("Error? " + err + " | Time: " + res.rows[0].now)
-    // client.end() Don't disconnect yet!
+    if (err){
+    printToConsole("Error? " + err  )
+    }
+    if (res && res.rows && res.rows[0]){
+        printToConsole("Time " + res.rows[0].now)
+    }
 })
 
 // Apply rateLimit to the whole app (every route) to protect against ddos attacks
