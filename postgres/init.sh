@@ -2,7 +2,7 @@
 set -e
 
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" << EOSQL
-CREATE USER $NOTES_USER PASSWORD '$NOTES_PASSWORD';
+CREATE USER notes PASSWORD '$NOTES_PASSWORD';
 
 CREATE table users(
     id bigserial PRIMARY KEY ,
@@ -15,7 +15,7 @@ CREATE table notes(
     title varchar not null,
     content varchar not null,
     private boolean not null ,
-    authorID integer not null references users(id)
+    authorID integer not null references users(id) ON DELETE CASCADE
 );
 
 GRANT USAGE ON SEQUENCE users_id_seq TO notes;

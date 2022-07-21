@@ -10,7 +10,8 @@ import {
     authRouter, strengthRouter
 } from "./routes/index"
 import crypto from "crypto";
-import { printToConsole} from "./modules/util/util";
+import {printToConsole} from "./modules/util/util";
+
 
 export const PORT = 8000
 
@@ -25,9 +26,10 @@ app.use(express.urlencoded({
     extended: true
 }));
 
+
 const rateLimiter = rateLimit({
-    windowMs:  60 * 1000, // 1 minute
-    max: 5, // Limit each IP to 5 requests per `window` (here, per 1 minute)
+    windowMs: 10 * 60 * 1000, // 1 minute
+    max: 10 * 5, // Limit each IP to 5 requests per `window` (here, per 1 minute)
     standardHeaders: false, // Do not return rate limit info in the `RateLimit-*` headers
     legacyHeaders: false,
 })
@@ -57,10 +59,13 @@ export const pool = new Pool({
     port: 5432,
 })
 
-//client.connect()
 pool.query('SELECT NOW()', (err: Error, res: any) => {
-    printToConsole("Error? " + err + " | Time: " + res.rows[0].now)
-    // client.end() Don't disconnect yet!
+    if (err){
+    printToConsole("Error? " + err  )
+    }
+    if (res && res.rows && res.rows[0]){
+        printToConsole("Time " + res.rows[0].now)
+    }
 })
 
 // Apply rateLimit to the whole app (every route) to protect against ddos attacks
