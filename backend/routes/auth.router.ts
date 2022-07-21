@@ -3,6 +3,7 @@ import {userController} from "../modules/controllers";
 //import {authModule} from "../modules/auth"
 import {authModule} from "../modules/auth"
 
+
 export const router = express.Router({
     strict: true
 })
