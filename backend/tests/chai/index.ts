@@ -174,14 +174,22 @@ chai.use(chaiHttp)
             testResult = ( testResult && resCreate.status == 400)
         })
 
-        // DOCUMENTS GET - CORRECT - PUBLIC
-        it('documents:get. (own public note) should return 200', async () => {
-            const res = await agent.get('/api/documents/get/1')
-            chai.expect(res.status).to.equal(200)
-            chai.expect(res.body.title).to.exist
-            testResult = (testResult && res.status == 200 && res.body.title)
-        })
+        if (config.get('githubactions') == "true") {
+            // DOCUMENTS GET - CORRECT - PUBLIC
+            it('documents:get. (own public note) should return 200', async () => {
+                const res = await agent.get('/api/documents/get/1')
+                chai.expect(res.status).to.equal(200)
+                chai.expect(res.body.title).to.exist
+                testResult = (testResult && res.status == 200 && res.body.title)
+            })
 
+            it('documents:get. (own public note) should return 200', async () => {
+                const res = await agent.get('/api/documents/get/2')
+                chai.expect(res.status).to.equal(200)
+                chai.expect(res.body.title).to.exist
+                testResult = (testResult && res.status == 200 && res.body.title)
+            })
+        }
         // DOCUMENTS LIST - CORRECT - OWN NOTES
         it ('documents:List should return 200', async ()=>{
             const res = await agent.get('/api/documents/list')
@@ -191,33 +199,43 @@ chai.use(chaiHttp)
         })
 
         // USER DELETE - CORRECT
-        it ('user:delete. should return 200 and delete as well as log out user', async ()=>{
+        it ('user:delete. should return 200 and delete as well as log out user', async ()=> {
             const res = await agent.delete('/api/user/delete')
-            printToConsole("1"+res.text)
             chai.expect(res.status).to.equal(200)
             testResult = (testResult && res.status == 200)
             // register to prove user was in fact deleted (if not, there would be a status 400 because of duplicate name
             const resReg = await agent.post('/api/user/register').send({
-                name:	username,
-                password:	"picket lock singer dread"
+                name: username,
+                password: "picket lock singer dread"
             })
-            printToConsole("2"+res.text)
+
             chai.expect(resReg.status).to.equal(200)
             // Delete user again
             const res2 = await agent.delete('/api/user/delete')
-            printToConsole("3"+res.text)
+
             chai.expect(res2.status).to.equal(200)
             testResult = (testResult && res2.status == 200)
             // Deleting the user also logs us out
-            const resCreate = await  agent.post('/api/documents/create').send({
+            const resCreate = await agent.post('/api/documents/create').send({
                 title: "This should fail",
                 content: "We aren't logged in",
                 private: true
             })
-            printToConsole("4"+res.text)
+
             chai.expect(resCreate.status).to.equal(401)
-            testResult = ( testResult && resCreate.status == 401)
+            testResult = (testResult && resCreate.status == 401)
         })
+
+        // SEARCH (searches public notes for a string. Checks author name, content and title
+        it('should return public notes containing the search value in the url', async ()=> {
+           const res = await agent.get('/api/documents/search/e')
+            chai.expect(res.body).to.exist
+            chai.expect(res.status).to.equal(200)
+            let array = res.body
+            for (let i = 0; i < array.length; i++) {
+                chai.expect(array[i].private).to.be.false
+            }
+        });
 
         it("result for github actions", ()=> {
 
