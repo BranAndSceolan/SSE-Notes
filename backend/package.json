@@ -12,7 +12,13 @@
 
     "start": "env $(cat ../.env) ./node_modules/.bin/nodemon",
 
-    "build": "npx tsc"
+    "build": "npx tsc",
+
+    "test": "env $(cat ../.env) mocha -r ts-node/register tests/chai/index.ts",
+
+    "github": "env $(cat ../.testenv) mocha -r ts-node/register tests/chai/index.ts",
+
+    "baseTest": "NODE_ENV=baseTest mocha -r ts-node/register tests/chai/index.ts"
 
   },
 
@@ -38,6 +44,10 @@
 
     "argon2": "^0.28.7",
 
+    "chai": "^4.3.6",
+
+    "chai-http": "^4.3.0",
+
     "express": "^4.18.1",
 
     "express-rate-limit": "^6.4.0",
@@ -45,6 +55,8 @@
     "express-session": "^1.17.3",
 
     "helmet": "^5.1.0",
+
+    "mocha": "^10.0.0",
 
     "node-postgres": "^0.6.2",
 
@@ -69,6 +81,8 @@
   "devDependencies": {
 
     "@types/config": "^0.0.41",
+
+    "@types/mocha": "^9.1.1",
 
     "@types/zxcvbn": "^4.4.1",
 
