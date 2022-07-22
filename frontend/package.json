@@ -15,7 +15,7 @@
     "core-js": "^3.23.5",
     "md-editor-v3": "^2.2.1",
     "roboto-fontface": "*",
-    "sanitize-html": "^2.7.0",
+    "sanitize-html": "^2.7.1",
     "vue": "^3.2.13",
     "vue-router": "^4.1.2",
     "vuetify": "^3.0.0-beta.5",
