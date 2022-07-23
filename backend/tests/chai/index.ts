@@ -202,6 +202,67 @@ chai.use(chaiHttp)
             testResult = (testResult && res.status == 200 && res.body[0])
         })
 
+        // SEARCH (searches public notes for a string. Checks author name, content and title)
+        // SEARCH - Title
+        // enter search value for title
+        it('should return public notes with title', async ()=> {
+            const res = await agent.get('/api/documents/search/succeed')
+            chai.expect(res.body).to.be.an("array")
+            chai.expect(res.body).to.not.be.empty
+            chai.expect(res.status).to.equal(200)
+            testResult = ( testResult && res.status == 200 && res.body.length > 0)
+            let array = res.body
+            for (let i = 0; i < array.length; i++) {
+                chai.expect(array[i].private).to.be.false
+                testResult = (testResult && ! array[i].private)
+            }
+        });
+
+        // SEARCH - Content
+        // enter search value for content
+        it('should return public notes', async ()=> {
+            const res = await agent.get('/api/documents/search/logge')
+            chai.expect(res.body).to.be.an("array")
+            chai.expect(res.body).to.not.be.empty
+            chai.expect(res.status).to.equal(200)
+            testResult = ( testResult && res.status == 200 && res.body.length > 0)
+            let array = res.body
+            for (let i = 0; i < array.length; i++) {
+                chai.expect(array[i].private).to.be.false
+                testResult = (testResult && ! array[i].private)
+            }
+        });
+
+        // SEARCH - author
+        // enter search value for author
+        it('should return public notes', async ()=> {
+            const res = await agent.get('/api/documents/search/'+username)
+            chai.expect(res.body).to.be.an("array")
+            chai.expect(res.body).to.not.be.empty
+            chai.expect(res.status).to.equal(200)
+            testResult = ( testResult && res.status == 200 && res.body.length > 0)
+            let array = res.body
+            for (let i = 0; i < array.length; i++) {
+                chai.expect(array[i].private).to.be.false
+                testResult = (testResult && ! array[i].private)
+            }
+        });
+
+        // SEARCH - no result
+        // enter search value for author
+        it('should return public notes', async ()=> {
+            const res = await agent.get('/api/documents/search/Wollfilzofenhandschuhe')
+            chai.expect(res.body).to.be.an("array")
+            chai.expect(res.body).to.be.empty
+            chai.expect(res.status).to.equal(200)
+            testResult = ( testResult && res.status == 200 && res.body.length == 0)
+            let array = res.body
+            for (let i = 0; i < array.length; i++) {
+                chai.expect(array[i].private).to.be.false
+                testResult = (testResult && ! array[i].private)
+            }
+        });
+
         // DOCUMENTS DELETE
         it ('delete own public document' , async ()=>{
             const res = await agent.delete('/api/documents/delete/'+ publicNoteId)
@@ -252,19 +313,6 @@ chai.use(chaiHttp)
             chai.expect(resCreate.status).to.equal(401)
             testResult = (testResult && resCreate.status == 401)
         })
-
-        // SEARCH (searches public notes for a string. Checks author name, content and title
-        it('should return public notes containing the search value in the url', async ()=> {
-           const res = await agent.get('/api/documents/search/e')
-            chai.expect(res.body).to.exist
-            chai.expect(res.status).to.equal(200)
-            testResult = ( testResult && res.status == 200 && res.body)
-            let array = res.body
-            for (let i = 0; i < array.length; i++) {
-                chai.expect(array[i].private).to.be.false
-                testResult = (testResult && ! array[i].private)
-            }
-        });
 
         it("result for github actions", ()=> {
 

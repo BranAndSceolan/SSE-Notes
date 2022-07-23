@@ -1,2 +1,2 @@
 ### Test: search
-GET localhost:8000/api/documents/search/a
+GET localhost:8000/api/documents/search/test
