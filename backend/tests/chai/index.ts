@@ -5,6 +5,7 @@ import config from "config";
 import {printToConsole} from "../../modules/util/util";
 import crypto from "crypto";
 
+
 chai.use(chaiHttp)
 
 // Test base route to return string
@@ -194,7 +195,7 @@ chai.use(chaiHttp)
 
         // USER DELETE - CORRECT
         it ('user:delete. should return 200 and delete as well as log out user', async ()=>{
-            const res = await agent.delete('/api/user/delete')
+            const res = await agent.delete('/api/user/delete').set("csrf-token", csrfToken)
             printToConsole("1"+res.text)
             chai.expect(res.status).to.equal(200)
             testResult = (testResult && res.status == 200)
@@ -206,7 +207,7 @@ chai.use(chaiHttp)
             printToConsole("2"+res.text)
             chai.expect(resReg.status).to.equal(200)
             // Delete user again
-            const res2 = await agent.delete('/api/user/delete')
+            const res2 = await agent.delete('/api/user/delete').set("csrf-token", csrfToken)
             printToConsole("3"+res.text)
             chai.expect(res2.status).to.equal(200)
             testResult = (testResult && res2.status == 200)
