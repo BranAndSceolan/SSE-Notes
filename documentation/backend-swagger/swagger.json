@@ -226,6 +226,44 @@
         }
       }
     },
+    "/api/documents/search/{searchValue}": {
+      "get": {
+        "summary": "searches only in public notes, no need to be logged in",
+        "requestBody": {
+          "description": "parameter needed for the search are in the url",
+          "required": false,
+          "content": {
+
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/searchValue"
+          }
+        ],
+        "tags": ["Documents"],
+        "responses": {
+          "200": {
+            "description": "searched for note(s) (a successful search can also have no results, if there never was anything to find!)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/List"
+                },
+                "examples": {
+                  "result found": {
+                    "$ref": "#/components/examples/loggedOutUsersListExample"
+                  },
+                  "no result found": {
+                    "value":[]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/documents/update/{docId}": {
       "put": {
         "security": [
@@ -717,6 +755,20 @@
       }
     },
     "parameters": {
+      "searchValue": {
+        "name": "searchValue",
+        "in": "path",
+        "required": true,
+        "description": "a url encoded string",
+        "examples": {
+            "search": {
+              "$ref": "#/components/examples/searchValue1"
+          }
+        },
+        "schema": {
+          "type": "string"
+        }
+      },
       "docId": {
         "name": "docId",
         "in": "path",
@@ -802,6 +854,10 @@
       "missingPrivacyFlag": {
         "summary": "Missing or invalid privacy flag",
         "value": "Privacy flag is missing or invalid"
+      },
+      "searchValue1": {
+        "summary": "value to search for in title, content and author name of notes",
+        "value": "movie"
       },
       "idOfPublicNote":{
         "summary": "id for example of public message",
