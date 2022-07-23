@@ -53,8 +53,8 @@ export class DocumentsController {
 
     public async get(req: Request, res: Response): Promise <void> {
         let noteId
-        if(req.params.id) {
-            noteId = BigInt(req.params.id)
+        if(req.session.signInId) {
+            noteId = BigInt(req.session.signInId)
         }
         let result
         if (noteId) {

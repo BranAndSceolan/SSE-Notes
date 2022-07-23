@@ -14,9 +14,19 @@ import {
 import crypto from "crypto";
 import {printToConsole} from "./modules/util/util";
 import config from "config";
+import bodyParser from "body-parser";
 
 
 export const PORT = 8000
+
+// Because the standard typescript type 'Session & Partial<SessionData> does not include the attributes signInId
+// and csrfSecret we add them by overwriting express-session
+declare module "express-session" {
+    interface Session {
+        signInId: bigint;
+        csrfSecret: any;
+    }
+}
 
 
 // Verbindung zur Datenbank herstellen
@@ -36,8 +46,8 @@ const rateLimiter = rateLimit({
 })
 
 if (config.get("auth")== "true") {
+    app.use(bodyParser.urlencoded({ extended: false }))
     app.use(cookieParser())
-    app.use(csurf({cookie: true}))
 
     app.use(session({
         resave: true, // save session even if not modified
@@ -49,6 +59,8 @@ if (config.get("auth")== "true") {
         // only then will this application be secure!
         cookie: {maxAge: 15 * 60 * 1000}
     }));
+    app.use(csurf({cookie: {httpOnly: true}}))
+
 } else{
     app.use(session({
         resave: true, // save session even if not modified
@@ -60,12 +72,6 @@ if (config.get("auth")== "true") {
         // only then will this application be secure!
         cookie: {maxAge: 15 * 60 * 1000}
 }))
-}
-
-declare module "express-session" {
-    interface Session {
-        signInId: bigint;
-    }
 }
 
 export const pool = new Pool({
@@ -94,8 +100,8 @@ app.use('/api/documents', notesRouter)
 app.use('/api/user', authRouter)
 app.use('/api/strength', strengthRouter)
 
-app.get('/api', (_req: Request, res: Response) => {
-    res.status(200).send("Welcome to SSE-NOTES!")
+app.get('/api', (req: Request, res: Response) => {
+    res.status(200).send({message:"Welcome to SSE-NOTES!",  csrfToken: req.csrfToken()})
 });
 
 // Start server
