@@ -1,8 +1,9 @@
 import express from "express";
 import {Application, Request, Response} from "express";
 import helmet from "helmet";
-import {Client} from "pg";
+import {Pool} from "pg";
 import session from "express-session";
+import rateLimit from "express-rate-limit"
 import csurf from "csurf"
 import cookieParser from "cookie-parser"
 
@@ -11,8 +12,9 @@ import {
     authRouter, strengthRouter
 } from "./routes/index"
 import crypto from "crypto";
-import { printToConsole} from "./modules/util/util";
+import {printToConsole} from "./modules/util/util";
 import config from "config";
+
 
 export const PORT = 8000
 
@@ -26,9 +28,16 @@ app.use(helmet())
 app.use(express.urlencoded({
     extended: true
 }));
+const rateLimiter = rateLimit({
+    windowMs: 10 * 60 * 1000, // 1 minute
+    max: 10 * 5, // Limit each IP to 5 requests per `window` (here, per 1 minute)
+    standardHeaders: false, // Do not return rate limit info in the `RateLimit-*` headers
+    legacyHeaders: false,
+})
 
-if (config.get("auth") == true) {
+if (config.get("auth")== "true") {
     app.use(cookieParser())
+    app.use(csurf({cookie: true}))
 
     app.use(session({
         resave: true, // save session even if not modified
@@ -36,21 +45,21 @@ if (config.get("auth") == true) {
         rolling: true, // forces cookie set on every response needed to set expiration
         secret: crypto.randomInt(0, 1000000).toString(), // encrypt session-id in cookie using "secret" as modifier
         name: "myawesomecookie", // name of the cookie set is set by the server
-        cookie: {secure: true, maxAge: 15*60*1000}, //enable this as soon as https-certificates are included, and we use https for our messages
+        //TODO: cookie: {secure: true} //enable this as soon as https-certificates are included and we use https for our messages
         // only then will this application be secure!
+        cookie: {maxAge: 15 * 60 * 1000}
     }));
-    // protect against cross site request forgery
-    app.use(csurf({ cookie: true }));
-} else {
+} else{
     app.use(session({
         resave: true, // save session even if not modified
         saveUninitialized: true, // save session even if not used
         rolling: true, // forces cookie set on every response needed to set expiration
         secret: crypto.randomInt(0, 1000000).toString(), // encrypt session-id in cookie using "secret" as modifier
         name: "myawesomecookie", // name of the cookie set is set by the server
-        cookie: {maxAge: 15*60*1000}, //enable this as soon as https-certificates are included, and we use https for our messages
+        //TODO: cookie: {secure: true} //enable this as soon as https-certificates are included and we use https for our messages
         // only then will this application be secure!
-    }));
+        cookie: {maxAge: 15 * 60 * 1000}
+}))
 }
 
 declare module "express-session" {
@@ -58,7 +67,8 @@ declare module "express-session" {
         signInId: bigint;
     }
 }
-export const client = new Client({
+
+export const pool = new Pool({
     user: process.env.NOTES_USER,
     host: 'localhost',
     database: process.env.POSTGRES_DB,
@@ -66,11 +76,17 @@ export const client = new Client({
     port: 5432,
 })
 
-client.connect()
-client.query('SELECT NOW()', (err: Error, res: any) => {
-    printToConsole("Error? " + err + " | Time: " + res.rows[0].now)
-    // client.end() Don't disconnect yet!
+pool.query('SELECT NOW()', (err: Error, res: any) => {
+    if (err){
+    printToConsole("Error? " + err  )
+    }
+    if (res && res.rows && res.rows[0]){
+        printToConsole("Time " + res.rows[0].now)
+    }
 })
+
+// Apply rateLimit to the whole app (every route) to protect against ddos attacks
+app.use(rateLimiter)
 
 
 // Application routing
