@@ -62,6 +62,16 @@ chai.use(chaiHttp)
             testResult = ( testResult && res.status == 400)
         })
 
+        it('user:register: weak password', async ()=>{
+            const res = await  agent.post('/api/user/register').send({
+                name:	username,
+                password:	"password1!",
+            })
+            chai.expect(res.status).to.equal(400)
+            printToConsole(res.text)
+            testResult = ( testResult && res.status == 400)
+        })
+
         // CORRECT - Logout and fail request you need to be logged in for
         it('user:logout: should return 200 and other requests should fail', async ()=>{
             const res = await agent.post('/api/user/logout').send({
