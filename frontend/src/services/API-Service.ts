@@ -1,7 +1,7 @@
 import axios, {AxiosError, AxiosInstance, AxiosResponse} from "axios";
 
 const apiAxiosInstance: AxiosInstance = axios.create({
-    //if dev env variable is set use localhost port, else assume production where reverse a proxy should handle this correctly
+    //if dev .env variable is set use localhost port, else assume production where reverse a proxy should handle this correctly
     baseURL: process.env.DEV ? 'https://localhost:8000/api/' : '/api'
 });
 

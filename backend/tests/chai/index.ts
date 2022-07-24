@@ -13,6 +13,8 @@ chai.use(chaiHttp)
         const username = crypto.randomBytes(64).toString('hex')
         let csrfToken: string;
         let testResult : boolean | void = false
+        let privateNoteId : number;
+        let publicNoteId : number;
         const agent = chai.request.agent(app)
         const returnString: String = "Welcome to SSE-NOTES!"
         it(`should return ${returnString}`, () => {
@@ -63,6 +65,16 @@ chai.use(chaiHttp)
             testResult = ( testResult && res.status == 400)
         })
 
+        it('user:register: weak password', async ()=>{
+            const res = await  agent.post('/api/user/register').send({
+                name:	username,
+                password:	"password1!",
+            })
+            chai.expect(res.status).to.equal(400)
+            printToConsole(res.text)
+            testResult = ( testResult && res.status == 400)
+        })
+
         // CORRECT - Logout and fail request you need to be logged in for
         it('user:logout: should return 200 and other requests should fail', async ()=>{
             const res = await agent.post('/api/user/logout').set("csrf-token", csrfToken).send({
@@ -96,7 +108,8 @@ chai.use(chaiHttp)
                 content: "We are logged in",
                 private: false
             })
-            printToConsole(res.text)
+            chai.expect(resCreate.body.id).to.exist
+            publicNoteId = resCreate.body.id
             chai.expect(resCreate.status).to.equal(201)
             testResult = ( testResult && resCreate.status == 201)
         })
@@ -104,12 +117,14 @@ chai.use(chaiHttp)
         // DOCUMENTS CREATE - CORRECT
         it ('documents:create should return 200', async ()=>{
         const resCreate = await  agent.post('/api/documents/create').set("csrf-token", csrfToken).send({
-            title: "This should succeed a second time",
-            content: "We are logged in",
-            private: true
-        })
-        chai.expect(resCreate.status).to.equal(201)
-        testResult = ( testResult && resCreate.status == 201)
+                title: "This should succeed a second time",
+                content: "We are logged in",
+                private: true
+            })
+            chai.expect(resCreate.body.id).to.exist
+            privateNoteId = resCreate.body.id
+            chai.expect(resCreate.status).to.equal(201)
+            testResult = ( testResult && resCreate.status == 201)
         })
 
         // DOCUMENTS CREATE - WRONG - MISSING TITLE
@@ -177,13 +192,20 @@ chai.use(chaiHttp)
             testResult = ( testResult && resCreate.status == 400)
         })
 
-        // DOCUMENTS GET - CORRECT - PUBLIC
-        it('documents:get. (own public note) should return 200', async () => {
-            const res = await agent.get('/api/documents/get/1')
-            chai.expect(res.status).to.equal(200)
-            chai.expect(res.body.title).to.exist
-            testResult = (testResult && res.status == 200 && res.body.title)
-        })
+            // DOCUMENTS GET - CORRECT - PUBLIC
+            it('documents:get. (own public note) should return 200', async () => {
+                const res = await agent.get('/api/documents/get/'+publicNoteId)
+                chai.expect(res.status).to.equal(200)
+                chai.expect(res.body.title).to.exist
+                testResult = (testResult && res.status == 200 && res.body.title)
+            })
+
+            it('documents:get. (private note) should return 200', async () => {
+                const res = await agent.get('/api/documents/get/'+privateNoteId)
+                chai.expect(res.status).to.equal(200)
+                chai.expect(res.body.title).to.exist
+                testResult = (testResult && res.status == 200 && res.body.title)
+            })
 
         // DOCUMENTS LIST - CORRECT - OWN NOTES
         it ('documents:List should return 200', async ()=>{
@@ -191,6 +213,90 @@ chai.use(chaiHttp)
             chai.expect(res.status).to.equal(200)
             chai.expect(res.body[0]).to.exist
             testResult = (testResult && res.status == 200 && res.body[0])
+        })
+
+        // SEARCH (searches public notes for a string. Checks author name, content and title)
+        // SEARCH - Title
+        // enter search value for title
+        it('should return public notes with title', async ()=> {
+            const res = await agent.get('/api/documents/search/succeed')
+            chai.expect(res.body).to.be.an("array")
+            chai.expect(res.body).to.not.be.empty
+            chai.expect(res.status).to.equal(200)
+            testResult = ( testResult && res.status == 200 && res.body.length > 0)
+            let array = res.body
+            for (let i = 0; i < array.length; i++) {
+                chai.expect(array[i].private).to.be.false
+                testResult = (testResult && ! array[i].private)
+            }
+        });
+
+        // SEARCH - Content
+        // enter search value for content
+        it('should return public notes', async ()=> {
+            const res = await agent.get('/api/documents/search/logge')
+            chai.expect(res.body).to.be.an("array")
+            chai.expect(res.body).to.not.be.empty
+            chai.expect(res.status).to.equal(200)
+            testResult = ( testResult && res.status == 200 && res.body.length > 0)
+            let array = res.body
+            for (let i = 0; i < array.length; i++) {
+                chai.expect(array[i].private).to.be.false
+                testResult = (testResult && ! array[i].private)
+            }
+        });
+
+        // SEARCH - author
+        // enter search value for author
+        it('should return public notes', async ()=> {
+            const res = await agent.get('/api/documents/search/'+username)
+            chai.expect(res.body).to.be.an("array")
+            chai.expect(res.body).to.not.be.empty
+            chai.expect(res.status).to.equal(200)
+            testResult = ( testResult && res.status == 200 && res.body.length > 0)
+            let array = res.body
+            for (let i = 0; i < array.length; i++) {
+                chai.expect(array[i].private).to.be.false
+                testResult = (testResult && ! array[i].private)
+            }
+        });
+
+        // SEARCH - no result
+        // enter search value for author
+        it('should return public notes', async ()=> {
+            const res = await agent.get('/api/documents/search/Wollfilzofenhandschuhe')
+            chai.expect(res.body).to.be.an("array")
+            chai.expect(res.body).to.be.empty
+            chai.expect(res.status).to.equal(200)
+            testResult = ( testResult && res.status == 200 && res.body.length == 0)
+            let array = res.body
+            for (let i = 0; i < array.length; i++) {
+                chai.expect(array[i].private).to.be.false
+                testResult = (testResult && ! array[i].private)
+            }
+        });
+
+        // DOCUMENTS DELETE
+        it ('delete own public document' , async ()=>{
+            const res = await agent.delete('/api/documents/delete/'+ publicNoteId)
+            chai.expect(res.status).to.equal(200)
+            testResult = ( testResult && res.status == 200)
+            // shouldn't be able to get document anymore now
+            const resFail = await agent.get('/api/documents/get/'+publicNoteId)
+            chai.expect(resFail.status).to.equal(403)
+            chai.expect(resFail.text).to.equal("This note either doesn't exist or isn't your own.")
+            testResult = ( testResult && resFail.status == 403 && resFail.text == "This note either doesn't exist or isn't your own.")
+        })
+
+        it ('delete own private document' , async ()=>{
+            const res = await agent.delete('/api/documents/delete/'+ privateNoteId)
+            chai.expect(res.status).to.equal(200)
+            testResult = ( testResult && res.status == 200)
+            // shouldn't be able to get document anymore now
+            const resFail = await agent.get('/api/documents/get/'+privateNoteId)
+            chai.expect(resFail.status).to.equal(403)
+            chai.expect(resFail.text).to.equal("This note either doesn't exist or isn't your own.")
+            testResult = ( testResult && resFail.status == 403 && resFail.text == "This note either doesn't exist or isn't your own.")
         })
 
         // USER DELETE - CORRECT
@@ -201,25 +307,24 @@ chai.use(chaiHttp)
             testResult = (testResult && res.status == 200)
             // register to prove user was in fact deleted (if not, there would be a status 400 because of duplicate name
             const resReg = await agent.post('/api/user/register').set("csrf-token", csrfToken).send({
-                name:	username,
-                password:	"picket lock singer dread"
+                name: username,
+                password: "picket lock singer dread"
             })
-            printToConsole("2"+res.text)
+
             chai.expect(resReg.status).to.equal(200)
             // Delete user again
             const res2 = await agent.delete('/api/user/delete').set("csrf-token", csrfToken)
-            printToConsole("3"+res.text)
             chai.expect(res2.status).to.equal(200)
             testResult = (testResult && res2.status == 200)
             // Deleting the user also logs us out
-            const resCreate = await  agent.post('/api/documents/create').set("csrf-token", csrfToken).send({
+            const resCreate = await agent.post('/api/documents/create').set("csrf-token", csrfToken).send({
                 title: "This should fail",
                 content: "We aren't logged in",
                 private: true
             })
-            printToConsole("4"+res.text)
+
             chai.expect(resCreate.status).to.equal(401)
-            testResult = ( testResult && resCreate.status == 401)
+            testResult = (testResult && resCreate.status == 401)
         })
 
         it("result for github actions", ()=> {
