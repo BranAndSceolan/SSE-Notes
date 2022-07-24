@@ -147,7 +147,7 @@ export class DocumentsController {
         let searchResult = undefined
         if(req && req.params && req.params.search &&( searchValues = req.params.search)){
             try {
-                searchResult = await pool.query("SELECT content, private, title, name, notes.id AS id FROM notes INNER JOIN users ON notes.authorid = users.id WHERE private=FALSE AND (title LIKE '%' || $1 || '%' OR content LIKE '%' || $1 || '%' OR name LIKE '%' || $1 || '%')" , [searchValues])
+                    searchResult = await pool.query("SELECT content, private, title, name, notes.id AS id FROM notes INNER JOIN users ON notes.authorid = users.id WHERE private=FALSE AND (title LIKE '%' || $1 || '%' OR content LIKE '%' || $1 || '%' OR name LIKE '%' || $1 || '%') UNION SELECT content, private, title, name, notes.id AS id FROM notes INNER JOIN users ON notes.authorid = users.id WHERE private=TRUE AND notes.authorid=$2 AND (title LIKE '%' || $1 || '%' OR content LIKE '%' || $1 || '%' OR name LIKE '%' || $1 || '%')", [searchValues, req.session.signInId])
             } catch (e) {
                 printError("Search Notes", e)
                 return res.status(500).send(internalErrorMessage)

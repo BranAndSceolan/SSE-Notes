@@ -228,7 +228,7 @@
     },
     "/api/documents/search/{searchValue}": {
       "get": {
-        "summary": "searches only in public notes, no need to be logged in",
+        "summary": "searches in public notes if you are NOT logged in and in public and your private Notes if you are logged in",
         "requestBody": {
           "description": "parameter needed for the search are in the url",
           "required": false,
