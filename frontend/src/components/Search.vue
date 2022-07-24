@@ -40,7 +40,6 @@ const table = ref<Array<Note>>();
 const searchTerm = ref("");
 
 function triggerSearch(){
-  console.log("searching")
   router.push("/search?q=" + encodeURIComponent(searchTerm.value)).then(searchNotes);
 }
 

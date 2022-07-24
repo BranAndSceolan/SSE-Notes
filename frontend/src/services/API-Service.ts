@@ -63,10 +63,9 @@ class APIService {
         });
     }
 
-    //This function expects the query to be encoded as a URI
     searchDocuments(query: string){
         return new Promise<AxiosResponse>((resolve, reject) => {
-            this.axios.get("/documents/search/" + query).then((res: AxiosResponse) => {
+            this.axios.get("/documents/search/" + encodeURIComponent(query)).then((res: AxiosResponse) => {
                 resolve(res);
             }).catch((error: AxiosError) => {
                 reject(error);
