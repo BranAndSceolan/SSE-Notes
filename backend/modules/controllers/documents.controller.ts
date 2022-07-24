@@ -68,10 +68,10 @@ export class DocumentsController {
                 const note = result.rows[0]
                 printToConsole(note)
                 if (!note.hidden) {
-                    res.status(200).send(new CreditedNote(note.content, note.hidden, note.title, note.name, note.id, note.aid))
+                    res.status(200).send(new CreditedNote(note.content, note.hidden, note.title, note.name, note.id))
                 } else {
                     if (req.session.signInId == note.aid) {
-                        res.status(200).send(new CreditedNote(note.content, note.hidden, note.title, note.name, note.id, note.aid))
+                        res.status(200).send(new CreditedNote(note.content, note.hidden, note.title, note.name, note.id))
                     } else{
                         printError("get note", "Tried to get private note from other user \n aid: "+ note.aid +" sessionid: "+ req.session.signInId)
                         res.status(404).send("This note either doesn't exist or isn't your own.")
@@ -153,7 +153,12 @@ export class DocumentsController {
                 return res.status(500).send(internalErrorMessage)
             }
             if(searchResult.rows) {
-                return res.status(200).send(searchResult.rows)
+                const notes: CreditedNote[] = []
+                for( let i = 0; i < searchResult.rowCount; i++){
+                    const l = searchResult.rows[i]
+                    notes.push(new CreditedNote(l.content, l.hidden, l.title, l.name, l.id))
+                }
+                return res.status(200).send(notes)
             } else{
                 return res.status(500).send(internalErrorMessage)
             }

@@ -22,14 +22,14 @@ export class CreditedNote implements DocumentI{
     title: string;
     authorName: string;
     id?: bigint;
-    authorId?: bigint;
+    authorid?: bigint;
 
     constructor(content: string, privacy: boolean, title: string, authorName: string, id?: bigint, authorId?: bigint) {
         this.title = title
         this.hidden = privacy
         this.content = content
         this.authorName = authorName
-        this.authorId = authorId
+        this.authorid = authorId
         this.id = id
     }
 }
