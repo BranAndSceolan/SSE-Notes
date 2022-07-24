@@ -10,7 +10,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr v-for="note in table" :key="note.id">
+    <tr v-for="note in table" :key="note.id" @click="router.push('/documents/' + note.id);" style="cursor: pointer">
       <td>{{note.title}}</td>
       <td>{{note.authorName}}</td>
       <td>{{note.content.substring(0,30)}}</td>
@@ -29,6 +29,7 @@ import {ref} from "vue";
 import {Note} from "@/libraries/Types";
 import {API} from "@/services/API-Service";
 import {AxiosResponse} from "axios";
+import router from "@/router";
 
 const table = ref<Array<Note>>();
 
