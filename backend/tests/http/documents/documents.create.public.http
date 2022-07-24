@@ -14,7 +14,7 @@ Content-Type: application/json
 {
   "title": "Hallo",
   "content": "test!",
-  "private": false
+  "hidden": false
 }
 
 ### Test: create public note with missing title
@@ -22,8 +22,8 @@ POST localhost:8000/api/documents/create
 Content-Type: application/json
 
 {
- "content": "Diese Nachricht hat keinen Titel!",
-  "private": false
+  "content": "Diese Nachricht hat keinen Titel!",
+  "hidden": false
 }
 
 ### Test: create public note with empty title
@@ -33,7 +33,7 @@ Content-Type: application/json
 {
   "title": "",
   "content": "Dies ist eine öffentliche Nachricht!",
-  "private": false
+  "hidden": false
 }
 
 ### Test: create public note with missing content
@@ -42,7 +42,7 @@ Content-Type: application/json
 
 {
   "title": "Hey",
-  "private": false
+  "hidden": false
 }
 
 ### Test: create public note with empty content
@@ -52,7 +52,7 @@ Content-Type: application/json
 {
   "title": "OH!",
   "content": "",
-  "private": false
+  "hidden": false
 }
 
 ### Test: create public note with empty title and content
@@ -62,7 +62,7 @@ Content-Type: application/json
 {
   "title": "",
   "content": "",
-  "private": false
+  "hidden": false
 }
 
 ### Test: create a public note with missing title and content
@@ -70,7 +70,7 @@ POST localhost:8000/api/documents/create
 Content-Type: application/json
 
 {
-  "private": false
+  "hidden": false
 }
 
 ### Test: create a note without body
@@ -90,7 +90,7 @@ Content-Type: application/json
 {
   "title": "",
   "content": "",
-  "private": ""
+  "hidden": ""
 }
 
 ### Test: create a note with wrong types (number)
@@ -100,7 +100,7 @@ Content-Type: application/json
 {
   "title": 13,
   "content": 14,
-  "private": 15
+  "hidden": 15
 }
 
 ### Test: create a note with wrong types (bool for text)
@@ -110,7 +110,7 @@ Content-Type: application/json
 {
   "title": true,
   "content": true,
-  "private": true
+  "hidden": true
 }
 
 ### Test: create a note with wrong types (Not bool convertable string for private)
@@ -120,7 +120,7 @@ Content-Type: application/json
 {
   "title": "XXX",
   "content": "xxxxxxx",
-  "private": "löasklf"
+  "hidden": "löasklf"
 }
 
 ### Test: create a note with wrong types (Not bool convertable number for private)
@@ -130,7 +130,7 @@ Content-Type: application/json
 {
   "title": "XXX",
   "content": "xxxxxxx",
-  "private": 5
+  "hidden": 5
 }
 
 ### Test: create a note with missing entry for attribute private
@@ -140,7 +140,7 @@ Content-Type: application/json
 {
   "title": "XXX",
   "content": "xxxxxxx",
-  "private": ""
+  "hidden": ""
 }
 
 ### Test: create a note without attribute private
@@ -159,7 +159,7 @@ Content-Type: application/json
 {
   "title": "XXX",
   "content": "xxxxxxx",
-  "private": "no"
+  "hidden": "no"
 }
 
 ### Test: create a note with convertable string for attribute private ("NO")
@@ -169,7 +169,7 @@ Content-Type: application/json
 {
   "title": "XXX",
   "content": "xxxxxxx",
-  "private": "NO"
+  "hidden": "NO"
 }
 
 ### Test: create a note with convertable string for attribute private ("n")
@@ -179,7 +179,7 @@ Content-Type: application/json
 {
   "title": "XXX",
   "content": "xxxxxxx",
-  "private": "n"
+  "hidden": "n"
 }
 
 ### Test: create a note with convertable string for attribute private ("N")
@@ -189,7 +189,7 @@ Content-Type: application/json
 {
   "title": "XXX",
   "content": "xxxxxxx",
-  "private": "N"
+  "hidden": "N"
 }
 ### Test: create a note with convertable string for attribute private ("false")
 POST localhost:8000/api/documents/create
@@ -198,7 +198,7 @@ Content-Type: application/json
 {
   "title": "XXX",
   "content": "xxxxxxx",
-  "private": "false"
+  "hidden": "false"
 }
 
 ### Test: create a note with convertable string for attribute private ("FALSE")
@@ -208,7 +208,7 @@ Content-Type: application/json
 {
   "title": "XXX",
   "content": "xxxxxxx",
-  "private": "FALSE"
+  "hidden": "FALSE"
 }
 
 ### Test: create a note with convertable string for attribute private ("f")
@@ -218,7 +218,7 @@ Content-Type: application/json
 {
   "title": "XXX",
   "content": "xxxxxxx",
-  "private": "f"
+  "hidden": "f"
 }
 
 ### Test: create a note with convertable string for attribute private ("F")
@@ -228,7 +228,7 @@ Content-Type: application/json
 {
   "title": "XXX",
   "content": "xxxxxxx",
-  "private": "F"
+  "hidden": "F"
 }
 
 ### Test: create a note with convertable string for attribute private ("off")
@@ -238,7 +238,7 @@ Content-Type: application/json
 {
   "title": "XXX",
   "content": "xxxxxxx",
-  "private": "off"
+  "hidden": "off"
 }
 
 ### Test: create a note with convertable string for attribute private ("OFF")
@@ -248,7 +248,7 @@ Content-Type: application/json
 {
   "title": "XXX",
   "content": "xxxxxxx",
-  "private": "OFF"
+  "hidden": "OFF"
 }
 
 ### Test: create a note with convertable string for attribute private ("0")
@@ -258,7 +258,7 @@ Content-Type: application/json
 {
   "title": "XXX",
   "content": "xxxxxxx",
-  "private": "0"
+  "hidden": "0"
 }
 
 ### Test: create a note with convertable number for attribute private (0)
@@ -268,5 +268,5 @@ Content-Type: application/json
 {
   "title": "XXX",
   "content": "xxxxxxx",
-  "private": 0
+  "hidden": 0
 }

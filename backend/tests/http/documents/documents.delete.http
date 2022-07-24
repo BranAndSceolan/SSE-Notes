@@ -14,7 +14,7 @@ Content-Type: application/json
 {
   "title": "Hallo",
   "content": "DeleteTest!",
-  "private": false
+  "hidden": false
 }
 
 ### Preparation: logout (to confirm that logged out you cannot delete any notes)

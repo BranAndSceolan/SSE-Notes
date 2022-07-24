@@ -39,8 +39,8 @@ app.use(express.urlencoded({
     extended: true
 }));
 const rateLimiter = rateLimit({
-    windowMs: 10 * 60 * 1000, // 1 minute
-    max: 10 * 5, // Limit each IP to 5 requests per `window` (here, per 1 minute)
+    windowMs: 60 * 1000, // 1 minute
+    max: 60, // Limit each IP to 5 requests per `window` (here, per 1 minute)
     standardHeaders: false, // Do not return rate limit info in the `RateLimit-*` headers
     legacyHeaders: false,
 })

@@ -228,7 +228,7 @@
     },
     "/api/documents/search/{searchValue}": {
       "get": {
-        "summary": "searches only in public notes, no need to be logged in",
+        "summary": "searches in public notes if you are NOT logged in and in public and your private Notes if you are logged in",
         "requestBody": {
           "description": "parameter needed for the search are in the url",
           "required": false,
@@ -871,15 +871,15 @@
         "value": {
           "title": "Remember to bring your own food!",
           "content": "While we have prepared some drinks for the movie night tomorrow, we did not have time to get food for everyone. So if you think you might get hungry, especially if you have special dietary needs, please bring your own food.",
-          "private": false
+          "hidden": false
         }
       },
       "publicDocExample": {
         "value": {
           "title": "Remember to bring your own food!",
           "content": "While we have prepared some drinks for the movie night tomorrow, we did not have time to get food for everyone. So if you think you might get hungry, especially if you have special dietary needs, please bring your own food.",
-          "private": false,
-          "name": "thm_movie_committee",
+          "hidden": false,
+          "authorName": "thm_movie_committee",
           "id": 298
         }
       },
@@ -887,8 +887,8 @@
         "value": {
           "title": "Bake some cupcakes",
           "content": "For the movie night. **Use NO ALMONDS** Sam is allergic.",
-          "private": true,
-          "name": "Kali",
+          "hidden": true,
+          "authorName": "Kali",
           "id": 155
         }
       },
@@ -897,15 +897,15 @@
           {
            "title": "Bake some cupcakes",
            "content": "For the movie night. **Use NO ALMONDS** Sam is allergic.",
-           "private": true,
-           "name": "Kali",
+           "hidden": true,
+           "authorName": "Kali",
            "id": 155
          },
           {
              "title": "Remember to bring your own food!",
              "content": "While we have prepared some drinks for the movie night tomorrow, we did not have time to get food for everyone. So if you think you might get hungry, especially if you have special dietary needs, please bring your own food.",
-             "private": false,
-             "name": "thm_movie_committee",
+             "hidden": false,
+             "authorName": "thm_movie_committee",
              "id": 298
           }
         ]
@@ -915,8 +915,8 @@
           {
             "title": "Remember to bring your own food!",
             "content": "While we have prepared some drinks for the movie night tomorrow, we did not have time to get food for everyone. So if you think you might get hungry, especially if you have special dietary needs, please bring your own food.",
-            "private": false,
-            "name": "thm_movie_committee",
+            "hidden": false,
+            "authorName": "thm_movie_committee",
             "id": 298
           }
         ]
@@ -988,10 +988,10 @@
         "required": [
           "title",
           "content",
-          "private"
+          "hidden"
         ],
         "properties": {
-          "private": {
+          "hidden": {
             "type": "boolean"
           },
           "content": {
@@ -1007,8 +1007,8 @@
         "required": [
           "title",
           "content",
-          "private",
-          "name",
+          "hidden",
+          "authorName",
           "id"
         ],
         "properties": {
@@ -1016,10 +1016,10 @@
             "type": "integer",
             "format": "bigint"
           },
-          "name": {
+          "authorName": {
             "type": "string"
           },
-          "private": {
+          "hidden": {
             "type": "boolean"
           },
           "content": {

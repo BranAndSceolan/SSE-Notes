@@ -1,8 +1,7 @@
 import axios, {AxiosError, AxiosInstance, AxiosResponse} from "axios";
 
 const apiAxiosInstance: AxiosInstance = axios.create({
-    //if dev .env variable is set use localhost port, else assume production where reverse a proxy should handle this correctly
-    baseURL: process.env.DEV ? 'https://localhost:8000/api/' : '/api'
+    baseURL: '/api'
 });
 
 class APIService {
@@ -17,12 +16,12 @@ class APIService {
         //todo: please change the backend to expect booleans, they are stored as booleans in the DB, then correct this
         let privateInt = 0;
         if(privateNote){privateInt = 1}
-        return new Promise((resolve, reject) => {
+        return new Promise<AxiosResponse>((resolve, reject) => {
             this.axios.post("/documents/create",
                 {
                 title: title,
                 content: text,
-                private: privateInt
+                hidden: privateInt
                 })
                 .then((res: AxiosResponse) => {
                     resolve(res);
@@ -33,17 +32,49 @@ class APIService {
 
         });
     }
-    /*
-    todo: implement methods
 
-    getDocument(){}
+    getDocument(id: bigint){
+        return new Promise<AxiosResponse>((resolve, reject) => {
+            this.axios.get("/documents/get/" + id).then((res: AxiosResponse) => {
+                resolve(res);
+            }).catch((error: AxiosError) => {
+                reject(error);
+            })
+        });
+    }
 
-    deleteDocument(){}
+    deleteDocument(id: bigint){
+        return new Promise<AxiosResponse>((resolve, reject) => {
+            this.axios.delete("/documents/delete/" + id).then((res: AxiosResponse) => {
+                resolve(res);
+            }).catch((error: AxiosError) => {
+                reject(error);
+            })
+        });
+    }
 
-    getDocumentList(){}
-    */
+    getDocumentList(){
+        return new Promise<AxiosResponse>((resolve, reject) => {
+            this.axios.get("/documents/list").then((res: AxiosResponse) => {
+                resolve(res);
+            }).catch((error: AxiosError) => {
+                reject(error);
+            })
+        });
+    }
+
+    searchDocuments(query: string){
+        return new Promise<AxiosResponse>((resolve, reject) => {
+            this.axios.get("/documents/search/" + encodeURIComponent(query)).then((res: AxiosResponse) => {
+                resolve(res);
+            }).catch((error: AxiosError) => {
+                reject(error);
+            })
+        });
+    }
+
     registerUser(username: string, password: string){
-        return new Promise((resolve, reject) => {
+        return new Promise<AxiosResponse>((resolve, reject) => {
             this.axios.post("/user/register", {name: username, password: password})
                 .then((res: AxiosResponse) => {
                     resolve(res);
@@ -58,7 +89,7 @@ class APIService {
     //deleteUser(){}
 
     login(username: string, password: string){
-        return new Promise((resolve, reject) => {
+        return new Promise<AxiosResponse>((resolve, reject) => {
             this.axios.post("/user/login", {name: username, password: password})
                 .then((res: AxiosResponse) => {
                     resolve(res);
@@ -71,7 +102,7 @@ class APIService {
     }
 
     logout(){
-        return new Promise((resolve, reject) => {
+        return new Promise<AxiosResponse>((resolve, reject) => {
             this.axios.post("/user/logout")
                 .then((res: AxiosResponse) => {
                     resolve(res);
