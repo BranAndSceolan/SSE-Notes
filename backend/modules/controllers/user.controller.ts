@@ -1,5 +1,5 @@
 import {Request, Response} from "express";
-import {client} from "../../index";
+import {pool} from "../../index";
 import {internalErrorMessage, printError} from "../util/util";
 
 export class UserController{
@@ -12,7 +12,7 @@ export class UserController{
                 res.clearCookie("myawesomecookie");
             });
             try {
-                let result = await client.query('DELETE FROM users WHERE id = $1 RETURNING *', [userId])
+                let result = await pool.query('DELETE FROM users WHERE id = $1 RETURNING *', [userId])
                 if (result) {
                     res.status(200).send("user "+ result.rows[0].name + " deleted!")
                 } else {
