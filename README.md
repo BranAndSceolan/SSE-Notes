@@ -33,3 +33,9 @@ It consists of a server and a client which make the writing and saving of privat
     * remove images to ensure the database is going to be recreated ``docker rmi postgres notes/postgres adminer``
     * create and start new containers and volumes: ``env $(cat ../.env) docker-compose up``
     * start the server using nodemon (script should cause nodemon to use env-Variables): ``npm start``
+
+## Tests
+  * backend
+    * chai
+      * to run local chai tests, ensure you are using a development build like explained above
+      * use ``npm run test`` instead of ``npm start`` to start your local tests
