@@ -316,7 +316,7 @@ chai.use(chaiHttp)
 
         // USER DELETE - CORRECT
         it ('user:delete. should return 200 and delete as well as log out user', async ()=>{
-            const res = await agent.delete('/api/user/delete').set("csrf-token", csrfToken)
+            const res = await agent.delete('/api/user/delete').set("csrf-token", csrfToken).send("")
             chai.expect(res.status).to.equal(200)
             testResult = (testResult && res.status == 200)
             // register to prove user was in fact deleted (if not, there would be a status 400 because of duplicate name
@@ -327,7 +327,7 @@ chai.use(chaiHttp)
 
             chai.expect(resReg.status).to.equal(200)
             // Delete user again
-            const res2 = await agent.delete('/api/user/delete').set("csrf-token", csrfToken)
+            const res2 = await agent.delete('/api/user/delete').set("csrf-token", csrfToken).send("")
             chai.expect(res2.status).to.equal(200)
             testResult = (testResult && res2.status == 200)
             // Deleting the user also logs us out
