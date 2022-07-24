@@ -266,7 +266,7 @@ chai.use(chaiHttp)
         });
 
         it('should only return public notes if user is not logged in', async ()=>{
-            const resLogout = await agent.post('/api/user/logout')
+            const resLogout = await agent.post('/api/user/logout').set("csrf-token", csrfToken)
             chai.expect(resLogout.status).to.equal(200)
             testResult = (testResult && resLogout.status == 200)
             const resSearch = await agent.get('/api/documents/search/succeed')
@@ -282,7 +282,7 @@ chai.use(chaiHttp)
 
         // LOGIN AGAIN to enable further tests
         it('user:login', async ()=> {
-            const res = await agent.post('/api/user/login').send({
+            const res = await agent.post('/api/user/login').set("csrf-token", csrfToken).send({
                 name: username,
                 password: "picket lock singer dread"
             })

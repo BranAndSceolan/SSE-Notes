@@ -13,7 +13,6 @@ import {
 } from "./routes/index"
 import crypto from "crypto";
 import {printToConsole} from "./modules/util/util";
-import config from "config";
 import bodyParser from "body-parser";
 
 
@@ -45,7 +44,6 @@ const rateLimiter = rateLimit({
     legacyHeaders: false,
 })
 
-if (config.get("auth")== "true") {
     app.use(bodyParser.urlencoded({ extended: false }))
     app.use(cookieParser())
 
@@ -61,18 +59,6 @@ if (config.get("auth")== "true") {
     }));
     app.use(csurf({cookie: {httpOnly: true}}))
 
-} else{
-    app.use(session({
-        resave: true, // save session even if not modified
-        saveUninitialized: true, // save session even if not used
-        rolling: true, // forces cookie set on every response needed to set expiration
-        secret: crypto.randomInt(0, 1000000).toString(), // encrypt session-id in cookie using "secret" as modifier
-        name: "myawesomecookie", // name of the cookie set is set by the server
-        //TODO: cookie: {secure: true} //enable this as soon as https-certificates are included and we use https for our messages
-        // only then will this application be secure!
-        cookie: {maxAge: 15 * 60 * 1000}
-}))
-}
 
 export const pool = new Pool({
     user: process.env.NOTES_USER,
