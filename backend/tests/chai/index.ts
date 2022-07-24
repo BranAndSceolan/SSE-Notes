@@ -215,7 +215,7 @@ chai.use(chaiHttp)
         // SEARCH (searches public notes for a string. Checks author name, content and title)
         // SEARCH - Title
         // enter search value for title
-        it('should return public notes with title', async ()=> {
+        it('should return public and private notes (check finding word in title)', async ()=> {
             const res = await agent.get('/api/documents/search/succeed')
             chai.expect(res.body).to.be.an("array")
             chai.expect(res.body).to.not.be.empty
@@ -223,14 +223,14 @@ chai.use(chaiHttp)
             testResult = ( testResult && res.status == 200 && res.body.length > 0)
             let array = res.body
             for (let i = 0; i < array.length; i++) {
-                chai.expect(array[i].private).to.be.false
-                testResult = (testResult && ! array[i].private)
+                chai.expect([false, true]).to.contain(array[i].private)
+                testResult = testResult && (array[i].private == true || array[i].private == false)
             }
         });
 
         // SEARCH - Content
-        // enter search value for content
-        it('should return public notes', async ()=> {
+        // enter search value for content - returns public and private if logged in
+        it('should return public and private notes', async ()=> {
             const res = await agent.get('/api/documents/search/logge')
             chai.expect(res.body).to.be.an("array")
             chai.expect(res.body).to.not.be.empty
@@ -238,40 +238,56 @@ chai.use(chaiHttp)
             testResult = ( testResult && res.status == 200 && res.body.length > 0)
             let array = res.body
             for (let i = 0; i < array.length; i++) {
-                chai.expect(array[i].private).to.be.false
-                testResult = (testResult && ! array[i].private)
+                chai.expect([false, true]).to.contain(array[i].private)
+                testResult = testResult && (array[i].private == true || array[i].private == false)
             }
         });
 
         // SEARCH - author
         // enter search value for author
-        it('should return public notes', async ()=> {
+        it('should return public and private notes', async ()=> {
             const res = await agent.get('/api/documents/search/'+username)
             chai.expect(res.body).to.be.an("array")
             chai.expect(res.body).to.not.be.empty
             chai.expect(res.status).to.equal(200)
             testResult = ( testResult && res.status == 200 && res.body.length > 0)
-            let array = res.body
-            for (let i = 0; i < array.length; i++) {
-                chai.expect(array[i].private).to.be.false
-                testResult = (testResult && ! array[i].private)
-            }
         });
 
         // SEARCH - no result
         // enter search value for author
-        it('should return public notes', async ()=> {
+        it('should emty array, because there is no note including the String "Wollfilzofenhandschuhe', async ()=> {
             const res = await agent.get('/api/documents/search/Wollfilzofenhandschuhe')
             chai.expect(res.body).to.be.an("array")
             chai.expect(res.body).to.be.empty
             chai.expect(res.status).to.equal(200)
             testResult = ( testResult && res.status == 200 && res.body.length == 0)
-            let array = res.body
+        });
+
+        it('should only return public notes if user is not logged in', async ()=>{
+            const resLogout = await agent.post('/api/user/logout')
+            chai.expect(resLogout.status).to.equal(200)
+            testResult = (testResult && resLogout.status == 200)
+            const resSearch = await agent.get('/api/documents/search/succeed')
+            chai.expect(resSearch.body).to.be.an("array")
+            chai.expect(resSearch.status).to.equal(200)
+            testResult = ( testResult && resSearch.status == 200 && resSearch.body.length < 0)
+            let array = resSearch.body
             for (let i = 0; i < array.length; i++) {
                 chai.expect(array[i].private).to.be.false
                 testResult = (testResult && ! array[i].private)
             }
-        });
+        })
+
+        // LOGIN AGAIN to enable further tests
+        it('user:login', async ()=> {
+            const res = await agent.post('/api/user/login').send({
+                name: username,
+                password: "picket lock singer dread"
+            })
+            expect(res).to.have.cookie('myawesomecookie')
+            chai.expect(res.status).to.equal(200)
+            testResult = (testResult && res.status == 200)
+        })
 
         // DOCUMENTS DELETE
         it ('delete own public document' , async ()=>{
