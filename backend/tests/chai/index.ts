@@ -66,7 +66,7 @@ chai.use(chaiHttp)
         })
 
         it('user:register: weak password', async ()=>{
-            const res = await  agent.post('/api/user/register').send({
+            const res = await  agent.post('/api/user/register').set("csrf-token", csrfToken).send({
                 name:	username,
                 password:	"password1!",
             })
@@ -98,7 +98,6 @@ chai.use(chaiHttp)
                 name: username,
                 password: "picket lock singer dread"
             })
-            printToConsole(res.text)
             expect(res).to.have.cookie('myawesomecookie')
             chai.expect(res.status).to.equal(200)
             testResult = ( testResult && res.status == 200)
@@ -192,20 +191,20 @@ chai.use(chaiHttp)
             testResult = ( testResult && resCreate.status == 400)
         })
 
-            // DOCUMENTS GET - CORRECT - PUBLIC
-            it('documents:get. (own public note) should return 200', async () => {
-                const res = await agent.get('/api/documents/get/'+publicNoteId)
-                chai.expect(res.status).to.equal(200)
-                chai.expect(res.body.title).to.exist
-                testResult = (testResult && res.status == 200 && res.body.title)
-            })
+        // DOCUMENTS GET - CORRECT - PUBLIC
+        it('documents:get. (own public note) should return 200', async () => {
+            const res = await agent.get('/api/documents/get/'+publicNoteId)
+            chai.expect(res.status).to.equal(200)
+            chai.expect(res.body.title).to.exist
+            testResult = (testResult && res.status == 200 && res.body.title)
+        })
 
-            it('documents:get. (private note) should return 200', async () => {
-                const res = await agent.get('/api/documents/get/'+privateNoteId)
-                chai.expect(res.status).to.equal(200)
-                chai.expect(res.body.title).to.exist
-                testResult = (testResult && res.status == 200 && res.body.title)
-            })
+        it('documents:get. (private note) should return 200', async () => {
+            const res = await agent.get('/api/documents/get/'+privateNoteId)
+            chai.expect(res.status).to.equal(200)
+            chai.expect(res.body.title).to.exist
+            testResult = (testResult && res.status == 200 && res.body.title)
+        })
 
         // DOCUMENTS LIST - CORRECT - OWN NOTES
         it ('documents:List should return 200', async ()=>{
@@ -278,7 +277,7 @@ chai.use(chaiHttp)
 
         // DOCUMENTS DELETE
         it ('delete own public document' , async ()=>{
-            const res = await agent.delete('/api/documents/delete/'+ publicNoteId)
+            const res = await agent.delete('/api/documents/delete/'+ publicNoteId).set("csrf-token", csrfToken)
             chai.expect(res.status).to.equal(200)
             testResult = ( testResult && res.status == 200)
             // shouldn't be able to get document anymore now
@@ -289,7 +288,7 @@ chai.use(chaiHttp)
         })
 
         it ('delete own private document' , async ()=>{
-            const res = await agent.delete('/api/documents/delete/'+ privateNoteId)
+            const res = await agent.delete('/api/documents/delete/'+ privateNoteId).set("csrf-token", csrfToken)
             chai.expect(res.status).to.equal(200)
             testResult = ( testResult && res.status == 200)
             // shouldn't be able to get document anymore now
@@ -301,8 +300,7 @@ chai.use(chaiHttp)
 
         // USER DELETE - CORRECT
         it ('user:delete. should return 200 and delete as well as log out user', async ()=>{
-            const res = await agent.delete('/api/user/delete').set("csrf-token", csrfToken)
-            printToConsole("1"+res.text)
+            const res = await agent.delete('/api/user/delete').set("csrf-token", csrfToken).set("csrf-token", csrfToken)
             chai.expect(res.status).to.equal(200)
             testResult = (testResult && res.status == 200)
             // register to prove user was in fact deleted (if not, there would be a status 400 because of duplicate name
