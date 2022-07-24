@@ -56,14 +56,24 @@ class APIService {
     getDocumentList(){
         return new Promise<AxiosResponse>((resolve, reject) => {
             this.axios.get("/documents/list").then((res: AxiosResponse) => {
-                console.log(res.data)
                 resolve(res);
             }).catch((error: AxiosError) => {
                 reject(error);
             })
         });
-
     }
+
+    //This function expects the query to be encoded as a URI
+    searchDocuments(query: string){
+        return new Promise<AxiosResponse>((resolve, reject) => {
+            this.axios.get("/documents/search/" + query).then((res: AxiosResponse) => {
+                resolve(res);
+            }).catch((error: AxiosError) => {
+                reject(error);
+            })
+        });
+    }
+
     registerUser(username: string, password: string){
         return new Promise<AxiosResponse>((resolve, reject) => {
             this.axios.post("/user/register", {name: username, password: password})
