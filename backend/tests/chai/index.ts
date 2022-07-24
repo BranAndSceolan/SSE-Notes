@@ -296,9 +296,9 @@ chai.use(chaiHttp)
             testResult = ( testResult && res.status == 200)
             // shouldn't be able to get document anymore now
             const resFail = await agent.get('/api/documents/get/'+publicNoteId)
-            chai.expect(resFail.status).to.equal(403)
+            chai.expect(resFail.status).to.equal(404)
             chai.expect(resFail.text).to.equal("This note either doesn't exist or isn't your own.")
-            testResult = ( testResult && resFail.status == 403 && resFail.text == "This note either doesn't exist or isn't your own.")
+            testResult = ( testResult && resFail.status == 404 && resFail.text == "This note either doesn't exist or isn't your own.")
         })
 
         it ('delete own private document' , async ()=>{
@@ -307,14 +307,14 @@ chai.use(chaiHttp)
             testResult = ( testResult && res.status == 200)
             // shouldn't be able to get document anymore now
             const resFail = await agent.get('/api/documents/get/'+privateNoteId)
-            chai.expect(resFail.status).to.equal(403)
+            chai.expect(resFail.status).to.equal(404)
             chai.expect(resFail.text).to.equal("This note either doesn't exist or isn't your own.")
-            testResult = ( testResult && resFail.status == 403 && resFail.text == "This note either doesn't exist or isn't your own.")
+            testResult = ( testResult && resFail.status == 404 && resFail.text == "This note either doesn't exist or isn't your own.")
         })
 
         // USER DELETE - CORRECT
         it ('user:delete. should return 200 and delete as well as log out user', async ()=> {
-            const res = await agent.delete('/api/user/delete')
+            const res = await agent.delete('/api/user/delete').send("")
             chai.expect(res.status).to.equal(200)
             testResult = (testResult && res.status == 200)
             // register to prove user was in fact deleted (if not, there would be a status 400 because of duplicate name
@@ -325,7 +325,7 @@ chai.use(chaiHttp)
 
             chai.expect(resReg.status).to.equal(200)
             // Delete user again
-            const res2 = await agent.delete('/api/user/delete')
+            const res2 = await agent.delete('/api/user/delete').send("")
 
             chai.expect(res2.status).to.equal(200)
             testResult = (testResult && res2.status == 200)
