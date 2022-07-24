@@ -22,7 +22,7 @@ class APIService {
                 {
                 title: title,
                 content: text,
-                private: privateInt
+                hidden: privateInt
                 })
                 .then((res: AxiosResponse) => {
                     resolve(res);

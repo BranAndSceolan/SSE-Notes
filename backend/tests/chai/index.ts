@@ -11,7 +11,7 @@ chai.use(chaiHttp)
     describe('Base Route Test',  () => {
         const username = crypto.randomBytes(64).toString('hex')
         let testResult : boolean | void = false
-        let privateNoteId : number;
+        let hiddenNoteId : number;
         let publicNoteId : number;
         const agent = chai.request.agent(app)
         const returnString: String = "Welcome to SSE-NOTES!"
@@ -82,7 +82,7 @@ chai.use(chaiHttp)
             const resCreate = await  agent.post('/api/documents/create').send({
                 title: "This should fail",
                 content: "We aren't logged in",
-                private: true
+                hidden: true
             })
             chai.expect(resCreate.status).to.equal(401)
             testResult = ( testResult && res.status == 200 && resCreate.status == 401)
@@ -103,7 +103,7 @@ chai.use(chaiHttp)
             const resCreate = await agent.post('/api/documents/create').send({
                 title: "This should succeed",
                 content: "We are logged in",
-                private: false
+                hidden: false
             })
             chai.expect(resCreate.body.id).to.exist
             publicNoteId = resCreate.body.id
@@ -116,10 +116,10 @@ chai.use(chaiHttp)
         const resCreate = await  agent.post('/api/documents/create').send({
                 title: "This should succeed a second time",
                 content: "We are logged in",
-                private: true
+                hidden: true
             })
             chai.expect(resCreate.body.id).to.exist
-            privateNoteId = resCreate.body.id
+            hiddenNoteId = resCreate.body.id
             chai.expect(resCreate.status).to.equal(201)
             testResult = ( testResult && resCreate.status == 201)
         })
@@ -129,7 +129,7 @@ chai.use(chaiHttp)
             const resCreate = await  agent.post('/api/documents/create').send({
                 title: "",
                 content: "We are logged in",
-                private: true
+                hidden: true
             })
             chai.expect(resCreate.status).to.equal(400)
             testResult = ( testResult && resCreate.status == 400)
@@ -140,7 +140,7 @@ chai.use(chaiHttp)
             const resCreate = await agent.post('/api/documents/create').send({
                 title: "Logged in",
                 content: "",
-                private: true
+                hidden: true
             })
             chai.expect(resCreate.status).to.equal(400)
             testResult = ( testResult && resCreate.status == 400)
@@ -161,7 +161,7 @@ chai.use(chaiHttp)
             const resCreate = await agent.post('/api/documents/create').send({
                 title: "Logged in",
                 content: 7,
-                private: true
+                hidden: true
             })
             chai.expect(resCreate.status).to.equal(400)
             testResult = ( testResult && resCreate.status == 400)
@@ -172,7 +172,7 @@ chai.use(chaiHttp)
             const resCreate = await agent.post('/api/documents/create').send({
                 title: 4,
                 content: "We are logged in",
-                private: true
+                hidden: true
             })
             chai.expect(resCreate.status).to.equal(400)
             testResult = ( testResult && resCreate.status == 400)
@@ -183,7 +183,7 @@ chai.use(chaiHttp)
             const resCreate = await agent.post('/api/documents/create').send({
                 title: 4,
                 content: "We are logged in",
-                private: 8
+                hidden: 8
             })
             chai.expect(resCreate.status).to.equal(400)
             testResult = ( testResult && resCreate.status == 400)
@@ -198,7 +198,7 @@ chai.use(chaiHttp)
             })
 
             it('documents:get. (private note) should return 200', async () => {
-                const res = await agent.get('/api/documents/get/'+privateNoteId)
+                const res = await agent.get('/api/documents/get/'+hiddenNoteId)
                 chai.expect(res.status).to.equal(200)
                 chai.expect(res.body.title).to.exist
                 testResult = (testResult && res.status == 200 && res.body.title)
@@ -223,8 +223,8 @@ chai.use(chaiHttp)
             testResult = ( testResult && res.status == 200 && res.body.length > 0)
             let array = res.body
             for (let i = 0; i < array.length; i++) {
-                chai.expect([false, true]).to.contain(array[i].private)
-                testResult = testResult && (array[i].private == true || array[i].private == false)
+                chai.expect([false, true]).to.contain(array[i].hidden)
+                testResult = testResult && (array[i].hidden == true || array[i].hidden == false)
             }
         });
 
@@ -238,8 +238,8 @@ chai.use(chaiHttp)
             testResult = ( testResult && res.status == 200 && res.body.length > 0)
             let array = res.body
             for (let i = 0; i < array.length; i++) {
-                chai.expect([false, true]).to.contain(array[i].private)
-                testResult = testResult && (array[i].private == true || array[i].private == false)
+                chai.expect([false, true]).to.contain(array[i].hidden)
+                testResult = testResult && (array[i].hidden == true || array[i].hidden == false)
             }
         });
 
@@ -273,8 +273,8 @@ chai.use(chaiHttp)
             testResult = ( testResult && resSearch.status == 200 && resSearch.body.length < 0)
             let array = resSearch.body
             for (let i = 0; i < array.length; i++) {
-                chai.expect(array[i].private).to.be.false
-                testResult = (testResult && ! array[i].private)
+                chai.expect(array[i].hidden).to.be.false
+                testResult = (testResult && ! array[i].hidden)
             }
         })
 
@@ -302,11 +302,11 @@ chai.use(chaiHttp)
         })
 
         it ('delete own private document' , async ()=>{
-            const res = await agent.delete('/api/documents/delete/'+ privateNoteId)
+            const res = await agent.delete('/api/documents/delete/'+ hiddenNoteId)
             chai.expect(res.status).to.equal(200)
             testResult = ( testResult && res.status == 200)
             // shouldn't be able to get document anymore now
-            const resFail = await agent.get('/api/documents/get/'+privateNoteId)
+            const resFail = await agent.get('/api/documents/get/'+hiddenNoteId)
             chai.expect(resFail.status).to.equal(403)
             chai.expect(resFail.text).to.equal("This note either doesn't exist or isn't your own.")
             testResult = ( testResult && resFail.status == 403 && resFail.text == "This note either doesn't exist or isn't your own.")
@@ -333,7 +333,7 @@ chai.use(chaiHttp)
             const resCreate = await agent.post('/api/documents/create').send({
                 title: "This should fail",
                 content: "We aren't logged in",
-                private: true
+                hidden: true
             })
 
             chai.expect(resCreate.status).to.equal(401)
