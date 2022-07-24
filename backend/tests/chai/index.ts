@@ -296,9 +296,9 @@ chai.use(chaiHttp)
             testResult = ( testResult && res.status == 200)
             // shouldn't be able to get document anymore now
             const resFail = await agent.get('/api/documents/get/'+publicNoteId)
-            chai.expect(resFail.status).to.equal(403)
+            chai.expect(resFail.status).to.equal(404)
             chai.expect(resFail.text).to.equal("This note either doesn't exist or isn't your own.")
-            testResult = ( testResult && resFail.status == 403 && resFail.text == "This note either doesn't exist or isn't your own.")
+            testResult = ( testResult && resFail.status == 404 && resFail.text == "This note either doesn't exist or isn't your own.")
         })
 
         it ('delete own private document' , async ()=>{
@@ -307,9 +307,9 @@ chai.use(chaiHttp)
             testResult = ( testResult && res.status == 200)
             // shouldn't be able to get document anymore now
             const resFail = await agent.get('/api/documents/get/'+privateNoteId)
-            chai.expect(resFail.status).to.equal(403)
+            chai.expect(resFail.status).to.equal(404)
             chai.expect(resFail.text).to.equal("This note either doesn't exist or isn't your own.")
-            testResult = ( testResult && resFail.status == 403 && resFail.text == "This note either doesn't exist or isn't your own.")
+            testResult = ( testResult && resFail.status == 404 && resFail.text == "This note either doesn't exist or isn't your own.")
         })
 
         // USER DELETE - CORRECT
