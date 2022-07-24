@@ -74,11 +74,11 @@ export class DocumentsController {
                         res.status(200).send(new CreditedNote(note.content, note.hidden, note.title, note.name, note.id, note.aid))
                     } else{
                         printError("get note", "Tried to get private note from other user \n aid: "+ note.aid +" sessionid: "+ req.session.signInId)
-                        res.status(403).send("This note either doesn't exist or isn't your own.")
+                        res.status(404).send("This note either doesn't exist or isn't your own.")
                     }
                 }
             } else {
-                res.status(403).send("This note either doesn't exist or isn't your own.");
+                res.status(404).send("This note either doesn't exist or isn't your own.");
             }
         } else {
             res.status(400).send()
@@ -137,7 +137,7 @@ export class DocumentsController {
             return res.status(200).send();
         } else {
             printError("update Note", "no result from db")
-            return res.status(403).send("This note either doesn't exist or isn't your own.")
+            return res.status(404).send("This note either doesn't exist or isn't your own.")
         }
 
     }
@@ -173,7 +173,7 @@ export class DocumentsController {
         if (deleted.rowCount == 1){
             return res.status(200).send();
         } else{
-            return res.status(403).send("This note either doesn't exist or isn't your own.")
+            return res.status(404).send("This note either doesn't exist or isn't your own.")
         }
 
     }
