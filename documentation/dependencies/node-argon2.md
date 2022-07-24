@@ -25,3 +25,13 @@ github: https://github.com/ranisalt/node-argon2/issues
 ## Dependencies
 node-argon2 has 3 direct and no indirect dependencies. All of them seem well tested and trustworthy. 
 Sadly one of them does seem inactive.
+
+## Why this package?
+
+There is a golden rule in securety: <br>
+*If you are not a expert,*  ***do not*** *try to implement hashing, encrypting, or decrypting functions yourself.* <br>
+*Will fail, and your application will be insecure because of this. There are already implementations out there, which were done by experts and are secure. use them.*<br>
+
+After deciding on using agron2id as a state-of-the-art password hashing algorithm, we therefore knew we had to find a trustworthy package implementing agron2id.<br>
+node-argon2 by ranisalt is by far the most used npm package for password-hashing using argon2id.<br>
+It is regularily updated, has multiple contributers, and offers bindings to the [reference c implementation of argon2id that won the password hashing competition](https://github.com/P-H-C/phc-winner-argon2).<br>
