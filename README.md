@@ -23,5 +23,5 @@ It consists of a server and a client which make the writing and saving of privat
       * NOTES_USER=choose_a_username
     * Replace all choose_-entries with the values you would like to use.
     * source your .env file  ``source <path to .env>``
-    * execute the docker-compose file in the root directory. ``docker-compose build``
+    * execute the docker-compose file in the root directory. ``docker-compose up``
     * start the server using nodemon (script should cause nodemon to use env-Variables): ``npm start``
