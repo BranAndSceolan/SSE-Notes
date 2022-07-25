@@ -13,7 +13,7 @@ export class DocumentsController {
         let insertResult = undefined
         let title : string | undefined = undefined
         let content : string | undefined = undefined
-        let privacy : string | number | boolean | undefined = undefined
+        let hidden : string | number | boolean | undefined = undefined
 
         if (req.body.title &&  typeof req.body.title == "string" && (title = req.body.title.trim())) {
         } else {
@@ -27,16 +27,16 @@ export class DocumentsController {
             return res.status(400).send("Content is missing")
         }
 
-        if ((typeof req.body.private == "string" && this.postgreSqlTruthStrings.includes(req.body.private.toUpperCase())) ||(typeof req.body.private == "boolean") || (typeof req.body.private == "number" &&(req.body.private == 0 || req.body.private == 1)) ){
-           privacy = req.body.private
+        if ((typeof req.body.hidden == "string" && this.postgreSqlTruthStrings.includes(req.body.hidden.toUpperCase())) ||(typeof req.body.hidden == "boolean") || (typeof req.body.hidden == "number" &&(req.body.hidden == 0 || req.body.hidden == 1)) ){
+           hidden = req.body.hidden
         } else {
             printError("create Note", "Privacy flag is missing or invalid")
             return res.status(400).send("Privacy flag is missing or invalid")
         }
 
          try {
-             const insertNoteStatement = 'INSERT INTO notes(authorid, title, content, private) VALUES($1, $2, $3, $4) RETURNING *'
-             const noteValues = [authorId, title, content, privacy]
+             const insertNoteStatement = 'INSERT INTO notes(authorid, title, content, hidden) VALUES($1, $2, $3, $4) RETURNING *'
+             const noteValues = [authorId, title, content, hidden]
              insertResult = await pool.query(insertNoteStatement, noteValues)
              if (insertResult?.rowCount == 1){
                  printToConsole("[+] added note with id: "+ insertResult.rows[0].id)
@@ -59,7 +59,7 @@ export class DocumentsController {
         let result
         if (noteId) {
             try {
-               result = await pool.query('SELECT content, private, title, name, notes.id AS id, notes.authorid AS aid FROM notes INNER JOIN users ON users.id = notes.authorid WHERE $1 = notes.id', [noteId])
+               result = await pool.query('SELECT content, hidden, title, name, notes.id AS id, notes.authorid AS aid FROM notes INNER JOIN users ON users.id = notes.authorid WHERE $1 = notes.id', [noteId])
             } catch (e) {
                 printToConsole("Error while getting specific note: "+ e)
                 res.status(500).send(internalErrorMessage)
@@ -67,18 +67,18 @@ export class DocumentsController {
             if (result?.rowCount == 1) {
                 const note = result.rows[0]
                 printToConsole(note)
-                if (!note.private) {
-                    res.status(200).send(new CreditedNote(note.content, note.private, note.title, note.name, note.id, note.aid))
+                if (!note.hidden) {
+                    res.status(200).send(new CreditedNote(note.content, note.hidden, note.title, note.name, note.id))
                 } else {
                     if (req.session.signInId == note.aid) {
-                        res.status(200).send(new CreditedNote(note.content, note.private, note.title, note.name, note.id, note.aid))
+                        res.status(200).send(new CreditedNote(note.content, note.hidden, note.title, note.name, note.id))
                     } else{
                         printError("get note", "Tried to get private note from other user \n aid: "+ note.aid +" sessionid: "+ req.session.signInId)
-                        res.status(403).send("This note either doesn't exist or isn't your own.")
+                        res.status(404).send("This note either doesn't exist or isn't your own.")
                     }
                 }
             } else {
-                res.status(403).send("This note either doesn't exist or isn't your own.");
+                res.status(404).send("This note either doesn't exist or isn't your own.");
             }
         } else {
             res.status(400).send()
@@ -88,11 +88,11 @@ export class DocumentsController {
     public async getList(req: Request, res: Response): Promise<Response> {
         let list = undefined
         try {
-            list = await pool.query('SELECT content, private, title, name, notes.id AS id FROM notes INNER JOIN users ON notes.authorid = users.id WHERE users.id = $1 OR notes.private = FALSE', [req.session.signInId])
+            list = await pool.query('SELECT content, hidden, title, name, notes.id AS id FROM notes INNER JOIN users ON notes.authorid = users.id WHERE users.id = $1 OR notes.hidden = FALSE', [req.session.signInId])
             const notes : CreditedNote[] = []
             for( let i = 0; i < list.rowCount; i++){
                 const l = list.rows[i]
-                notes.push(new CreditedNote(l.content, l.private, l.title, l.name, l.id))
+                notes.push(new CreditedNote(l.content, l.hidden, l.title, l.name, l.id))
             }
                 return res.status(200).send(notes)
         } catch (e) {
@@ -104,10 +104,10 @@ export class DocumentsController {
 
     public async update(req: Request, res: Response): Promise<Response> {
         let updated = undefined
-        const query = 'UPDATE notes SET title = $3, content = $4, private = $5 WHERE id = $1 AND authorid = $2 RETURNING *'
+        const query = 'UPDATE notes SET title = $3, content = $4, hidden = $5 WHERE id = $1 AND authorid = $2 RETURNING *'
         let title : string | undefined = undefined
         let content : string | undefined = undefined
-        let privacy : string | number | boolean | undefined = undefined
+        let hidden : string | number | boolean | undefined = undefined
         if (req.body && req.body.title && typeof req.body.title == "string" && (title = req.body.title.trim())) {
         } else{
             printError("update note", "Title missing")
@@ -120,15 +120,15 @@ export class DocumentsController {
             return res.status(400).send("Content missing!")
         }
 
-        if ((typeof req.body.private == "string" && this.postgreSqlTruthStrings.includes(req.body.private.toUpperCase())) ||(typeof req.body.private == "boolean") || (typeof req.body.private == "number" &&(req.body.private == 0 || req.body.private == 1))){
-            privacy = req.body.private
+        if ((typeof req.body.hidden == "string" && this.postgreSqlTruthStrings.includes(req.body.hidden.toUpperCase())) ||(typeof req.body.hidden == "boolean") || (typeof req.body.hidden == "number" &&(req.body.hidden == 0 || req.body.hidden == 1))){
+            hidden = req.body.hidden
         } else {
             printError("Update Note", "Privacy flag is missing or invalid")
             return res.status(400).send("Privacy flag is missing or invalid")
         }
 
         try {
-            updated = await pool.query(query, [req.params.id, req.session.signInId, title, content, privacy])
+            updated = await pool.query(query, [req.params.id, req.session.signInId, title, content, hidden])
         } catch (e) {
             printToConsole("Something went wrong updating a note: "+ e)
             return res.status(500).send(internalErrorMessage)
@@ -137,7 +137,7 @@ export class DocumentsController {
             return res.status(200).send();
         } else {
             printError("update Note", "no result from db")
-            return res.status(403).send("This note either doesn't exist or isn't your own.")
+            return res.status(404).send("This note either doesn't exist or isn't your own.")
         }
 
     }
@@ -147,13 +147,18 @@ export class DocumentsController {
         let searchResult = undefined
         if(req && req.params && req.params.search &&( searchValues = req.params.search)){
             try {
-                    searchResult = await pool.query("SELECT content, private, title, name, notes.id AS id FROM notes INNER JOIN users ON notes.authorid = users.id WHERE private=FALSE AND (title LIKE '%' || $1 || '%' OR content LIKE '%' || $1 || '%' OR name LIKE '%' || $1 || '%') UNION SELECT content, private, title, name, notes.id AS id FROM notes INNER JOIN users ON notes.authorid = users.id WHERE private=TRUE AND notes.authorid=$2 AND (title LIKE '%' || $1 || '%' OR content LIKE '%' || $1 || '%' OR name LIKE '%' || $1 || '%')", [searchValues, req.session.signInId])
+                    searchResult = await pool.query("SELECT content, hidden, title, name, notes.id AS id FROM notes INNER JOIN users ON notes.authorid = users.id WHERE hidden=FALSE AND (title LIKE '%' || $1 || '%' OR content LIKE '%' || $1 || '%' OR name LIKE '%' || $1 || '%') UNION SELECT content, hidden, title, name, notes.id AS id FROM notes INNER JOIN users ON notes.authorid = users.id WHERE hidden=TRUE AND notes.authorid=$2 AND (title LIKE '%' || $1 || '%' OR content LIKE '%' || $1 || '%' OR name LIKE '%' || $1 || '%')", [searchValues, req.session.signInId])
             } catch (e) {
                 printError("Search Notes", e)
                 return res.status(500).send(internalErrorMessage)
             }
             if(searchResult.rows) {
-                return res.status(200).send(searchResult.rows)
+                const notes: CreditedNote[] = []
+                for( let i = 0; i < searchResult.rowCount; i++){
+                    const l = searchResult.rows[i]
+                    notes.push(new CreditedNote(l.content, l.hidden, l.title, l.name, l.id))
+                }
+                return res.status(200).send(notes)
             } else{
                 return res.status(500).send(internalErrorMessage)
             }
@@ -173,7 +178,7 @@ export class DocumentsController {
         if (deleted.rowCount == 1){
             return res.status(200).send();
         } else{
-            return res.status(403).send("This note either doesn't exist or isn't your own.")
+            return res.status(404).send("This note either doesn't exist or isn't your own.")
         }
 
     }

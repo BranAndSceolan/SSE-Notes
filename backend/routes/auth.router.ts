@@ -1,6 +1,5 @@
 import express, { Request, Response} from 'express'
 import {userController} from "../modules/controllers";
-//import {authModule} from "../modules/auth"
 import {authModule} from "../modules/auth"
 
 

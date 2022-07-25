@@ -3,14 +3,17 @@ import {Application, Request, Response} from "express";
 import helmet from "helmet";
 import {Pool} from "pg";
 import session from "express-session";
-import rateLimit from "express-rate-limit"
+
 
 import {
     notesRouter,
-    authRouter, strengthRouter
+    authRouter,
+    strengthRouter
 } from "./routes/index"
 import crypto from "crypto";
 import {printToConsole} from "./modules/util/util";
+import config from "config";
+import rateLimit from "express-rate-limit"
 
 
 export const PORT = 8000
@@ -26,24 +29,33 @@ app.use(express.urlencoded({
     extended: true
 }));
 
-
-const rateLimiter = rateLimit({
+const rateLimitOptions = rateLimit({
     windowMs: 60 * 1000, // 1 minute
     max: 60, // Limit each IP to 5 requests per `window` (here, per 1 minute)
     standardHeaders: false, // Do not return rate limit info in the `RateLimit-*` headers
     legacyHeaders: false,
 })
 
-app.use(session({
-    resave: true, // save session even if not modified
-    saveUninitialized: true, // save session even if not used
-    rolling: true, // forces cookie set on every response needed to set expiration
-    secret: crypto.randomInt(0, 1000000).toString(), // encrypt session-id in cookie using "secret" as modifier
-    name: "myawesomecookie", // name of the cookie set is set by the server
-    //TODO: cookie: {secure: true} //enable this as soon as https-certificates are included and we use https for our messages
-    // only then will this application be secure!
-    cookie: {maxAge: 15*60*1000}
-}));
+
+if (config.get("debug")) {
+    app.use(session({
+        resave: true, // save session even if not modified
+        saveUninitialized: true, // save session even if not used
+        rolling: true, // forces cookie set on every response needed to set expiration
+        secret: crypto.randomInt(0, 1000000).toString(), // encrypt session-id in cookie using "secret" as modifier
+        name: "myawesomecookie", // name of the cookie set is set by the server
+        cookie: {maxAge: 15 * 60 * 1000}
+    }));
+} else {
+    app.use(session({
+        resave: true, // save session even if not modified
+        saveUninitialized: true, // save session even if not used
+        rolling: true, // forces cookie set on every response needed to set expiration
+        secret: crypto.randomInt(0, 1000000).toString(), // encrypt session-id in cookie using "secret" as modifier
+        name: "myawesomecookie", // name of the cookie set is set by the server
+        cookie: {secure: true, httpOnly: true, maxAge: 15 * 60 * 1000}
+    }));
+}
 
 declare module "express-session" {
     interface Session {
@@ -59,6 +71,7 @@ export const pool = new Pool({
     port: 5432,
 })
 
+
 pool.query('SELECT NOW()', (err: Error, res: any) => {
     if (err){
     printToConsole("Error? " + err  )
@@ -68,8 +81,8 @@ pool.query('SELECT NOW()', (err: Error, res: any) => {
     }
 })
 
-// Apply rateLimit to the whole app (every route) to protect against ddos attacks
-app.use(rateLimiter)
+
+app.use(rateLimitOptions)
 
 
 // Application routing
