@@ -23,7 +23,7 @@ export const rateLimiterMiddleware = (req: Request, res: Response, next: NextFun
 
     let consume: number = 1;
     // make routes involving passwords or csrf-tokens more expensive
-    if (! (config.get("debug")=="true")) {
+    if (! config.get("debug")) {
         if (req.url.startsWith('/api/user/register') || req.url.startsWith('/api/user/login') || req.url == '/api') {
             consume = 5
         } else {
