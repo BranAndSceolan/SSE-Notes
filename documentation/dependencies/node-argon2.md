@@ -1,4 +1,5 @@
 # node-argon2
+[![argon2](https://snyk.io/advisor/npm-package/argon2/badge.svg)](https://snyk.io/advisor/npm-package/argon2)
 
 ## License
 node-argon2 is published under MIT-License which is unproblematic, because it allows all kinds of uses.

@@ -3,14 +3,17 @@ import {Application, Request, Response} from "express";
 import helmet from "helmet";
 import {Pool} from "pg";
 import session from "express-session";
-import rateLimit from "express-rate-limit"
+
 
 import {
     notesRouter,
-    authRouter, strengthRouter
+    authRouter,
+    strengthRouter,
+    rateLimiterMiddleware
 } from "./routes/index"
 import crypto from "crypto";
 import {printToConsole} from "./modules/util/util";
+
 
 
 export const PORT = 8000
@@ -26,13 +29,11 @@ app.use(express.urlencoded({
     extended: true
 }));
 
+app.set('trust proxy', true)
 
-const rateLimiter = rateLimit({
-    windowMs: 60 * 1000, // 1 minute
-    max: 60, // Limit each IP to 5 requests per `window` (here, per 1 minute)
-    standardHeaders: false, // Do not return rate limit info in the `RateLimit-*` headers
-    legacyHeaders: false,
-})
+// Note: register rate limiting middleware *before* all routes
+// so that it gets executed first.
+app.use(rateLimiterMiddleware)
 
 app.use(session({
     resave: true, // save session even if not modified
@@ -68,8 +69,7 @@ pool.query('SELECT NOW()', (err: Error, res: any) => {
     }
 })
 
-// Apply rateLimit to the whole app (every route) to protect against ddos attacks
-app.use(rateLimiter)
+
 
 
 // Application routing

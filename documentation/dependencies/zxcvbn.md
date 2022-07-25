@@ -1,5 +1,7 @@
 # zxcvbn
 
+[![zxcvbn](https://snyk.io/advisor/npm-package/zxcvbn/badge.svg)](https://snyk.io/advisor/npm-package/zxcvbn)
+
 github: https://github.com/dropbox/zxcvbn#usage
 npm: https://www.npmjs.com/package/zxcvbn
 
