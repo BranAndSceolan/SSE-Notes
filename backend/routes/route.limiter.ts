@@ -10,8 +10,15 @@ const opts = {
     duration: 60 // Reset points consumption every 60 sec.
 }
 const rateLimiter = new RateLimiterMemory(opts)
+
+/***
+ * Middleware for limiting requests.
+ * Especially valuable routes like login or register are more "expensive"
+ * @param req
+ * @param res
+ * @param next
+ */
 export const rateLimiterMiddleware = (req: Request, res: Response, next: NextFunction) => {
-    // Rate limiting only applies to the /tokens route.
     let ip: string;
     if (req.headers['x-forwarded-for']) {
         ip = req.headers['x-forwarded-for'].toString()
@@ -22,9 +29,9 @@ export const rateLimiterMiddleware = (req: Request, res: Response, next: NextFun
     }
 
     let consume: number = 1;
-    // make routes involving passwords or csrf-tokens more expensive
+    // make routes involving passwords more expensive
     if (! (config.get("debug")=="true")) {
-        if (req.url.startsWith('/api/user/register') || req.url.startsWith('/api/user/login') || req.url == '/api') {
+        if (req.url.startsWith('/api/user/register') || req.url.startsWith('/api/user/login') ) {
             consume = 5
         } else {
             consume = 1
