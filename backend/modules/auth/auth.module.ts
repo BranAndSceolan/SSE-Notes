@@ -3,12 +3,13 @@ import {NextFunction} from "express/ts4.0";
 import {pool} from "../../index";
 import zxcvbn from "zxcvbn";
 import {internalErrorMessage, printError, printToConsole} from "../util/util";
-import argon2, {argon2id} from "argon2";
+import argon2, {argon2id} from 'argon2';
 
-export class AuthModule{
+
+export class AuthModule {
     public async register(req: Request, res: Response): Promise<Response> {
         let newUsername : undefined | string = undefined
-        let newPassword : undefined | string = undefined
+        let newPassword : undefined | string = undefined;
         // check for validity
         if (req.body && req.body.name && typeof req.body.name == "string" && (newUsername = req.body.name.trim())){
         } else {
