@@ -80,7 +80,15 @@
 
     "@types/zxcvbn": "^4.4.1",
 
+    "@typescript-eslint/eslint-plugin": "^5.30.7",
+
+    "@typescript-eslint/parser": "^5.30.7",
+
     "config": "^3.3.7",
+
+    "eslint": "^8.20.0",
+
+    "eslint-config-google": "^0.14.0",
 
     "nodemon": "^2.0.19"
 

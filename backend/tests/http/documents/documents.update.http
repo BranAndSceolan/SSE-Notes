@@ -14,7 +14,7 @@ Content-Type: application/json
 {
   "title": "Hallo",
   "content": "updateTest!",
-  "private": false
+  "hidden": false
 }
 
 ### Preparation: logout (to confirm that logged out you cannot update any notes)
@@ -36,5 +36,5 @@ Content-Type: application/json
 {
   "title": "Updated",
   "content": "Diese Nachricht wurde verändert!",
-  "private": 1
+  "hidden": 1
 }
