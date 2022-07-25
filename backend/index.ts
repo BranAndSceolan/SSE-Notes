@@ -36,7 +36,7 @@ app.set('trust proxy', true)
 // so that it gets executed first.
 app.use(rateLimiterMiddleware)
 
-if (config.get("debug")=="true") {
+if (config.get("debug")) {
     app.use(session({
         resave: true, // save session even if not modified
         saveUninitialized: true, // save session even if not used
