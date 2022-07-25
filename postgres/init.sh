@@ -14,7 +14,7 @@ CREATE table notes(
     id bigserial PRIMARY KEY,
     title varchar not null,
     content varchar not null,
-    private boolean not null ,
+    hidden boolean not null ,
     authorID integer not null references users(id) ON DELETE CASCADE
 );
 
