@@ -13,6 +13,20 @@
         </v-btn>
       </v-col>
       <v-col class="button-col">
+        <v-btn class="button"
+               @click="changeRoute('search')">
+          <v-icon class="icon">mdi-card-search</v-icon>
+          Search for Notes
+        </v-btn>
+      </v-col>
+      <v-col class="button-col">
+        <v-btn class="button"
+               @click="changeRoute('create')">
+          <v-icon class="icon">mdi-fountain-pen-tip</v-icon>
+          New Note
+        </v-btn>
+      </v-col>
+      <v-col class="button-col">
           <v-btn
           @click="logout"
           v-if="loggedIn">
@@ -32,7 +46,7 @@
           </template>
           <template v-slot:default="{ isActive }">
           <v-card class="loginPrompt">
-            <v-card-header-text>
+            <v-card-text>
               <v-form>
                       <v-text-field
                           v-model.lazy.trim="username"
@@ -47,7 +61,7 @@
                           @keyup.enter="login().then(()=>{isActive.value = false; loggedIn = true});"
                       ></v-text-field>
               </v-form>
-            </v-card-header-text>
+            </v-card-text>
 
             <v-card-actions class="justify-end">
               <v-btn
@@ -56,7 +70,7 @@
               >Login</v-btn>
               <v-btn
                   text
-                  @click="register();"
+                  @click="register().then(()=>{login().then(() => {isActive.value = false; loggedIn = true});});"
               >Register now</v-btn>
               <v-btn
                   text

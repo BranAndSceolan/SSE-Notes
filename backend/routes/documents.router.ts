@@ -32,6 +32,14 @@ router.get('/list', (req: Request, res: Response) => {
     noteController.getList(req, res)
 })
 
+// SEARCH IN NOTES
+/**
+ * Searches for notes which have the search parameter in content, title and author name.
+ */
+router.get('/search/:search', (req: Request, res: Response)=>{
+    noteController.search(req, res)
+})
+
 // DELETE ROUTES
 /**
  * Deletes a Note.

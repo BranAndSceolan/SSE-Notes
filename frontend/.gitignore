@@ -6,7 +6,7 @@ node_modules
 /tests/e2e/screenshots/
 
 
-# local env files
+# local .env files
 .env.local
 .env.*.local
 
