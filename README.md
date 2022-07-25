@@ -6,6 +6,8 @@ It consists of a server and a client which make the writing and saving of privat
 
 ## Current State Of The Project
 [![CodeQL](https://github.com/BranAndSceolan/SSE-Notes/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/BranAndSceolan/SSE-Notes/actions/workflows/codeql-analysis.yml)
+[![Dependency Review](https://github.com/BranAndSceolan/SSE-Notes/actions/workflows/dependency-review.yml/badge.svg)](https://github.com/BranAndSceolan/SSE-Notes/actions/workflows/dependency-review.yml)
+[![backend tests](https://github.com/BranAndSceolan/SSE-Notes/actions/workflows/backend-test.yml/badge.svg)](https://github.com/BranAndSceolan/SSE-Notes/actions/workflows/backend-test.yml)
 
 ## Building This Project
 
@@ -13,7 +15,7 @@ It consists of a server and a client which make the writing and saving of privat
 * make sure all dependencies are installed ``npm install``
 * either:
 
-  * build and for development (first time): 
+  * build and for development (first time):
     * create a .env file in the root directory with
       * NOTES_PASSWORD=choose_a_password
       * POSTGRES_USER=choose_an_admin_name
@@ -26,13 +28,19 @@ It consists of a server and a client which make the writing and saving of privat
     * go into the backend directory ``cd backend``
     * execute the docker-compose file in the root directory using env-variables. ``env $(cat ../.env) docker-compose up``
     * start the server using nodemon (script should cause nodemon to use env-Variables): ``npm start``
-    
+
   * replace old development build:
     * make all changes you would like to use for the .env file
     * take down current containers and volumes ``docker-compose down --volumes``
     * remove images to ensure the database is going to be recreated ``docker rmi postgres notes/postgres adminer``
     * create and start new containers and volumes: ``env $(cat ../.env) docker-compose up``
     * start the server using nodemon (script should cause nodemon to use env-Variables): ``npm start``
+
+  * build for deployment
+    * make a .env file with all environment variables you would like to use for deployment. ***Use NODE_ENV=deployment****
+    * if there is already a lib directory in root, remove it
+    * build using your new .env file (here we are assuming a file .devEnv in the project root) : ``env $(cat ../.devEnv) npm run build``
+    * the compiled code will be placed in a lib directory in the project root
 
 ## Tests
   * backend
