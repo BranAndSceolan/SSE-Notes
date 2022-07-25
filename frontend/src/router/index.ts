@@ -46,4 +46,9 @@ const router = createRouter({
   routes
 })
 
+router.beforeEach((to, from, next) => {
+  document.title = "SSE Notes"; //can load title dynamically from the "to" object
+  next();
+});
+
 export default router

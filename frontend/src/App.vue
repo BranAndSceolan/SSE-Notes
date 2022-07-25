@@ -46,7 +46,7 @@ API.axios.interceptors.response.use(
           setSnackbar("Unauthorized - please login and try again.");
           break;
         case 403:
-          setSnackbar("You don't have permission to view this.");
+          setSnackbar("You don't have permission to view or do this.");
           break;
         case 404:
           setSnackbar("Nothing was found.");
