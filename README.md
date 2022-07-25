@@ -36,11 +36,19 @@ It consists of a server and a client which make the writing and saving of privat
     * create and start new containers and volumes: ``env $(cat ../.env) docker-compose up``
     * start the server using nodemon (script should cause nodemon to use env-Variables): ``npm start``
 
-  * build for deployment
-    * make a .env file with all environment variables you would like to use for deployment. ***Use NODE_ENV=deployment****
+  * build and run deployment version locally (not in container)
     * if there is already a lib directory in root, remove it
-    * build using your new .env file (here we are assuming a file .devEnv in the project root) : ``env $(cat ../.devEnv) npm run build``
+    * build using ``npm run build``
     * the compiled code will be placed in a lib directory in the project root
+    * copy into the lib directory
+      * the package.json
+      * the config folder with deployment.json AND default.json
+    * either 
+      - use another env file and change the start command in the package.json to use this new file
+      - **or**
+      - use the old env file (with the variable NODE_ENV now NODE_ENV=deployment and don't change the command in the package.json
+    * enter the lib directory and install dependencies ``npm install``
+    * 
 
 ## Tests
   * backend
