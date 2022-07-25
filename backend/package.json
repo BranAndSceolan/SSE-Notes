@@ -46,7 +46,7 @@
 
     "express-session": "^1.17.3",
 
-    "helmet": "^5.1.0",
+    "helmet": "^5.1.1",
 
     "mocha": "^10.0.0",
 
