@@ -1,7 +1,7 @@
 import config from "config"
 
 export function printToConsole(s: string){
-    if (config.get("debug")== "true"){
+    if (config.get("debug")){
         console.log(s)
     }
 }

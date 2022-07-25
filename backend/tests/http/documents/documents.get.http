@@ -23,5 +23,5 @@ Content-Type: application/json
 }
 
 ### Test: get a private note by a valid id
-GET localhost:8000/api/documents/get/9
+GET localhost:8000/api/documents/get/1
 ###
