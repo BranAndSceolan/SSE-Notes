@@ -13,6 +13,7 @@ import {
 } from "./routes/index"
 import crypto from "crypto";
 import {printToConsole} from "./modules/util/util";
+import config from "config";
 
 
 
@@ -35,16 +36,25 @@ app.set('trust proxy', true)
 // so that it gets executed first.
 app.use(rateLimiterMiddleware)
 
-app.use(session({
-    resave: true, // save session even if not modified
-    saveUninitialized: true, // save session even if not used
-    rolling: true, // forces cookie set on every response needed to set expiration
-    secret: crypto.randomInt(0, 1000000).toString(), // encrypt session-id in cookie using "secret" as modifier
-    name: "myawesomecookie", // name of the cookie set is set by the server
-    //TODO: cookie: {secure: true} //enable this as soon as https-certificates are included and we use https for our messages
-    // only then will this application be secure!
-    cookie: {maxAge: 15*60*1000}
-}));
+if (config.get("debug")=="true") {
+    app.use(session({
+        resave: true, // save session even if not modified
+        saveUninitialized: true, // save session even if not used
+        rolling: true, // forces cookie set on every response needed to set expiration
+        secret: crypto.randomInt(0, 1000000).toString(), // encrypt session-id in cookie using "secret" as modifier
+        name: "myawesomecookie", // name of the cookie set is set by the server
+        cookie: {maxAge: 15 * 60 * 1000}
+    }));
+} else {
+    app.use(session({
+        resave: true, // save session even if not modified
+        saveUninitialized: true, // save session even if not used
+        rolling: true, // forces cookie set on every response needed to set expiration
+        secret: crypto.randomInt(0, 1000000).toString(), // encrypt session-id in cookie using "secret" as modifier
+        name: "myawesomecookie", // name of the cookie set is set by the server
+        cookie: {secure: true, httpOnly: true, maxAge: 15 * 60 * 1000}
+    }));
+}
 
 declare module "express-session" {
     interface Session {

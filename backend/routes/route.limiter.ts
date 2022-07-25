@@ -3,9 +3,10 @@ import {RateLimiterMemory} from "rate-limiter-flexible";
 import {Request, Response} from "express";
 import {NextFunction} from "connect";
 import {internalErrorMessage, printError} from "../modules/util/util";
+import config from "config";
 
 const opts = {
-    points: 50, // Point budget.
+    points: 60, // Point budget.
     duration: 60 // Reset points consumption every 60 sec.
 }
 const rateLimiter = new RateLimiterMemory(opts)
@@ -20,12 +21,14 @@ export const rateLimiterMiddleware = (req: Request, res: Response, next: NextFun
         return res.status(500).send(internalErrorMessage)
     }
 
-    let consume: number;
+    let consume: number = 1;
     // make routes involving passwords or csrf-tokens more expensive
-    if (req.url.startsWith('/api/user/register') || req.url.startsWith('/api/user/login') || req.url == '/api') {
-        consume = 5
-    } else{
-        consume = 1
+    if (! (config.get("debug")=="true")) {
+        if (req.url.startsWith('/api/user/register') || req.url.startsWith('/api/user/login') || req.url == '/api') {
+            consume = 5
+        } else {
+            consume = 1
+        }
     }
     return rateLimiter
         .consume(ip, consume)
