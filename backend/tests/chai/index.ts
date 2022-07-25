@@ -324,6 +324,7 @@ chai.use(chaiHttp)
             })
 
             chai.expect(resReg.status).to.equal(200)
+            testResult = testResult && (resReg.status == 200)
             // Delete user again
             const res2 = await agent.delete('/api/user/delete').send("")
 
