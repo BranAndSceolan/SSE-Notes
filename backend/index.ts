@@ -36,8 +36,6 @@ const rateLimitOptions = rateLimit({
     legacyHeaders: false,
 })
 
-app.use(rateLimitOptions)
-
 
 if (config.get("debug")) {
     app.use(session({
@@ -73,6 +71,7 @@ export const pool = new Pool({
     port: 5432,
 })
 
+
 pool.query('SELECT NOW()', (err: Error, res: any) => {
     if (err){
     printToConsole("Error? " + err  )
@@ -83,6 +82,7 @@ pool.query('SELECT NOW()', (err: Error, res: any) => {
 })
 
 
+app.use(rateLimitOptions)
 
 
 // Application routing
