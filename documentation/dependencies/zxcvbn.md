@@ -2,11 +2,14 @@
 
 [![zxcvbn](https://snyk.io/advisor/npm-package/zxcvbn/badge.svg)](https://snyk.io/advisor/npm-package/zxcvbn)
 
-github: https://github.com/dropbox/zxcvbn#usage
-npm: https://www.npmjs.com/package/zxcvbn
-
 ## License
 zxcvbn is published under MIT-License, which is unproblematic for us, because it allows all kinds of uses. 
+
+## Links
+[github](https://github.com/dropbox/zxcvbn#usage)<br>
+[npm](https://www.npmjs.com/package/zxcvbn)<br>
+[snykAdvisor](https://snyk.io/advisor/npm-package/zxcvbn)
+[bundlephobia](https://bundlephobia.com/package/zxcvbn@4.4.2)
 
 ## Pros
 * Gives not only a score but also suggestions and warnings
