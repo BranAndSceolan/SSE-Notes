@@ -40,7 +40,7 @@ export class DocumentsController {
              insertResult = await pool.query(insertNoteStatement, noteValues)
              if (insertResult?.rowCount == 1){
                  printToConsole("[+] added note with id: "+ insertResult.rows[0].id)
-                 return res.status(201).send(insertResult.rows[0].toString())
+                 return res.status(201).send(insertResult.rows[0])
              } else {
                  printToConsole("Something went wrong while creating a note!")
                  return res.status(500).send(internalErrorMessage)
