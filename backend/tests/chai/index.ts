@@ -342,9 +342,8 @@ chai.use(chaiHttp)
         })
 
         it("result for github actions", ()=> {
-            printToConsole(config.get('githubactions'))
+
             if (config.get('githubactions')) {
-                printToConsole("in github actions")
                 if (testResult) {
                     printToConsole("exit successfully")
                     setTimeout(()=>{process.exit(0)}, 1000)
