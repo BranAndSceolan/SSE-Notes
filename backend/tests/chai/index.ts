@@ -342,7 +342,7 @@ chai.use(chaiHttp)
 
         it("result for github actions", ()=> {
 
-            if (config.get('githubactions')) {
+            if (config.get('githubactions')== "true") {
                 printToConsole("in github actions")
                 if (testResult) {
                     printToConsole("exit successfully")
