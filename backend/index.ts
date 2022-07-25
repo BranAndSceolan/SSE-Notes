@@ -53,7 +53,7 @@ declare module "express-session" {
 
 export const pool = new Pool({
     user: process.env.NOTES_USER,
-    host: 'localhost',
+    host: process.env.NOTES_DB_HOST,
     database: process.env.POSTGRES_DB,
     password: process.env.NOTES_PASSWORD,
     port: 5432,
