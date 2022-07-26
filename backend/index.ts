@@ -3,6 +3,9 @@ import {Application, Request, Response} from "express";
 import helmet from "helmet";
 import {Pool} from "pg";
 import session from "express-session";
+import rateLimit from "express-rate-limit"
+import csurf from "csurf"
+import cookieParser from "cookie-parser"
 
 
 import {
@@ -12,11 +15,17 @@ import {
 } from "./routes/index"
 import crypto from "crypto";
 import {printToConsole} from "./modules/util/util";
-import config from "config";
-import rateLimit from "express-rate-limit"
 
 
 export const PORT = 8000
+
+// Because the standard typescript type 'Session & Partial<SessionData> does not include the attributes signInId
+// and csrfSecret we add them by overwriting express-session
+declare module "express-session" {
+    interface Session {
+        signInId: bigint;
+    }
+}
 
 
 // Verbindung zur Datenbank herstellen
@@ -36,6 +45,8 @@ const rateLimitOptions = rateLimit({
     legacyHeaders: false,
 })
 
+app.use(cookieParser())
+
 app.use(session({
         resave: true, // save session even if not modified
         saveUninitialized: true, // save session even if not used
@@ -44,13 +55,8 @@ app.use(session({
         name: "myawesomecookie", // name of the cookie set is set by the server
         cookie: {httpOnly: true, maxAge: 15 * 60 * 1000}
     }));
-} 
 
-declare module "express-session" {
-    interface Session {
-        signInId: bigint;
-    }
-}
+ app.use(csurf({cookie: {httpOnly: true}}))
 
 export const pool = new Pool({
     user: process.env.NOTES_USER,
@@ -79,8 +85,8 @@ app.use('/api/documents', notesRouter)
 app.use('/api/user', authRouter)
 app.use('/api/strength', strengthRouter)
 
-app.get('/api', (_req: Request, res: Response) => {
-    res.status(200).send("Welcome to SSE-NOTES!")
+app.get('/api', (req: Request, res: Response) => {
+    res.status(200).send({message:"Welcome to SSE-NOTES!",  csrfToken: req.csrfToken()})
 });
 
 // Start server

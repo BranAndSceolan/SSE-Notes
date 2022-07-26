@@ -14,7 +14,7 @@
   'github',
   'prettier'
 ]"/>
-  <v-checkbox class="checkbox" label="Private" v-model="privateCheckbox"></v-checkbox>
+  <v-checkbox class="checkbox" label="Hide this note from other users" v-model="privateCheckbox"></v-checkbox>
   <v-btn @click="saveNote();" class="button">Save this note</v-btn>
   </div>
 </template>

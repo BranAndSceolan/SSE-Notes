@@ -5,6 +5,7 @@ import DocumentListView from '../views/DocumentListView.vue'
 import DocumentView from '../views/DocumentView.vue'
 import SearchView from '../views/SearchView.vue'
 import CreateDocumentView from '../views/CreateDocumentView.vue'
+import {API} from '@/services/API-Service'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -49,6 +50,10 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   document.title = "SSE Notes"; //can load title dynamically from the "to" object
   next();
+});
+
+router.afterEach(() => {
+  API.getCsrfToken();
 });
 
 export default router
