@@ -1,8 +1,13 @@
 name: "backend tests"
 
 on:
+  push:
+    branches: [ "development", master ]
   pull_request:
+    # The branches below must be a subset of the branches above
     branches: [ "development" ]
+  schedule:
+    - cron: '33 1 * * 6'
 
 jobs:
   build:
