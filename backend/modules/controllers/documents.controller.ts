@@ -2,6 +2,7 @@ import {Request, Response} from "express";
 import {internalErrorMessage, printError, printToConsole} from "../util/util";
 import {pool} from "../../index";
 import {CreditedNote} from "../entities/document.entity";
+import sanitizeHtml from 'sanitize-html';
 
 export class DocumentsController {
     postgreSqlTrueStrings = ["TRUE", "T", "YES", "Y", "ON", "1"]
@@ -26,7 +27,8 @@ export class DocumentsController {
             printError("create Note", "Content is missing")
             return res.status(400).send("Content is missing")
         }
-
+        content = sanitizeHtml(content)
+        printToConsole(content)
         if ((typeof req.body.hidden == "string" && this.postgreSqlTruthStrings.includes(req.body.hidden.toUpperCase())) ||(typeof req.body.hidden == "boolean") || (typeof req.body.hidden == "number" &&(req.body.hidden == 0 || req.body.hidden == 1)) ){
            hidden = req.body.hidden
         } else {
@@ -119,7 +121,7 @@ export class DocumentsController {
             printError("update note", "Content missing")
             return res.status(400).send("Content missing!")
         }
-
+        content = sanitizeHtml(content)
         if ((typeof req.body.hidden == "string" && this.postgreSqlTruthStrings.includes(req.body.hidden.toUpperCase())) ||(typeof req.body.hidden == "boolean") || (typeof req.body.hidden == "number" &&(req.body.hidden == 0 || req.body.hidden == 1))){
             hidden = req.body.hidden
         } else {
