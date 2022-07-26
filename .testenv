@@ -4,3 +4,4 @@ POSTGRES_PASSWORD=Test
 POSTGRES_DB=Test
 NODE_ENV=githubactions
 NOTES_USER=Test
+NOTES_DB_HOST=localhost
