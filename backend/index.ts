@@ -12,7 +12,6 @@ import {
 } from "./routes/index"
 import crypto from "crypto";
 import {printToConsole} from "./modules/util/util";
-import config from "config";
 import rateLimit from "express-rate-limit"
 
 
@@ -37,16 +36,7 @@ const rateLimitOptions = rateLimit({
 })
 
 
-if (config.get("debug")) {
-    app.use(session({
-        resave: true, // save session even if not modified
-        saveUninitialized: true, // save session even if not used
-        rolling: true, // forces cookie set on every response needed to set expiration
-        secret: crypto.randomInt(0, 1000000).toString(), // encrypt session-id in cookie using "secret" as modifier
-        name: "myawesomecookie", // name of the cookie set is set by the server
-        cookie: {maxAge: 15 * 60 * 1000}
-    }));
-} else {
+
     app.use(session({
         resave: true, // save session even if not modified
         saveUninitialized: true, // save session even if not used
@@ -55,7 +45,6 @@ if (config.get("debug")) {
         name: "myawesomecookie", // name of the cookie set is set by the server
         cookie: {httpOnly: true, maxAge: 15 * 60 * 1000}
     }));
-}
 
 declare module "express-session" {
     interface Session {
