@@ -326,6 +326,7 @@ chai.use(chaiHttp)
             })
 
             chai.expect(resReg.status).to.equal(200)
+            testResult = testResult && (resReg.status == 200)
             // Delete user again
             const res2 = await agent.delete('/api/user/delete').set("csrf-token", csrfToken).send("")
             chai.expect(res2.status).to.equal(200)
@@ -343,8 +344,7 @@ chai.use(chaiHttp)
 
         it("result for github actions", ()=> {
 
-            if (config.get('githubactions') == "true") {
-                printToConsole("in github actions")
+            if (config.get('githubactions')) {
                 if (testResult) {
                     printToConsole("exit successfully")
                     setTimeout(()=>{process.exit(0)}, 1000)

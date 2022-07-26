@@ -1,4 +1,4 @@
 {
-  "debug": "true",
-  "githubactions": "true"
+  "debug": true,
+  "githubactions": true
 }
