@@ -4,11 +4,11 @@ version: '3.8'
 
 # The following environment variables need to be set appropriately (in a .env file for example):
 
-# $NOTES_USER
-# $NOTES_PASSWORD
-# $POSTGRES_USER
-# $POSTGRES_PASSWORD
-# $POSTGRES_DB
+# NOTES_USER
+# NOTES_PASSWORD
+# POSTGRES_USER
+# POSTGRES_PASSWORD
+# POSTGRES_DB
 # NOTES_FRONTEND_SERVER_NAME
 
 # The backend uses the environment variable "NOTES_DB_HOST" when built standalone, it is set here

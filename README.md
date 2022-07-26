@@ -48,7 +48,21 @@ It consists of a server and a client which make the writing and saving of privat
       - **or**
       - use the old env file (with the variable NODE_ENV now NODE_ENV=deployment and don't change the command in the package.json
     * enter the lib directory and install dependencies ``npm install``
-    * 
+
+## Frontend
+
+### Development Build
+Run the command ``npm run serve`` in the frontend directory to start the Vue development server.
+The development server expects the backend to be available at the URL "http://localhost:8000/".
+You can run the backend using the instructions above or as a docker container, use ``docker-compose-production.yml`` as a reference to do so, make sure port 8000 is forwarded from the container to the host.
+
+### Production Build
+You can build a docker image for the frontend using the included Dockerfile, however it isn't usable unless it's set up correctly using docker compose, use the frontend service in ``docker-compose-production.yml`` as a reference.
+
+
+## Deploy this project using docker compose
+
+Use the included docker-compose-production.yml to automatically deploy the project, you need to set the environment variables listed in the file on your system.
 
 ## Tests
   * backend
