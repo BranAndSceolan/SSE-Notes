@@ -16,7 +16,7 @@ zxcvbn is published under MIT-License, which is unproblematic for us, because it
 * A high number of weekly downloads on npm (more than 350 000)
 * Uses pattern matching (sequences, keyboard patterns, dates, l33t speak) and lists of common passwords and words
 * Recommended in a [study](http://users.encs.concordia.ca/~mmannan/publications/password-meters-tissec.pdf) by the [Concordia University (Canada)](https://www.concordia.ca/cunews/main/stories/2015/03/25/does-your-password-pass-muster.html)
-* No third hand dependencies
+* No dependencies
 * Operates below human perception
 * no known security issues on [synkAdvisor](https://snyk.io/advisor/npm-package/zxcvbn)
 ## Cons

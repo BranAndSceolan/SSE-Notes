@@ -30,6 +30,18 @@ node-argon2 is published under MIT-License which is unproblematic, because it al
 ## Dependencies
 node-argon2 has 3 direct and no indirect dependencies. All of them seem well tested and trustworthy. 
 Sadly one of them does seem inactive.
+* [@mapbox/node-pre-gyp](https://snyk.io/advisor/npm-package/@mapbox/node-pre-gyp)[![@mapbox/node-pre-gyp](https://snyk.io/advisor/npm-package/@mapbox/node-pre-gyp/badge.svg)](https://snyk.io/advisor/npm-package/@mapbox/node-pre-gyp)
+  * detect-libc
+  * https-proxy-agent
+  * make-dir
+  * node-fetch
+  * nopt
+  * npmlog
+  * rimraf
+  * semver
+  * tar
+* [@phc/format](https://snyk.io/advisor/npm-package/@phc/format)[![@phc/format](https://snyk.io/advisor/npm-package/@phc/format/badge.svg)](https://snyk.io/advisor/npm-package/@phc/format)
+* [node-adon-api](https://snyk.io/advisor/npm-package/node-addon-api)[![node-addon-api](https://snyk.io/advisor/npm-package/node-addon-api/badge.svg)](https://snyk.io/advisor/npm-package/node-addon-api)
 
 ## Why this package?
 
