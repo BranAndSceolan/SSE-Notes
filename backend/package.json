@@ -42,14 +42,17 @@
 
     "express-session": "^1.17.3",
 
+    "node-postgres": "^0.6.2",
+
     "helmet": "^5.1.1",
 
     "pg": "^8.7.3",
 
     "ts-node": "^10.9.1",
 
-    "zxcvbn": "^4.4.2"
+    "zxcvbn": "^4.4.2",
 
+    "config": "^3.3.7"
   },
 
   "files": [
@@ -74,17 +77,9 @@
 
     "@types/zxcvbn": "^4.4.1",
 
-    "@typescript-eslint/eslint-plugin": "^5.30.7",
-
-    "@typescript-eslint/parser": "^5.30.7",
-
     "chai": "^4.3.6",
 
     "chai-http": "^4.3.0",
-
-    "eslint": "^8.20.0",
-
-    "eslint-config-google": "^0.14.0",
 
     "mocha": "^10.0.0",
 
