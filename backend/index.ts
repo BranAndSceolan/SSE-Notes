@@ -53,7 +53,7 @@ if (config.get("debug")) {
         rolling: true, // forces cookie set on every response needed to set expiration
         secret: crypto.randomInt(0, 1000000).toString(), // encrypt session-id in cookie using "secret" as modifier
         name: "myawesomecookie", // name of the cookie set is set by the server
-        cookie: {secure: true, httpOnly: true, maxAge: 15 * 60 * 1000}
+        cookie: {httpOnly: true, maxAge: 15 * 60 * 1000}
     }));
 }
 
