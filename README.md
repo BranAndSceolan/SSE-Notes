@@ -6,8 +6,8 @@ It consists of a server and a client which make the writing and saving of privat
 
 ## Current State Of The Project
 [![CodeQL](https://github.com/BranAndSceolan/SSE-Notes/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/BranAndSceolan/SSE-Notes/actions/workflows/codeql-analysis.yml)
-[![Dependency Review](https://github.com/BranAndSceolan/SSE-Notes/actions/workflows/dependency-review.yml/badge.svg)](https://github.com/BranAndSceolan/SSE-Notes/actions/workflows/dependency-review.yml)
 [![backend tests](https://github.com/BranAndSceolan/SSE-Notes/actions/workflows/backend-test.yml/badge.svg)](https://github.com/BranAndSceolan/SSE-Notes/actions/workflows/backend-test.yml)
+[![Dependency Review](https://github.com/BranAndSceolan/SSE-Notes/actions/workflows/dependency-review.yml/badge.svg)](https://github.com/BranAndSceolan/SSE-Notes/actions/workflows/dependency-review.yml)
 
 ## Building This Project
 
