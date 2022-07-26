@@ -40,17 +40,5 @@ services:
     ports:
       - "9000:8080"
 
-  backend:
-    build:
-      context: ./backend
-
-    image: notes/backend
-
-    environment:
-      - NOTES_USER=$NOTES_USER
-      - NOTES_PASSWORD=$NOTES_PASSWORD
-      - POSTGRES_DB=$POSTGRES_DB
-      - NOTES_DB_HOST=db # Hostname/IP of the DB
-
 volumes:
   notes-db:
