@@ -32,6 +32,8 @@
 
   "dependencies": {
 
+    "@braintree/sanitize-url": "^6.0.0",
+
     "argon2": "^0.28.7",
 
     "config": "^3.3.7",
@@ -46,11 +48,13 @@
 
     "express-session": "^1.17.3",
 
-    "node-postgres": "^0.6.2",
-
     "helmet": "^5.1.1",
 
+    "node-postgres": "^0.6.2",
+
     "pg": "^8.7.3",
+
+    "sanitize-html": "^2.7.1",
 
     "ts-node": "^10.9.1",
 
@@ -79,6 +83,8 @@
     "@types/mocha": "^9.1.1",
 
     "@types/pg": "^8.6.5",
+
+    "@types/sanitize-html": "^2.6.2",
 
     "@types/uid-safe": "^2.1.2",
 

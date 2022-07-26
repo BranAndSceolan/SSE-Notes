@@ -46,6 +46,6 @@
     "ts-jest": "^27.0.4",
     "typescript": "~4.7.4",
     "vue-cli-plugin-vuetify": "~2.5.1",
-    "webpack-plugin-vuetify": "^2.0.0-alpha.12"
+    "webpack-plugin-vuetify": "^2.0.0-alpha.11"
   }
 }
