@@ -5,9 +5,9 @@ This is a project for our Secure Software Engineering course.
 It consists of a server and a client which make the writing and saving of private and public markdown notes possible.
 
 ## Current State Of The Project
-[![CodeQL](https://github.com/BranAndSceolan/SSE-Notes/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/BranAndSceolan/SSE-Notes/actions/workflows/codeql-analysis.yml)
-[![Dependency Review](https://github.com/BranAndSceolan/SSE-Notes/actions/workflows/dependency-review.yml/badge.svg)](https://github.com/BranAndSceolan/SSE-Notes/actions/workflows/dependency-review.yml)
-[![backend tests](https://github.com/BranAndSceolan/SSE-Notes/actions/workflows/backend-test.yml/badge.svg)](https://github.com/BranAndSceolan/SSE-Notes/actions/workflows/backend-test.yml)
+[![CodeQL](https://github.com/BranAndSceolan/SSE-Notes/actions/workflows/codeql-analysis.yml/badge.svg?branch=development&event=pull_request)](https://github.com/BranAndSceolan/SSE-Notes/actions/workflows/codeql-analysis.yml)
+[![backend tests](https://github.com/BranAndSceolan/SSE-Notes/actions/workflows/backend-test.yml/badge.svg?branch=development&event=pull_request)](https://github.com/BranAndSceolan/SSE-Notes/actions/workflows/backend-test.yml)
+[![Dependency Review](https://github.com/BranAndSceolan/SSE-Notes/actions/workflows/dependency-review.yml/badge.svg?branch=development&event=pull_request)](https://github.com/BranAndSceolan/SSE-Notes/actions/workflows/dependency-review.yml)
 
 ## Building This Project
 
