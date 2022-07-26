@@ -59,6 +59,7 @@
                           label="Password"
                           required
                           @keyup.enter="login().then(()=>{isActive.value = false; loggedIn = true});"
+                          type="password"
                       ></v-text-field>
               </v-form>
             </v-card-text>

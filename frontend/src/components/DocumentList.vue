@@ -15,7 +15,7 @@
       <td>{{note.authorName}}</td>
       <td>{{note.content.substring(0,30)}}</td>
       <td>
-        <v-icon v-if="note.privacy">mdi-lock</v-icon>
+        <v-icon v-if="note.hidden">mdi-lock</v-icon>
         <v-icon v-else>mdi-earth</v-icon>
       </td>
     </tr>
