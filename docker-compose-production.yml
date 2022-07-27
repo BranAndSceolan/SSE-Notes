@@ -65,6 +65,9 @@ services:
       - "80:80"
       - "443:443"
 
+    volumes:
+      - ./certs:/etc/nginx/certs
+
     # NGINX reverse proxies to the backend
     # the config contains environment variables that needs to be set
     # daemon off is required for use with docker
