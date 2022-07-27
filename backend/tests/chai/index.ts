@@ -5,11 +5,13 @@ import config from "config";
 import {printToConsole} from "../../modules/util/util";
 import crypto from "crypto";
 
+
 chai.use(chaiHttp)
 
 // Test base route to return string
     describe('Base Route Test',  () => {
         const username = crypto.randomBytes(64).toString('hex')
+        let csrfToken: string;
         let testResult : boolean | void = false
         let hiddenNoteId : number;
         let publicNoteId : number;
@@ -18,8 +20,9 @@ chai.use(chaiHttp)
         it(`should return ${returnString}`, () => {
             agent.get('/api')
                 .then(res => {
-                    chai.expect(res.text).to.equal(returnString)
-                    testResult = (res.text == returnString)
+                    csrfToken = res.body.csrfToken
+                    chai.expect(res.body.message).to.equal(returnString)
+                    testResult = (res.body.message == returnString)
                 })
         })
 
@@ -27,7 +30,7 @@ chai.use(chaiHttp)
 
         // REGISTER - CORRECT
         it(`user:register: should return 200`, async () => {
-                const res = await agent.post('/api/user/register').send({
+                const res = await agent.post('/api/user/register').set("csrf-token", csrfToken).send({
                     name:	username,
                     password:	"picket lock singer dread"
                 })
@@ -37,7 +40,7 @@ chai.use(chaiHttp)
 
         // REGISTER - WRONG
         it(`user:register: missing name. Should return 400`, async () => {
-            const res = await  agent.post('/api/user/register').send({
+            const res = await  agent.post('/api/user/register').set("csrf-token", csrfToken).send({
                 password:	"picket lock singer dread",
             })
             chai.expect(res.status).to.equal(400)
@@ -45,7 +48,7 @@ chai.use(chaiHttp)
         })
 
         it(`user:register: missing password. Should return 400`, async () => {
-            const res = await  agent.post('/api/user/register').send({
+            const res = await  agent.post('/api/user/register').set("csrf-token", csrfToken).send({
                 name:	"Cleo",
             })
             chai.expect(res.status).to.equal(400)
@@ -53,7 +56,7 @@ chai.use(chaiHttp)
         })
 
         it('user:register: name already in use. Should return 400', async ()=>{
-                const res = await  agent.post('/api/user/register').send({
+                const res = await  agent.post('/api/user/register').set("csrf-token", csrfToken).send({
                     name:	username,
                     password:	"picket lock singer dread",
                 })
@@ -63,7 +66,7 @@ chai.use(chaiHttp)
         })
 
         it('user:register: weak password', async ()=>{
-            const res = await  agent.post('/api/user/register').send({
+            const res = await  agent.post('/api/user/register').set("csrf-token", csrfToken).send({
                 name:	username,
                 password:	"password1!",
             })
@@ -74,12 +77,12 @@ chai.use(chaiHttp)
 
         // CORRECT - Logout and fail request you need to be logged in for
         it('user:logout: should return 200 and other requests should fail', async ()=>{
-            const res = await agent.post('/api/user/logout').send({
+            const res = await agent.post('/api/user/logout').set("csrf-token", csrfToken).send({
                 name:	username,
                 password:	"picket lock singer dread",
             })
             chai.expect(res.status).to.equal(200)
-            const resCreate = await  agent.post('/api/documents/create').send({
+            const resCreate = await  agent.post('/api/documents/create').set("csrf-token", csrfToken).send({
                 title: "This should fail",
                 content: "We aren't logged in",
                 hidden: true
@@ -91,16 +94,15 @@ chai.use(chaiHttp)
         // LOGIN
         // CORRECT
         it('user:login', async ()=>{
-            const res = await  agent.post('/api/user/login').send({
+            const res = await  agent.post('/api/user/login').set("csrf-token", csrfToken).send({
                 name: username,
                 password: "picket lock singer dread"
             })
-            printToConsole(res.text)
             expect(res).to.have.cookie('myawesomecookie')
             chai.expect(res.status).to.equal(200)
             testResult = ( testResult && res.status == 200)
             // Should now be logged in.
-            const resCreate = await agent.post('/api/documents/create').send({
+            const resCreate = await agent.post('/api/documents/create').set("csrf-token", csrfToken).send({
                 title: "This should succeed",
                 content: "We are logged in",
                 hidden: false
@@ -113,7 +115,7 @@ chai.use(chaiHttp)
 
         // DOCUMENTS CREATE - CORRECT
         it ('documents:create should return 200', async ()=>{
-        const resCreate = await  agent.post('/api/documents/create').send({
+        const resCreate = await  agent.post('/api/documents/create').set("csrf-token", csrfToken).send({
                 title: "This should succeed a second time",
                 content: "We are logged in",
                 hidden: true
@@ -126,7 +128,7 @@ chai.use(chaiHttp)
 
         // DOCUMENTS CREATE - WRONG - MISSING TITLE
         it ('documents:create. title missing. should return 400', async ()=>{
-            const resCreate = await  agent.post('/api/documents/create').send({
+            const resCreate = await  agent.post('/api/documents/create').set("csrf-token", csrfToken).send({
                 title: "",
                 content: "We are logged in",
                 hidden: true
@@ -137,7 +139,7 @@ chai.use(chaiHttp)
 
         // DOCUMENTS CREATE - WRONG - MISSING CONTENT
         it ('documents:create. content missing. should return 400', async ()=>{
-            const resCreate = await agent.post('/api/documents/create').send({
+            const resCreate = await agent.post('/api/documents/create').set("csrf-token", csrfToken).send({
                 title: "Logged in",
                 content: "",
                 hidden: true
@@ -148,7 +150,7 @@ chai.use(chaiHttp)
 
         // DOCUMENTS CREATE - WRONG - MISSING PRIVACY FLAG
         it ('documents:create. content missing. should return 400', async ()=>{
-            const resCreate = await agent.post('/api/documents/create').send({
+            const resCreate = await agent.post('/api/documents/create').set("csrf-token", csrfToken).send({
                 title: "Logged in",
                 content: "Privacy flag is missing"
             })
@@ -158,7 +160,7 @@ chai.use(chaiHttp)
 
         // DOCUMENTS CREATE - WRONG - CONTENT TYPE WRONG
         it ('documents:create. content wrong datatype. should return 400', async ()=>{
-            const resCreate = await agent.post('/api/documents/create').send({
+            const resCreate = await agent.post('/api/documents/create').set("csrf-token", csrfToken).send({
                 title: "Logged in",
                 content: 7,
                 hidden: true
@@ -169,7 +171,7 @@ chai.use(chaiHttp)
 
         // DOCUMENTS CREATE - WRONG - TITLE TYPE WRONG
         it ('documents:create. wrong datatype in title. should return 400', async ()=>{
-            const resCreate = await agent.post('/api/documents/create').send({
+            const resCreate = await agent.post('/api/documents/create').set("csrf-token", csrfToken).send({
                 title: 4,
                 content: "We are logged in",
                 hidden: true
@@ -180,7 +182,7 @@ chai.use(chaiHttp)
 
         // DOCUMENTS CREATE - WRONG - PRIVACY FLAG TYPE WRONG
         it ('documents:create. wrong datatype in privacy flag. should return 400', async ()=>{
-            const resCreate = await agent.post('/api/documents/create').send({
+            const resCreate = await agent.post('/api/documents/create').set("csrf-token", csrfToken).send({
                 title: 4,
                 content: "We are logged in",
                 hidden: 8
@@ -189,20 +191,20 @@ chai.use(chaiHttp)
             testResult = ( testResult && resCreate.status == 400)
         })
 
-            // DOCUMENTS GET - CORRECT - PUBLIC
-            it('documents:get. (own public note) should return 200', async () => {
-                const res = await agent.get('/api/documents/get/'+publicNoteId)
-                chai.expect(res.status).to.equal(200)
-                chai.expect(res.body.title).to.exist
-                testResult = (testResult && res.status == 200 && res.body.title)
-            })
+        // DOCUMENTS GET - CORRECT - PUBLIC
+        it('documents:get. (own public note) should return 200', async () => {
+            const res = await agent.get('/api/documents/get/'+publicNoteId)
+            chai.expect(res.status).to.equal(200)
+            chai.expect(res.body.title).to.exist
+            testResult = (testResult && res.status == 200 && res.body.title)
+        })
 
-            it('documents:get. (private note) should return 200', async () => {
-                const res = await agent.get('/api/documents/get/'+hiddenNoteId)
-                chai.expect(res.status).to.equal(200)
-                chai.expect(res.body.title).to.exist
-                testResult = (testResult && res.status == 200 && res.body.title)
-            })
+        it('documents:get. (private note) should return 200', async () => {
+            const res = await agent.get('/api/documents/get/'+hiddenNoteId)
+            chai.expect(res.status).to.equal(200)
+            chai.expect(res.body.title).to.exist
+            testResult = (testResult && res.status == 200 && res.body.title)
+        })
 
         // DOCUMENTS LIST - CORRECT - OWN NOTES
         it ('documents:List should return 200', async ()=>{
@@ -264,7 +266,7 @@ chai.use(chaiHttp)
         });
 
         it('should only return public notes if user is not logged in', async ()=>{
-            const resLogout = await agent.post('/api/user/logout')
+            const resLogout = await agent.post('/api/user/logout').set("csrf-token", csrfToken)
             chai.expect(resLogout.status).to.equal(200)
             testResult = (testResult && resLogout.status == 200)
             const resSearch = await agent.get('/api/documents/search/succeed')
@@ -280,7 +282,7 @@ chai.use(chaiHttp)
 
         // LOGIN AGAIN to enable further tests
         it('user:login', async ()=> {
-            const res = await agent.post('/api/user/login').send({
+            const res = await agent.post('/api/user/login').set("csrf-token", csrfToken).send({
                 name: username,
                 password: "picket lock singer dread"
             })
@@ -291,7 +293,7 @@ chai.use(chaiHttp)
 
         // DOCUMENTS DELETE
         it ('delete own public document' , async ()=>{
-            const res = await agent.delete('/api/documents/delete/'+ publicNoteId)
+            const res = await agent.delete('/api/documents/delete/'+ publicNoteId).set("csrf-token", csrfToken)
             chai.expect(res.status).to.equal(200)
             testResult = ( testResult && res.status == 200)
             // shouldn't be able to get document anymore now
@@ -302,7 +304,7 @@ chai.use(chaiHttp)
         })
 
         it ('delete own private document' , async ()=>{
-            const res = await agent.delete('/api/documents/delete/'+ hiddenNoteId)
+            const res = await agent.delete('/api/documents/delete/'+ hiddenNoteId).set("csrf-token", csrfToken)
             chai.expect(res.status).to.equal(200)
             testResult = ( testResult && res.status == 200)
             // shouldn't be able to get document anymore now
@@ -313,12 +315,12 @@ chai.use(chaiHttp)
         })
 
         // USER DELETE - CORRECT
-        it ('user:delete. should return 200 and delete as well as log out user', async ()=> {
-            const res = await agent.delete('/api/user/delete').send("")
+        it ('user:delete. should return 200 and delete as well as log out user', async ()=>{
+            const res = await agent.delete('/api/user/delete').set("csrf-token", csrfToken).send("")
             chai.expect(res.status).to.equal(200)
             testResult = (testResult && res.status == 200)
             // register to prove user was in fact deleted (if not, there would be a status 400 because of duplicate name
-            const resReg = await agent.post('/api/user/register').send({
+            const resReg = await agent.post('/api/user/register').set("csrf-token", csrfToken).send({
                 name: username,
                 password: "picket lock singer dread"
             })
@@ -326,12 +328,11 @@ chai.use(chaiHttp)
             chai.expect(resReg.status).to.equal(200)
             testResult = testResult && (resReg.status == 200)
             // Delete user again
-            const res2 = await agent.delete('/api/user/delete').send("")
-
+            const res2 = await agent.delete('/api/user/delete').set("csrf-token", csrfToken).send("")
             chai.expect(res2.status).to.equal(200)
             testResult = (testResult && res2.status == 200)
             // Deleting the user also logs us out
-            const resCreate = await agent.post('/api/documents/create').send({
+            const resCreate = await agent.post('/api/documents/create').set("csrf-token", csrfToken).send({
                 title: "This should fail",
                 content: "We aren't logged in",
                 hidden: true

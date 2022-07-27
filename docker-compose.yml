@@ -10,7 +10,7 @@ version: '3.8'
 # $POSTGRES_PASSWORD
 # $POSTGRES_DB
 
-# The backend uses the environment variables "NOTES_DB_HOST" when built standalone, it is set here
+# The backend uses the environment variable "NOTES_DB_HOST" when built standalone, it is set here
 
 services:
   db:

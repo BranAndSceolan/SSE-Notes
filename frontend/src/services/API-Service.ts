@@ -1,4 +1,4 @@
-import axios, {AxiosError, AxiosInstance, AxiosResponse} from "axios";
+import axios, { AxiosError, AxiosInstance, AxiosResponse} from "axios";
 
 const apiAxiosInstance: AxiosInstance = axios.create({
     baseURL: '/api'
@@ -8,8 +8,20 @@ class APIService {
 
     public axios: AxiosInstance;
 
+
     constructor(axiosInstance: AxiosInstance) {
         this.axios = axiosInstance;
+    }
+
+    getCsrfToken(){
+        return new Promise<string>((resolve, reject) => {
+            this.axios.get("").then((res: AxiosResponse) => {
+                this.axios.defaults.headers.common['csrf-token'] = res.data.csrfToken
+                resolve(res.data.csrfToken);
+            }).catch((error: AxiosError) => {
+                reject(error);
+            })
+        })
     }
 
     createDocument(title: string, text: string, privateNote: boolean){

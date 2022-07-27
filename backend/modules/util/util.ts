@@ -11,3 +11,5 @@ export function printError(position: string, errorText: string) {
 }
 
 export const internalErrorMessage: string = "Something went wrong, possibly on our side. We are sorry.\n Please try again in a minute."
+
+
