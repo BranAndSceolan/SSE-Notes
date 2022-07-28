@@ -1,16 +1,16 @@
 <template>
   <v-container class="greeting">
-    <h1>Login to view and create notes!</h1>
+    <h1>Login to create notes!</h1>
   </v-container>
   <v-container class="cookieInfo">
     <h3> We respect your privacy. </h3>
-    We use only <b>essential cookies</b> to run this Service. <br> These cookies are necessary to authenticate users and prevent fraudulent use of user accounts. <br>
-    There are no third-party cookies and no analytic cookies.<br>
+    We only use <b>essential cookies</b> to run this site. <br> These cookies are necessary to authenticate users and prevent fraudulent use of user accounts. <br>
+    We don't use third-party, tracking or analytics cookies.<br>
   </v-container>
   <v-container class="cookieInfo">
     <h3> Wir respektieren Ihre Privatsphäre. </h3>
     Wir nutzen nur <b>essentielle cookies</b> um diese Seite zu betreiben. <br> Diese Cookies sind notwendig, damit sich Nutzer authentifizieren können, und die Website vor Angriffen geschützt werden kann.<br>
-    Wir setzen keine Cookies Dritter und keine Cookies zu Tracking oder Analysezwecken.<br>
+    Wir setzen keine Cookies Dritter und keine Cookies zu Tracking- oder Analysezwecken.<br>
   </v-container>
 </template>
 
@@ -80,7 +80,7 @@ export default defineComponent({
 }
 
 .greeting{
-  padding-bottom: 4.0em;
-  padding-top: 4.0em;
+  margin-bottom: 2.5em;
+  margin-top: 4.0em;
 }
 </style>
