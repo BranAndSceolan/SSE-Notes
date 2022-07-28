@@ -7,7 +7,7 @@
   </p><p><strong>Kontakt:</strong> <br>
     Telefon: 01234-789456<br>
     Fax: 1234-56789<br>
-    E-Mail: <a href='mailto:max@muster.de'>max@muster.de</a></br></p><p><strong>Registereintrag: </strong><br>
+    E-Mail: <a href='mailto:max@muster.de'>max@muster.de</a><br></p><p><strong>Registereintrag: </strong><br>
     Eintragung im Registergericht: Musterstadt<br>
     Registernummer: 12345<br></p><p><strong>Umsatzsteuer-ID: </strong> <br>
     Umsatzsteuer-Identifikationsnummer gemäß §27a Umsatzsteuergesetz: Musterustid.<br><br>
