@@ -12,13 +12,15 @@
 
 # Packages used
 
-## [Vuetify](https://next.vuetifyjs.com/en/)
+## [Vuetify 3](https://next.vuetifyjs.com/en/)
 
 Vuetify is an open-source UI component library, it's included to speed up development.
 
 License: MIT
 
 ## [md-editor-v3](https://github.com/imzbf/md-editor-v3)
+
+[![md-editor-v3](https://snyk.io/advisor/npm-package/md-editor-v3/badge.svg)](https://snyk.io/advisor/npm-package/md-editor-v3)
 
 md-editor-v3 is an open source markdown editor and can be used to display markdown content. It also supports the use of an HTML sanitizer.
 To display HTML content it sets the .innerHTML attribute, any markdown file it's supposed to display <b>has to be filtered</b>.
@@ -28,12 +30,16 @@ License: MIT
 
 ## [sanitize-html](https://github.com/apostrophecms/sanitize-html)
 
+[![sanitize-html](https://snyk.io/advisor/npm-package/sanitize-html/badge.svg)](https://snyk.io/advisor/npm-package/sanitize-html)
+
 sanitize-html is open source, very comprehensive and covers a lot of ways an attacker could use HTML content to harm users of the application.
 Generally a client is not to be trusted with this, the backend also uses this library on created notes, it's used here to ensure the preview of the markdown editor is accurate and matches the saved note.
 
 License: MIT
 
 ## [axios](https://github.com/axios/axios)
+
+[![axios](https://snyk.io/advisor/npm-package/axios/badge.svg)](https://snyk.io/advisor/npm-package/axios)
 
 Axios is an open source library used to make http and XMLHttp requests. It supports client side protections against cross-site request forgery.
 
