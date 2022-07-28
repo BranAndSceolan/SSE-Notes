@@ -6,9 +6,9 @@ sanitize-html is published under MIT-License which is unproblematic, because it 
 
 ## Links
 [npm](https://www.npmjs.com/package/sanitize-html) <br>
-[github](https://github.com/apostrophecms/sanitize-html)<br>
-[snykAdvisor](https://snyk.io/advisor/npm-package/sanitize-html)<br>
-[bundlephobia](https://bundlephobia.com/package/sanitize-html@2.7.1)<br>
+[github](https://github.com/apostrophecms/sanitize-html) <br>
+[snykAdvisor](https://snyk.io/advisor/npm-package/sanitize-html) <br>
+[bundlephobia](https://bundlephobia.com/package/sanitize-html@2.7.1) <br>
 
 ## Pros
 * removes hidden javascript from href= and src= attributes
