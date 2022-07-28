@@ -20,7 +20,7 @@ License: MIT
 
 ## [md-editor-v3](https://github.com/imzbf/md-editor-v3)
 
-md-editor-v3 is an open source markdown editor and can to display markdown content. It also supports the use of an HTML sanitizer.
+md-editor-v3 is an open source markdown editor and can be used to display markdown content. It also supports the use of an HTML sanitizer.
 To display HTML content it sets the .innerHTML attribute, any markdown file it's supposed to display <b>has to be filtered</b>.
 The backend has to sanitize HTML and URLs in a-tags for this reason, otherwise it would be possible for users to write notes containing scripts or stylesheets that get loaded and executed as such.
 
