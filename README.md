@@ -62,7 +62,8 @@ You can build a docker image for the frontend using the included Dockerfile, how
 
 ## Deploy this project using docker compose
 
-Use the included docker-compose-production.yml to automatically deploy the project, you need to set the environment variables listed in the file on your system.
+Use the included ``docker-compose-production.yml`` to automatically deploy the project, you need to set the environment variables listed in the file on your system and add the included .cert file in ``/certs``as a certificate authority on your system.
+This file is <b>NOT</b> entirely production ready, it's meant to be used as a reference for production deployments.
 
 ## Tests
   * backend

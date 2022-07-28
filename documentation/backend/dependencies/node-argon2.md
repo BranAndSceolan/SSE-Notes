@@ -5,9 +5,9 @@
 node-argon2 is published under MIT-License which is unproblematic, because it allows all kinds of uses.
 
 # Links
-[npm](https://www.npmjs.com/package/argon2)<br>
-[github](https://github.com/ranisalt/node-argon2/issues)<br>
-[snykAdvisor](https://snyk.io/advisor/npm-package/argon2)<br>
+[npm](https://www.npmjs.com/package/argon2) <br>
+[github](https://github.com/ranisalt/node-argon2/issues) <br>
+[snykAdvisor](https://snyk.io/advisor/npm-package/argon2) <br>
 [bundlephobia](https://bundlephobia.com/package/argon2@0.28.7)
 
 ## Pros

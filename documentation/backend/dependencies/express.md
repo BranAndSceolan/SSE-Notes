@@ -5,10 +5,10 @@
 express is published under MIT-License, which is unproblematic for us, because it allows all kinds of uses.
 
 # Links
-[snykAdvisor](https://snyk.io/advisor/npm-package/express)<br>
-[npm](https://www.npmjs.com/package/express)<br>
-[github](https://github.com/expressjs/express)<br>
-[bundlephobia](https://bundlephobia.com/package/express@4.18.1)<br>
+[snykAdvisor](https://snyk.io/advisor/npm-package/express) <br>
+[npm](https://www.npmjs.com/package/express) <br>
+[github](https://github.com/expressjs/express) <br>
+[bundlephobia](https://bundlephobia.com/package/express@4.18.1) <br>
 
 
 # Pros
