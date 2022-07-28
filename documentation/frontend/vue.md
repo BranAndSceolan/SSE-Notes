@@ -14,7 +14,7 @@
 
 ## [Vuetify](https://next.vuetifyjs.com/en/)
 
-Vuetify has a lot of pre-made UI components to speed up development. It's open source and uses the MIT license.
+Vuetify is an open-source UI component library, it's included to speed up development.
 
 License: MIT
 
