@@ -2,9 +2,9 @@
 
 [![cookie-parser](https://snyk.io/advisor/npm-package/cookie-parser/badge.svg)](https://snyk.io/advisor/npm-package/cookie-parser)
 
-[npm](https://www.npmjs.com/package/cookie-signature)<br>
-[github](https://github.com/tj/node-cookie-signature)<br>
-[snykAdvisor](https://snyk.io/advisor/npm-package/cookie-parser)<br>
+[npm](https://www.npmjs.com/package/cookie-signature) <br>
+[github](https://github.com/tj/node-cookie-signature) <br>
+[snykAdvisor](https://snyk.io/advisor/npm-package/cookie-parser) <br>
 [bundlephobia](https://bundlephobia.com/package/cookie-parser@1.4.6)
 
 ## License

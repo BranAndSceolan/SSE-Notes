@@ -36,4 +36,4 @@ size and composition are acceptable ([bundlephobia](https://bundlephobia.com/pac
 ## Why this package?
 Chai is an assertion libary that is recommended for use with mocha.
 It helps us write easily readable tests.
-Because chai is a dev dependency and the [test](../../backend/tests)-directory is excluded from the deployment backend build, the security requirements for this package are less harsh.
+Because chai is a dev dependency and the [test](../../../backend/tests)-directory is excluded from the deployment backend build, the security requirements for this package are less harsh.
