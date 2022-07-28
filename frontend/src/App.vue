@@ -15,6 +15,7 @@
         </template>
       </v-snackbar>
     </v-main>
+    <Footer/>
   </v-app>
 </template>
 
@@ -22,6 +23,7 @@
 import Navbar from "@/components/Navbar.vue";
 import {ref} from "vue";
 import {API} from "@/services/API-Service";
+import Footer from "@/components/Footer.vue";
 
 const snackbar = ref({
       show: false,
