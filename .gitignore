@@ -1,5 +1,20 @@
-# Created by https://www.toptal.com/developers/gitignore/api/webstorm,visualstudiocode,node
-# Edit at https://www.toptal.com/developers/gitignore?templates=webstorm,visualstudiocode,node
+# Created by https://www.toptal.com/developers/gitignore/api/webstorm,git,node,vue,vuejs
+# Edit at https://www.toptal.com/developers/gitignore?templates=webstorm,git,node,vue,vuejs
+
+### Git ###
+# Created by git for backups. To disable backups in Git:
+# $ git config --global mergetool.keepBackup false
+*.orig
+
+# Created by git when using merge tools for conflicts
+*.BACKUP.*
+*.BASE.*
+*.LOCAL.*
+*.REMOTE.*
+*_BACKUP_*.txt
+*_BASE_*.txt
+*_LOCAL_*.txt
+*_REMOTE_*.txt
 
 ### Node ###
 # Logs
@@ -93,7 +108,7 @@ out
 
 # Nuxt.js build / generate output
 .nuxt
-dist/
+dist
 
 # Gatsby files
 .cache/
@@ -141,30 +156,23 @@ dist/
 # SvelteKit build / generate output
 .svelte-kit
 
-### VisualStudioCode ###
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-!.vscode/*.code-snippets
+### Vue ###
+# gitignore template for Vue.js projects
+#
+# Recommended template: Node.gitignore
 
-# Local History for Visual Studio Code
-.history/
+# TODO: where does this rule come from?
+docs/_book
 
-# Built Visual Studio Code Extensions
-*.vsix
+# TODO: where does this rule come from?
+test/
 
-### VisualStudioCode Patch ###
-# Ignore all local history of files
-.history
-.ionide
+### Vuejs ###
+# Recommended template: Node.gitignore
 
-# Support for Project snippet scope
-.vscode/*.code-snippets
-
-# Ignore code-workspaces
-*.code-workspace
+dist/
+npm-debug.log
+yarn-error.log
 
 ### WebStorm ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
@@ -279,6 +287,10 @@ fabric.properties
 # https://plugins.jetbrains.com/plugin/8053-azure-toolkit-for-intellij
 .idea/**/azureSettings.xml
 
-# End of https://www.toptal.com/developers/gitignore/api/webstorm,visualstudiocode,node
+# End of https://www.toptal.com/developers/gitignore/api/webstorm,git,node,vue,vuejs
 
-.idea
+.idea/httpRequests/http-client.cookies
+.idea/httpRequests/http-requests-log.http
+/.idea/httpRequests/
+/.idea/inspectionProfiles/
+

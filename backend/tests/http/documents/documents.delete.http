@@ -1,0 +1,33 @@
+### Preparation: login as Eleonore (use if not already logged in)
+POST localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "Eleonore",
+  "password": "Troubadour&444"
+}
+
+### Preparation: create a correctly written public note (if you are using NODE_ENV=debug, you can look up the id in the console)
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "Hallo",
+  "content": "DeleteTest!",
+  "hidden": false
+}
+
+### Preparation: logout (to confirm that logged out you cannot delete any notes)
+POST localhost:8000/api/user/logout
+
+### Preparation: login as Ella (to confirm that as Ben you cannot delete other users' notes)
+POST localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "Ella",
+  "password": "Troubadour&444"
+}
+
+### Test: delete a note (make sure the note exists, you are its logged in author and use the right id)
+DELETE http://localhost:8000/api/documents/delete/4

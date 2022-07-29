@@ -1,54 +1,30 @@
 import {Request, Response} from "express";
+import {pool} from "../../index";
+import {internalErrorMessage, printError} from "../util/util";
 
 export class UserController{
-    constructor() {
+    public async update(_req: Request, _res: Response): Promise <void>{
+        _res.send(501).send("Not yet implemented")
     }
 
-    public register(req: Request, res: Response): void {
-        if (req /*valid*/) {
-            /* if ( make entry into database){
-         send res with status 200 and id
-         }else{
-             send res with status 500
-            }*/
-        } else {
-            res.status(400).send("Bad Request")
-        }
-    }
+    public async delete(req: Request, res: Response) {
+            const userId: bigint = req.session.signInId
+            let result;
+            req.session.destroy(async ()=>{
+                res.clearCookie("myawesomecookie")
+                try {
+                    result = await pool.query('DELETE FROM users WHERE id = $1 RETURNING *', [userId])
+                } catch (e) {
+                    printError("delete user", e)
+                    return res.status(500).send(internalErrorMessage)
+                }
+                if (result) {
+                    return res.status(200).send("user "+ result.rows[0].name + " deleted!")
+                } else {
+                    printError("delete user", "no result from db")
+                    return res.status(500).send(internalErrorMessage)
+                }
+            })
 
-    public login(req: Request, res: Response): void {
-        if (req.params.id /*valid*/) {
-            /* if ( successfully gotten from db){
-         send res with status 200 and values as json
-         login
-         }else{
-             send res with status 404
-            }*/
-        } else {
-            res.status(400).send("Bad Request")
-        }
-    }
-
-    public logout(req: Request, res: Response): void {
-        if (req.params.name /*valid*/) {
-            /* if ( successfully gotten from db){
-         send res with status 200 and values as json
-         }else{
-             send res with status 404
-            }*/
-        } else {
-            res.status(400).send("Bad Request")
-        }
-    }
-    public delete(req: Request, res: Response): void {
-        if (req /*valid*/) {
-            /* if ( delete from database){
-         send res with status 200 and values of deleted note
-         }else{
-             send res with status 500
-            }*/
-        } else {
-            res.status(400).send("Bad Request")
-        }
     }
 }

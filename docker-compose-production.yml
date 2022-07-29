@@ -1,0 +1,78 @@
+version: '3.8'
+
+# This is a reference for a standard deployment
+
+# The following environment variables need to be set appropriately (in a .env file for example):
+
+# NOTES_USER
+# NOTES_PASSWORD
+# POSTGRES_USER
+# POSTGRES_PASSWORD
+# POSTGRES_DB
+# NOTES_FRONTEND_SERVER_NAME
+
+# The backend uses the environment variable "NOTES_DB_HOST" when built standalone, it is set here
+# NOTES_FRONTEND_SERVER_NAME is the NGINX configuration's server name for the frontend
+# eg: localhost, your domain name or an IP
+
+services:
+  db:
+    build:
+      context: ./postgres
+
+    image: notes/postgres
+
+    environment:
+      - NOTES_USER=$NOTES_USER
+      - NOTES_PASSWORD=$NOTES_PASSWORD
+      - POSTGRES_USER=$POSTGRES_USER
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+      - POSTGRES_DB=$POSTGRES_DB
+
+
+    restart: unless-stopped
+    volumes:
+    - notes-db:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+
+    image: notes/backend
+
+    restart: unless-stopped
+
+    environment:
+      - NOTES_USER=$NOTES_USER
+      - NOTES_PASSWORD=$NOTES_PASSWORD
+      - POSTGRES_DB=$POSTGRES_DB
+      - NOTES_DB_HOST=db # Hostname/IP of the DB
+
+  frontend:
+    build:
+      context: ./frontend
+
+    image: notes/frontend
+
+    restart: unless-stopped
+
+    # Specify backend protocol and port here too
+    environment:
+      - NOTES_BACKEND_HOST=http://backend:8000
+      - NOTES_FRONTEND_SERVER_NAME=$NOTES_FRONTEND_SERVER_NAME
+
+    ports:
+      - "80:80"
+      - "443:443"
+
+    volumes:
+      - ./certs:/etc/nginx/certs
+
+    # NGINX reverse proxies to the backend
+    # the config contains environment variables that needs to be set
+    # daemon off is required for use with docker
+    # $$ prevents docker compose from interpreting these as env variables
+    command: /bin/bash -c "envsubst '$$NOTES_BACKEND_HOST,$$NOTES_FRONTEND_SERVER_NAME' < /etc/nginx/nginx_original.conf > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
+
+volumes:
+  notes-db:

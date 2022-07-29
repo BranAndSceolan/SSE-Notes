@@ -1,0 +1,193 @@
+### Preparation: login as Beni (use if not already logged in)
+POST localhost:8000/api/user/login
+Content-Type: application/json
+
+{
+  "name": "Eleonore",
+  "password": "Troubadour&444"
+}
+
+### Test: correctly written private note
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "Shhh",
+  "content": "Dies ist eine geheime Nachricht!",
+  "hidden": true
+}
+
+### Test: private note with missing title
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "content": "Diese Nachricht hat keinen Titel!",
+  "hidden": true
+}
+
+### Test: private note with empty title
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "",
+  "content": "Dies ist eine geheime Nachricht!",
+  "hidden": true
+}
+
+### Test: private note with missing content
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "Shhh",
+  "hidden": true
+}
+
+### Test: private note with empty content
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "Ups",
+  "content": "",
+  "hidden": true
+}
+
+### Test: private note with empty title and content
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "",
+  "content": "",
+  "hidden": true
+}
+
+### Test: private note with missing title and content
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "hidden": true
+}
+
+### Test: create a note with convertable string for attribute private ("yes")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "hidden": "yes"
+}
+
+### Test: create a note with convertable string for attribute private ("YES")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "hidden": "YES"
+}
+
+### Test: create a note with convertable string for attribute private ("y")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "hidden": "y"
+}
+
+### Test: create a note with convertable string for attribute private ("Y")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "hidden": "Y"
+}
+### Test: create a note with convertable string for attribute private ("true")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "hidden": "true"
+}
+
+### Test: create a note with convertable string for attribute private ("TRUE")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "hidden": "TRUE"
+}
+
+### Test: create a note with convertable string for attribute private ("t")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "hidden": "t"
+}
+
+### Test: create a note with convertable string for attribute private ("T")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "hidden": "T"
+}
+
+### Test: create a note with convertable string for attribute private ("on")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "hidden": "on"
+}
+
+### Test: create a note with convertable string for attribute private ("ON")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "hidden": "ON"
+}
+
+### Test: create a note with convertable string for attribute private ("1")
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "hidden": "1"
+}
+
+### Test: create a note with convertable number for attribute private (1)
+POST localhost:8000/api/documents/create
+Content-Type: application/json
+
+{
+  "title": "XXX",
+  "content": "xxxxxxx",
+  "hidden": 1
+}
