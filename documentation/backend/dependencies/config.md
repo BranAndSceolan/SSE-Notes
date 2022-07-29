@@ -5,8 +5,8 @@
 config is published under MIT-License, which is unproblematic for us, because it allows all kinds of uses.
 
 [npm](https://www.npmjs.com/package/config) <br>
-[github](https://github.com/node-config/node-config)<br>
-[snykAdvisor](https://snyk.io/advisor/npm-package/config)<br>
+[github](https://github.com/node-config/node-config) <br>
+[snykAdvisor](https://snyk.io/advisor/npm-package/config) <br>
 [bundlephobia](https://bundlephobia.com/package/config@3.3.7)
 
 ## Pros

@@ -5,9 +5,9 @@
 express-rate-limit is published under MIT-License, which is unproblematic for us, because it allows all kinds of uses.
 
 ## Links
-[github](https://github.com/nfriedly/express-rate-limit)<br>
+[github](https://github.com/nfriedly/express-rate-limit) <br>
 [npm](https://www.npmjs.com/package/express-rate-limit) <br>
-[snykAdvisor](https://snyk.io/advisor/npm-package/express-rate-limit)<br>
+[snykAdvisor](https://snyk.io/advisor/npm-package/express-rate-limit) <br>
 [bundlephobia](https://bundlephobia.com/package/express-rate-limit@6.5.1)
 
 ## Pros
