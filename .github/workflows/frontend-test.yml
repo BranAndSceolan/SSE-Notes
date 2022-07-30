@@ -1,0 +1,29 @@
+name: "Frontend tests"
+
+on:
+  push:
+    branches: [ "development", master, "103-add-frontend-tests-using-jester" ]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ "development" ]
+  schedule:
+    - cron: '33 1 * * 6'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Jest Unit Test - Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: | 
+          cd frontend
+          npm run test:unit
