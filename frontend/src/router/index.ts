@@ -1,22 +1,17 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import AboutView from '../views/AboutView.vue'
-import DocumentListView from '../views/DocumentListView.vue'
-import DocumentView from '../views/DocumentView.vue'
-import SearchView from '../views/SearchView.vue'
-import CreateDocumentView from '../views/CreateDocumentView.vue'
-import {API} from '@/services/API-Service'
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import HomeView from '../views/HomeView.vue';
+import DocumentListView from '../views/DocumentListView.vue';
+import DocumentView from '../views/DocumentView.vue';
+import SearchView from '../views/SearchView.vue';
+import CreateDocumentView from '../views/CreateDocumentView.vue';
+import {API} from '@/services/API-Service';
+import ImprintView from '../views/ImprintView.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
     component: HomeView
-  },
-  {
-    path: '/about',
-    name: 'about',
-    component: AboutView
   },
   {
     path: '/documents',
@@ -37,8 +32,12 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/create',
     name: 'create',
-    //query parameters are not defined at all in Vue
     component: CreateDocumentView
+  },
+  {
+    path: '/imprint',
+    name: 'imprint',
+    component: ImprintView
   }
 ]
 
