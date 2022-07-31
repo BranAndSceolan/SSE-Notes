@@ -125,7 +125,7 @@
 
 <style scoped lang="scss">
   .notice{
-    background-color: lightcyan;
+    background-color: aliceblue;
     padding-left: 3em;
     padding-right: 3em;
     p {
