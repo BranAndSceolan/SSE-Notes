@@ -70,3 +70,6 @@ This file is <b>NOT</b> entirely production ready, it's meant to be used as a re
     * chai
       * to run local chai tests, ensure you are using a development build like explained above
       * use ``npm run test`` instead of ``npm start`` to start your local tests
+  * frontend
+      * You can run frontend tests using Jest by executing the command ``npm run test:unit`` in the frontend directory.
+    Due to problems with Jest and Cypress there are only a few very basic unit tests and no end to end testing.
