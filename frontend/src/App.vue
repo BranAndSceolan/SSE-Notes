@@ -3,6 +3,7 @@
     <v-main>
       <Navbar/>
       <router-view/>
+      <Footer/>
       <v-snackbar
           v-model="snackbar.show"
           :timeout="10_000"
@@ -22,6 +23,7 @@
 import Navbar from "@/components/Navbar.vue";
 import {ref} from "vue";
 import {API} from "@/services/API-Service";
+import Footer from "@/components/Footer.vue";
 
 const snackbar = ref({
       show: false,

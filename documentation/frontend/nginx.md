@@ -7,6 +7,8 @@ As the server automatically redirects regular HTTP requests to HTTPS, having a v
 ### Adding your own SSL Certificate
 
 For development purposes we include ``localhost.crt`` and ``localhost.key`` in the 'certs' directory. They were generated from the ``localhost.conf`` file using the command ``sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout localhost.key -out localhost.crt -config localhost.conf``.
+If you use your own self-signed certificate on a current debian-based system, you can tell your device to trust it by using ``sudo cp localhost.crt /usr/local/share/ca-certificates/
+`` and ``sudo update-ca-certificates``.
 Make sure your certificate name matches the environment variable for the server name and the folder containing it is mounted correctly, see the ``docker-compose-production.yml`` file for reference.
 
 ### Using the included SSL Certificate
