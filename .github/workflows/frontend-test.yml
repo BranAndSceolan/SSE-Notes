@@ -2,7 +2,7 @@ name: "Frontend tests"
 
 on:
   push:
-    branches: [ "development", master, "103-add-frontend-tests-using-jester" ]
+    branches: [ "development", master]
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [ "development" ]
