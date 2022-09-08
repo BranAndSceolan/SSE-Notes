@@ -12,7 +12,7 @@
   "dependencies": {
     "@mdi/font": "7.0.96",
     "axios": "^0.27.2",
-    "core-js": "^3.24.0",
+    "core-js": "^3.25.1",
     "md-editor-v3": "^2.2.1",
     "roboto-fontface": "*",
     "sanitize-html": "^2.7.1",
