@@ -48,7 +48,7 @@
 
     "express-session": "^1.17.3",
 
-    "helmet": "^5.1.1",
+    "helmet": "^6.0.1",
 
     "node-postgres": "^0.6.2",
 
