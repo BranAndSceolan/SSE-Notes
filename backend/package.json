@@ -52,7 +52,7 @@
 
     "node-postgres": "^0.6.2",
 
-    "pg": "^8.7.3",
+    "pg": "^8.9.0",
 
     "sanitize-html": "^2.7.1",
 
@@ -82,7 +82,7 @@
 
     "@types/mocha": "^9.1.1",
 
-    "@types/pg": "^8.6.5",
+    "@types/pg": "^8.6.6",
 
     "@types/sanitize-html": "^2.6.2",
 
